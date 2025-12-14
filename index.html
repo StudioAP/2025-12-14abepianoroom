@@ -95,22 +95,8 @@
             gap: 1.2rem;
             padding: 0 1rem;
         }
-        /* ヒーロー文字の「行ごとの」最小ガラス背景 */
-        .glass-line {
-            display: inline-block;
-            padding: 0.02em 0.18em; /* さらに文字ギリギリにトリミング */
-            background: rgba(0,0,0,0.012);
-            border: none;
-            backdrop-filter: blur(5px) saturate(112%);
-            -webkit-backdrop-filter: blur(5px) saturate(112%);
-            border-radius: 6px;
-            box-decoration-break: clone;
-            -webkit-box-decoration-break: clone;
-        }
-        .glass-line--title { padding: 0.01em 0.18em; }
-        .glass-line--sub { padding: 0.02em 0.20em; }
         .h-title { 
-            font-size: 4rem; margin: 0; letter-spacing: 0.2em; font-weight: 400; 
+            font-size: 3.6rem; margin: 0; letter-spacing: 0.2em; font-weight: 400; 
             text-shadow:
                 0 2px 24px rgba(0,0,0,0.55),
                 0 0 2px rgba(0,0,0,0.35);
@@ -153,7 +139,7 @@
         }
         .r-name {
             font-family: 'Cinzel', serif;
-            font-size: 2rem; /* サイズは現状維持 */
+            font-size: 1.8rem; /* ひとまわり小さく */
             margin-bottom: 0.5rem;
             color: #111;
             letter-spacing: 0.2em; /* ヒーローと同じ文字間隔 */
@@ -188,7 +174,13 @@
         .modal-body {
             padding: 3rem; overflow-y: auto; text-align: center;
         }
-        .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin: 0 0 1.5rem; }
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin: 0 0 1.5rem;
+            letter-spacing: 0.2em;
+            font-weight: 400;
+        }
         .modal-desc { line-height: 2; color: #555; font-size: 1rem; text-align: left; }
         
         .modal-close {
@@ -219,7 +211,7 @@
         @media (max-width: 768px) {
             header { padding: 1.5rem; }
             .logo { font-size: 1.4rem; }
-            .h-title { font-size: 2.5rem; }
+            .h-title { font-size: 2.3rem; }
             .h-sub { font-size: 0.7rem; }
             .r-img-wrap { height: 50vh; }
             .r-info { width: 85%; padding: 2rem; margin-top: -3rem; }
@@ -261,7 +253,6 @@
     <div style="height: 100px;"></div>
 
     <div class="book-bar">
-        <span>体験レッスン 1,000円</span>
         <a href="mailto:hello@example.com" class="book-btn">お問合せ</a>
     </div>
 
@@ -375,17 +366,12 @@
                 .replace(/'/g, "&#39;");
         }
 
-        // ヒーロー文字を「行ごとに最小ガラス」になる形で差し込む
+        // ヒーロー文字を差し込む（<br>のみ許可）
         function setHeroText() {
             const titleEl = document.getElementById('hero-title');
             const subEl = document.getElementById('hero-sub');
-            titleEl.innerHTML = `<span class="glass-line glass-line--title">${escapeHtml(config.hero.title)}</span>`;
-            // subは<br>を許可し、各行を個別のガラスにする（文字ギリギリにトリミング）
-            const safeSubWithBr = escapeHtml(config.hero.sub).replace(/&lt;br&gt;/g, "<br>");
-            const lines = safeSubWithBr.split("<br>");
-            subEl.innerHTML = lines
-                .map(line => `<span class="glass-line glass-line--sub">${line}</span>`)
-                .join("<br>");
+            titleEl.textContent = config.hero.title;
+            subEl.innerHTML = escapeHtml(config.hero.sub).replace(/&lt;br&gt;/g, "<br>");
         }
 
         // 画像存在チェック
