@@ -96,7 +96,7 @@
             padding: 0 1rem;
         }
         .h-title { 
-            font-size: 3.6rem; margin: 0; letter-spacing: 0.2em; font-weight: 600; 
+            font-size: 3.6rem; margin: 0; letter-spacing: 0.2em; font-weight: 400; 
             text-shadow:
                 0 3px 28px rgba(0,0,0,0.65),
                 0 0 2px rgba(0,0,0,0.45);
@@ -106,11 +106,23 @@
         .h-sub { 
             font-size: 1.15rem; margin-top: 0; letter-spacing: 0.18em; display: block;
             line-height: 1.7;
-            font-weight: 500;
             text-shadow:
                 0 3px 22px rgba(0,0,0,0.75),
                 0 0 2px rgba(0,0,0,0.45);
             -webkit-text-stroke: 0.8px rgba(0,0,0,0.25);
+        }
+
+        /* ヒーロー文字の最小ガラス背景（ほぼ透明・行ごと） */
+        .hero-glass {
+            display: inline-block;
+            padding: 0.01em 0.14em; /* 文字ギリギリ */
+            background: rgba(0,0,0,0.010); /* ほぼ透明 */
+            border: none;
+            border-radius: 6px;
+            backdrop-filter: blur(4px) saturate(110%);
+            -webkit-backdrop-filter: blur(4px) saturate(110%);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
         }
 
         /* コンテンツ */
@@ -372,8 +384,15 @@
         function setHeroText() {
             const titleEl = document.getElementById('hero-title');
             const subEl = document.getElementById('hero-sub');
-            titleEl.textContent = config.hero.title;
-            subEl.innerHTML = escapeHtml(config.hero.sub).replace(/&lt;br&gt;/g, "<br>");
+            // titleは単一行想定（最小ガラス）
+            titleEl.innerHTML = `<span class="hero-glass">${escapeHtml(config.hero.title)}</span>`;
+
+            // subは<br>を許可し、各行を別ガラスで最小面積にする
+            const safeSubWithBr = escapeHtml(config.hero.sub).replace(/&lt;br&gt;/g, "<br>");
+            subEl.innerHTML = safeSubWithBr
+                .split("<br>")
+                .map(line => `<span class="hero-glass">${line}</span>`)
+                .join("<br>");
         }
 
         // 画像存在チェック
