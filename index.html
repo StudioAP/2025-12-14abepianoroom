@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!--
+  Template: SANCTUARY v1.0
+  Author: Haruki Tominaga
+  License: https://amix-design.com/tominaga/eyan-theme/license 
+  © 2025 EYAN / トミナガハルキ
+-->
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    
+    <title>安部ピアノルーム｜京都市北区上賀茂のピアノレッスン</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Shippori+Mincho:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* ★ここを変更: サイト全体の色設定 */
+            --text: #2c2c2c; /* 文字色 */
+            --bg: #f9f8f6;   /* 背景色 */
+            --gold: #bfa37e; /* アクセントカラー（金） */
+        }
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: 'Shippori Mincho', 'Cinzel', serif;
+            overflow-x: hidden;
+        }
+
+        /* フェードイン */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: 1.5s ease; }
+        .fade-in.active { opacity: 1; transform: translateY(0); }
+
+        /* ヘッダー */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center;
+            color: #fff; mix-blend-mode: difference; /* 背景色に合わせて文字色を反転させる効果 */
+            box-sizing: border-box;
+        }
+        .logo { font-size: 1.8rem; letter-spacing: 0.2em; font-family: 'Cinzel', serif; }
+
+        /* ヒーロー（スライダー） */
+        .hero {
+            height: 100vh; position: relative; overflow: hidden; background: #111;
+        }
+        /* 文字の可読性を上げるための薄いオーバーレイ（画像差し替え時の見づらさ対策） */
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.18) 0%,
+                rgba(0,0,0,0.06) 45%,
+                rgba(0,0,0,0.18) 100%
+            );
+            z-index: 5;
+            pointer-events: none;
+        }
+        .slide {
+            position: absolute; inset: 0; background-size: cover; background-position: center;
+            opacity: 0; transform: scale(1.1); transition: transform 6s linear, opacity 2s ease;
+        }
+        .slide.active { opacity: 1; transform: scale(1); }
+        
+        .hero-txt {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; color: #fff; z-index: 10;
+            width: min(920px, 92vw);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 0 1rem;
+        }
+        /* ヒーロー文字の「行ごとの」最小ガラス背景 */
+        .glass-line {
+            display: inline-block;
+            padding: 0.02em 0.18em; /* さらに文字ギリギリにトリミング */
+            background: rgba(0,0,0,0.012);
+            border: none;
+            backdrop-filter: blur(5px) saturate(112%);
+            -webkit-backdrop-filter: blur(5px) saturate(112%);
+            border-radius: 6px;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+        .glass-line--title { padding: 0.01em 0.18em; }
+        .glass-line--sub { padding: 0.02em 0.20em; }
+        .h-title { 
+            font-size: 4rem; margin: 0; letter-spacing: 0.2em; font-weight: 400; 
+            text-shadow:
+                0 2px 24px rgba(0,0,0,0.55),
+                0 0 2px rgba(0,0,0,0.35);
+            -webkit-text-stroke: 1px rgba(0,0,0,0.22);
+            line-height: 1.2; 
+        }
+        .h-sub { 
+            font-size: 1rem; margin-top: 0; letter-spacing: 0.18em; display: block;
+            text-shadow:
+                0 2px 18px rgba(0,0,0,0.65),
+                0 0 2px rgba(0,0,0,0.35);
+            -webkit-text-stroke: 0.6px rgba(0,0,0,0.22);
+        }
+
+        /* コンテンツ */
+        .content { max-width: 1000px; margin: 0 auto; padding: 10rem 2rem 5rem; text-align: center; }
+        .lead-p { font-size: 1rem; line-height: 2.2; margin-bottom: 5rem; color: #555; }
+        
+        /* 部屋紹介（縦並び） */
+        .room-sec { padding: 5rem 0; }
+        .room-item { margin-bottom: 8rem; position: relative; width: 100%; }
+        
+        /* パララックス用コンテナ */
+        .r-img-wrap {
+            width: 100%; height: 70vh; overflow: hidden; position: relative;
+        }
+        /* 画像（パララックス適用） */
+        .r-img {
+            width: 100%; height: 120%; /* パララックス用に少し高さを確保 */
+            object-fit: cover; display: block;
+            position: absolute; top: -10%; left: 0;
+            transition: transform 0.1s linear; /* スクロール追従 */
+            will-change: transform;
+        }
+
+        .r-info {
+            background: #fff; padding: 3rem; max-width: 500px; margin: 0 auto;
+            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: center; margin-top: -5rem; z-index: 2; /* 画像に被せる */
+        }
+        .r-name {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem; /* サイズは現状維持 */
+            margin-bottom: 0.5rem;
+            color: #111;
+            letter-spacing: 0.2em; /* ヒーローと同じ文字間隔 */
+            font-weight: 400;
+        }
+        
+        .btn {
+            display: inline-block; border-bottom: 1px solid var(--text); padding-bottom: 5px;
+            margin-top: 1.5rem; text-decoration: none; color: var(--text); letter-spacing: 0.1em;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn:hover { opacity: 0.6; }
+
+        /* モーダルウィンドウ */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .modal-content {
+            background: #fff; width: 90%; max-width: 800px; max-height: 90vh;
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
+            transform: translateY(20px); transition: transform 0.4s ease;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-img {
+            width: 100%; height: 50vh; object-fit: cover; display: block;
+        }
+        .modal-body {
+            padding: 3rem; overflow-y: auto; text-align: center;
+        }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin: 0 0 1.5rem; }
+        .modal-desc { line-height: 2; color: #555; font-size: 1rem; text-align: left; }
+        
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; color: #fff; background: rgba(0,0,0,0.5);
+            width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; font-family: sans-serif; font-size: 1.2rem; transition: 0.3s; z-index: 10;
+        }
+        .modal-close:hover { background: #000; }
+
+        /* 事業概要 */
+        .business-overview {
+            background: #6b1f2b; color: #fff; padding: 5rem 2rem; text-align: center;
+            letter-spacing: 0.1em;
+        }
+        .bo-title { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 2rem; }
+        .bo-info p { margin: 0.8rem 0; font-size: 0.9rem; color: #ccc; }
+        .bo-mail { color: #fff; text-decoration: none; border-bottom: 1px solid #555; padding-bottom: 2px; }
+
+        /* 予約バー */
+        .book-bar {
+            position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #eee;
+            padding: 1.5rem; text-align: center; z-index: 50; display: flex; justify-content: center; gap: 2rem;
+            align-items: center; font-family: sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
+            box-sizing: border-box;
+        }
+        .book-btn { background: #6b1f2b; color: #fff; padding: 1rem 3rem; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            header { padding: 1.5rem; }
+            .logo { font-size: 1.4rem; }
+            .h-title { font-size: 2.5rem; }
+            .h-sub { font-size: 0.7rem; }
+            .r-img-wrap { height: 50vh; }
+            .r-info { width: 85%; padding: 2rem; margin-top: -3rem; }
+            .book-bar { flex-direction: column; gap: 1rem; padding: 1rem; }
+            .modal-body { padding: 2rem; }
+            .modal-img { height: 40vh; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="brand" class="logo"></div>
+    </header>
+
+    <div class="hero" id="hero-slider">
+        <div class="hero-txt">
+            <h1 id="hero-title" class="h-title"></h1>
+            <span id="hero-sub" class="h-sub"></span>
+        </div>
+    </div>
+
+    <div class="content">
+        <p id="concept-text" class="lead-p fade-in"></p>
+
+        <section id="rooms" class="room-sec">
+        </section>
+    </div>
+
+    <div class="business-overview">
+        <div class="bo-title">INFO</div>
+        <div class="bo-info">
+            <p>安部ピアノルーム（abepianoroom）</p>
+            <p>京都市北区上賀茂（上賀茂・西賀茂・市原エリア）／depuis 2009</p>
+            <p><a href="mailto:hello@example.com" class="bo-mail">お問合せ（メール）</a></p>
+            <p><a href="https://koguma-rythmique.netlify.app/" class="bo-mail" target="_blank" rel="noopener">リトミッククラスはこちら</a></p>
+        </div>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+    <div class="book-bar">
+        <span>体験レッスン 1,000円</span>
+        <a href="mailto:hello@example.com" class="book-btn">お問合せ</a>
+    </div>
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <img id="modal-img" src="" class="modal-img" onclick="closeModal()" style="cursor: pointer;">
+            <div class="modal-body">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <p id="modal-desc" class="modal-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ===================================================
+           ★設定エリア
+           この config の中身を書き換えるだけでサイトの内容が反映されます。
+           =================================================== */
+        const config = {
+            // サイト左上のロゴ名
+            name: "安部ピアノルーム",
+            
+            // トップのヒーローエリアの文字
+            hero: { title: "安部ピアノルーム", sub: "depuis 2009<br>京都市北区上賀茂<br>（上賀茂・西賀茂・市原エリア）" },
+            
+            // 導入のコンセプト文章（<br>で改行できます）
+            concept: "初めてだけど弾いてみたい…<br>昔習っていてまた弾きたくなった…<br>シニア世代の趣味に…<br>お腹の赤ちゃんと音楽を楽しみたい…<br>育休中、乳児を連れて一息つきたい…<br>教職課程で必要になった…<br>そんな方に。<br><br>京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、初心者〜中級くらいの方に向けたピアノレッスンを行っています。<br><br>体験レッスンは1,000円です。「お問合せ」からお気軽にご質問ください。",
+            
+            // 各コンテンツ（部屋など）のデータ
+            // image1.jpg が textData[0]、image2.jpg が textData[1]... に対応します
+            textData: [
+                { name: "対象・場所", desc: "【対象】<br>・初心者〜中級くらいの方<br>・大人は女性の方のみを対象としています<br><br>【場所】<br>京都市北区上賀茂（自宅教室）<br>バス停「柊野別れ」「ゴルフ場前」<br>柊野小学校 徒歩10分<br>北大路からバス12〜13分<br>西賀茂・市原からも通いやすい立地です。<br><br>※自宅教室につき住所詳細は、お問合せくださった方にお伝えしております。駐車可。" },
+                { name: "料金・曜日・時間", desc: "【大人レッスン】<br>〈料金〉<br>①12,000円（90分×2回）有効期間6ヶ月<br>②23,000円（60分×6回）有効期間1年間<br>※料金は初回レッスン日にいただきます。オンライン対応可。<br><br>〈曜日・時間〉<br>・月曜日／火曜日／木曜日／金曜日<br>・A枠 9:50〜10:50<br>・B枠 11:00〜12:00<br>※曜日・時間枠は固定不要です。レッスンの都度、お仕事や園・学校行事等に合わせてご相談ください。<br><br>【子どもレッスン（高校生まで）】<br>5,500円〜（30分×3回〜）<br>※土曜日14:00〜16:00の間で都度ご相談<br><br>★2025/9/1より募集（9/10更新）<br>・火曜日16:30〜17:00枠 1名（月3回）<br>※月曜日16:30〜17:00枠（月2回）は予約済みとなりました。" },
+                { name: "大人向けへの想い", desc: "ピアノレッスンを始めて約18年。大人向けのレッスンコースを始めました。<br><br>私は、娘が0歳だったころ、娘を連れてとあるお稽古ごとに通い、心身ともにとてもリフレッシュできた経験があります。そんな実体験から、（いつか自分もピアノを通して、大人の方がホッとできるような、大人向けのレッスンをご提供できたら...）と、願うようになりました。<br><br>ピアノはこつこつと続けて上達していくものですが、仕事や子育てをしていると、続けるのが大変になることもあります。<br><br>都合がつかない時期には休み、時間ができたらまた再開する...というのも「続け方」だと思います。生活に合わせて、歩いたり、立ち止まったり、時には走ってピアノに打ち込んでみたり...<br>長い長い目で見て、「弾きたい」気持ちを大切に、ピアノを楽しんでいただけたらと思っています。" },
+                { name: "教室概要・講師略歴", desc: "〈安部ピアノルーム〉<br>・京都市北区上賀茂の自宅で2009年開室<br><br>〈講師略歴〉<br>1977年京都市生まれ。大阪音楽大学短期学部卒。<br>ヤマハ指導・演奏 グレード5級。<br>卒業後、ピアノレッスンの傍らホテルレストラン奏者、ブライダル奏者、またジャズ奏者としても活動経験あり。<br>音楽以外に好きなものは料理・お菓子作り、おいしいものを食べること。" },
+                { name: "小さいお子様向け", desc: "小さいお子様向けに、リトミッククラスを開講しています。<br>こちらをご覧ください：<br>https://koguma-rythmique.netlify.app/<br><br>※上記に関しまして、ご不明な点等についてはお気軽にご質問・ご相談ください。" }
+            ]
+        };
+
+        // ★スライダー画像の最大枚数（imageフォルダの main1.jpg, main2.jpg ... を読み込みます）
+        const MAX_HERO_IMAGES = 5;
+        
+        // ★リスト画像の最大枚数（imageフォルダの image1.jpg, image2.jpg ... を読み込みます）
+        const MAX_ROOM_IMAGES = 18;
+
+        /* ===================================================
+           ここから下のコードは変更しないでください（動作ロジック）
+           =================================================== */
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('brand').textContent = config.name;
+            setHeroText();
+            document.getElementById('concept-text').innerHTML = config.concept;
+
+            // 1. ヒーロースライダー画像の動的生成
+            const heroContainer = document.getElementById('hero-slider');
+            let heroImageCount = 0;
+            for (let i = 1; i <= MAX_HERO_IMAGES; i++) {
+                const exists = await checkAndRenderHeroImage(i, heroContainer);
+                if (exists) heroImageCount++;
+            }
+            if (heroImageCount > 0) {
+                heroContainer.querySelector('.slide').classList.add('active');
+            }
+
+            // 2. コンテンツの動的生成（textData件数ぶん表示）
+            const roomContainer = document.getElementById('rooms');
+            const roomPromises = [];
+            const ROOM_COUNT = Math.max(0, (config.textData || []).length);
+            for (let i = 1; i <= ROOM_COUNT; i++) {
+                roomPromises.push(checkAndGetRoomHtml(i));
+            }
+            // 全画像の判定を並行して行い、完了を待つ
+            const roomResults = await Promise.all(roomPromises);
+            
+            // 結果を順番に描画
+            roomResults.forEach(html => {
+                if(html) roomContainer.insertAdjacentHTML('beforeend', html);
+            });
+
+            // スライダーロジック
+            const slides = document.querySelectorAll('.slide');
+            if(slides.length > 1) {
+                let current = 0;
+                setInterval(() => {
+                    slides[current].classList.remove('active');
+                    current = (current + 1) % slides.length;
+                    slides[current].classList.add('active');
+                }, 3000);
+            }
+
+            // Scroll Animation Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if(e.isIntersecting) e.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // パララックス開始
+            initParallax();
+        });
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        // ヒーロー文字を「行ごとに最小ガラス」になる形で差し込む
+        function setHeroText() {
+            const titleEl = document.getElementById('hero-title');
+            const subEl = document.getElementById('hero-sub');
+            titleEl.innerHTML = `<span class="glass-line glass-line--title">${escapeHtml(config.hero.title)}</span>`;
+            // subは<br>を許可し、各行を個別のガラスにする（文字ギリギリにトリミング）
+            const safeSubWithBr = escapeHtml(config.hero.sub).replace(/&lt;br&gt;/g, "<br>");
+            const lines = safeSubWithBr.split("<br>");
+            subEl.innerHTML = lines
+                .map(line => `<span class="glass-line glass-line--sub">${line}</span>`)
+                .join("<br>");
+        }
+
+        // 画像存在チェック
+        function imageExists(src) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = src;
+            });
+        }
+
+        // ヒーロー画像のレンダリング（既存維持）
+        async function checkAndRenderHeroImage(index, container) {
+            const imgPath = `image/main${index}.jpg`;
+            const exists = await imageExists(imgPath);
+            if (exists) {
+                const div = document.createElement('div');
+                div.className = 'slide';
+                div.style.backgroundImage = `url('${imgPath}')`;
+                container.insertBefore(div, container.querySelector('.hero-txt'));
+                return true;
+            }
+            return false;
+        }
+
+        // 部屋画像のHTML生成（HTML文字列を返すように変更）
+        async function checkAndGetRoomHtml(index) {
+            const imgPathCandidate = `image/image${index}.jpg`;
+            const candidateExists = await imageExists(imgPathCandidate);
+            // 画像が足りない場合は既存画像を流用（表示用）
+            const imgPath = candidateExists ? imgPathCandidate : `image/image1.jpg`;
+            
+            const dataIndex = index - 1;
+            const item = config.textData && config.textData[dataIndex] ? config.textData[dataIndex] : null;
+            if (item) {
+                const name = item.name;
+                const desc = item.desc;
+                const safeName = name.replace(/'/g, "\\'");
+                const safeDesc = desc.replace(/'/g, "\\'").replace(/\n/g, "");
+
+                return `
+                    <div class="room-item fade-in">
+                        <div class="r-img-wrap">
+                            <img src="${imgPath}" class="r-img parallax-target">
+                        </div>
+                        <div class="r-info">
+                            <h2 class="r-name">${name}</h2>
+                            <a href="javascript:void(0)" class="btn" onclick="openModal('${safeName}', '${safeDesc}', '${imgPath}')">CLICK</a>
+                        </div>
+                    </div>
+                `;
+            }
+            return null;
+        }
+
+        // モーダル操作関数
+        function openModal(title, desc, imgSrc) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-desc').innerHTML = desc;
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // パララックスエフェクト関数
+        function initParallax() {
+            const targets = document.getElementsByClassName('parallax-target');
+            window.addEventListener('scroll', () => {
+                const windowHeight = window.innerHeight;
+                for (let i = 0; i < targets.length; i++) {
+                    const rect = targets[i].parentElement.getBoundingClientRect();
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        const speed = 0.15;
+                        const offset = (windowHeight / 2 - (rect.top + rect.height / 2)) * speed;
+                        targets[i].style.transform = `translateY(${offset}px) scale(1.1)`;
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
