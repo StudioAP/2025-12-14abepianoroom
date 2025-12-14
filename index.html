@@ -159,6 +159,11 @@
             letter-spacing: 0.2em; /* ヒーローと同じ文字間隔 */
             font-weight: 400;
         }
+        /* 見出し内の「・」だけ、前後をほんの僅かに詰める（自然なタイポグラフィ調整） */
+        .dot-tight {
+            display: inline-block;
+            margin: 0 -0.10em;
+        }
         
         .btn {
             display: inline-block; border-bottom: 1px solid var(--text); padding-bottom: 5px;
@@ -380,6 +385,11 @@
                 .replace(/'/g, "&#39;");
         }
 
+        // 見出し表示用：HTMLエスケープした上で「・」のみspanで包む
+        function formatHeadingHtml(text) {
+            return escapeHtml(text).replace(/・/g, '<span class="dot-tight">・</span>');
+        }
+
         // ヒーロー文字を差し込む（<br>のみ許可）
         function setHeroText() {
             const titleEl = document.getElementById('hero-title');
@@ -447,7 +457,7 @@
                             <img src="${imgPath}" class="r-img parallax-target">
                         </div>
                         <div class="r-info">
-                            <h2 class="r-name">${name}</h2>
+                            <h2 class="r-name">${formatHeadingHtml(name)}</h2>
                             <a href="javascript:void(0)" class="btn" onclick="openModal('${safeName}', '${safeDesc}', '${imgPath}')">CLICK</a>
                         </div>
                     </div>
@@ -458,7 +468,7 @@
 
         // モーダル操作関数
         function openModal(title, desc, imgSrc) {
-            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-title').innerHTML = formatHeadingHtml(title);
             document.getElementById('modal-desc').innerHTML = desc;
             document.getElementById('modal-img').src = imgSrc;
             document.getElementById('modal').classList.add('active');
