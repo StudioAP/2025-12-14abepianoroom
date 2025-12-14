@@ -147,6 +147,8 @@
             position: absolute; top: -10%; left: 0;
             transition: transform 0.1s linear; /* スクロール追従 */
             will-change: transform;
+            transform: translate3d(0,0,0); /* モバイルの微ブレ対策（合成レイヤー化） */
+            backface-visibility: hidden;
         }
 
         .r-info {
@@ -503,18 +505,31 @@
 
         // パララックスエフェクト関数
         function initParallax() {
+            // モバイル（タッチ端末）はスクロール時にガタつきやすいのでパララックスを無効化
+            const isMobileOrTouch = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+            if (isMobileOrTouch) return;
+
             const targets = document.getElementsByClassName('parallax-target');
-            window.addEventListener('scroll', () => {
+            let ticking = false;
+            const onScroll = () => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    ticking = false;
                 const windowHeight = window.innerHeight;
                 for (let i = 0; i < targets.length; i++) {
                     const rect = targets[i].parentElement.getBoundingClientRect();
                     if (rect.top < windowHeight && rect.bottom > 0) {
                         const speed = 0.15;
                         const offset = (windowHeight / 2 - (rect.top + rect.height / 2)) * speed;
-                        targets[i].style.transform = `translateY(${offset}px) scale(1.1)`;
+                        targets[i].style.transform = `translate3d(0, ${offset}px, 0) scale(1.1)`;
                     }
                 }
-            });
+                });
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            // 初回も反映
+            onScroll();
         }
     </script>
 </body>
