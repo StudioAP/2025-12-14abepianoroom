@@ -120,6 +120,10 @@
             box-decoration-break: clone;
             -webkit-box-decoration-break: clone;
         }
+        /* 「ピアノルーム」だけ、ほんの僅かに詰める（全体の雰囲気は維持） */
+        .hero-tight {
+            letter-spacing: 0.17em;
+        }
 
         /* コンテンツ */
         .content { max-width: 1000px; margin: 0 auto; padding: 10rem 2rem 5rem; text-align: center; }
@@ -381,7 +385,12 @@
             const titleEl = document.getElementById('hero-title');
             const subEl = document.getElementById('hero-sub');
             // titleは単一行想定（最小ガラス）
-            titleEl.innerHTML = `<span class="hero-glass">${escapeHtml(config.hero.title)}</span>`;
+            const safeTitle = escapeHtml(config.hero.title);
+            const tunedTitle = safeTitle.replace(
+                "ピアノルーム",
+                '<span class="hero-tight">ピアノルーム</span>'
+            );
+            titleEl.innerHTML = `<span class="hero-glass">${tunedTitle}</span>`;
 
             // subは<br>を許可し、各行を別ガラスで最小面積にする
             const safeSubWithBr = escapeHtml(config.hero.sub).replace(/&lt;br&gt;/g, "<br>");
