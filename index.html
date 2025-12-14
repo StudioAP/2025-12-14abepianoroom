@@ -390,6 +390,16 @@
             return escapeHtml(text).replace(/・/g, '<span class="dot-tight">・</span>');
         }
 
+        // HTML属性値用のエスケープ（onclick等の属性が壊れるのを防ぐ）
+        function escapeAttr(str) {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/'/g, "&#39;");
+        }
+
         // ヒーロー文字を差し込む（<br>のみ許可）
         function setHeroText() {
             const titleEl = document.getElementById('hero-title');
@@ -448,8 +458,10 @@
             if (item) {
                 const name = item.name;
                 const desc = item.desc;
-                const safeName = name.replace(/'/g, "\\'");
-                const safeDesc = desc.replace(/'/g, "\\'").replace(/\n/g, "");
+                // ※タイトルに " が入るとonclick属性が壊れるため、data属性経由で渡す
+                const attrTitle = escapeAttr(name);
+                const attrDesc = escapeAttr(desc).replace(/\n/g, "");
+                const attrImg = escapeAttr(imgPath);
 
                 return `
                     <div class="room-item fade-in">
@@ -458,7 +470,7 @@
                         </div>
                         <div class="r-info">
                             <h2 class="r-name">${formatHeadingHtml(name)}</h2>
-                            <a href="javascript:void(0)" class="btn" onclick="openModal('${safeName}', '${safeDesc}', '${imgPath}')">CLICK</a>
+                            <a href="javascript:void(0)" class="btn" data-title="${attrTitle}" data-desc="${attrDesc}" data-img="${attrImg}" onclick="openModalFromEl(this)">CLICK</a>
                         </div>
                     </div>
                 `;
@@ -467,6 +479,12 @@
         }
 
         // モーダル操作関数
+        function openModalFromEl(el) {
+            const title = el.getAttribute('data-title') || '';
+            const desc = el.getAttribute('data-desc') || '';
+            const imgSrc = el.getAttribute('data-img') || '';
+            openModal(title, desc, imgSrc);
+        }
         function openModal(title, desc, imgSrc) {
             document.getElementById('modal-title').innerHTML = formatHeadingHtml(title);
             document.getElementById('modal-desc').innerHTML = desc;
