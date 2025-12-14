@@ -43,7 +43,9 @@
 
         /* ヒーロー（スライダー） */
         .hero {
-            height: 100vh; position: relative; overflow: hidden; background: #111;
+            height: 100vh; position: relative; overflow: hidden;
+            /* 初期表示の「真っ暗」を避けるため、まず main1 を背景として表示（スライダー生成後は上書きされます） */
+            background: #111 url('image/main1.jpg') center / cover no-repeat;
         }
         /* 文字の可読性を上げるための薄いオーバーレイ（画像差し替え時の見づらさ対策） */
         .hero::after {
@@ -387,6 +389,8 @@
                 div.className = 'slide';
                 div.style.backgroundImage = `url('${imgPath}')`;
                 container.insertBefore(div, container.querySelector('.hero-txt'));
+                // まず1枚目は見つかった時点で即表示（全探索完了までの暗転を防ぐ）
+                if (index === 1) div.classList.add('active');
                 return true;
             }
             return false;
