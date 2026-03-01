@@ -2977,6 +2977,12 @@
                 padding-inline: 0.16rem;
             }
 
+            .pricing-cell-sub--support-video {
+                white-space: nowrap;
+                font-size: 0.82em;
+                line-height: 1.28;
+            }
+
             .stream-quote--yasuno .stream-quote-text {
                 white-space: nowrap;
             }
@@ -3415,7 +3421,7 @@
                         {
                             type: "text",
                             lines: [
-                                "【★子どもレッスンの、「自宅練習サポート動画」って？】",
+                                "【★子どもレッスンの、「自宅練習サポート動画」について】",
                                 "",
                                 "保護者の皆さま・お子さま双方の生活スタイルが多様化する中で、練習時間を確保することが簡単ではないこともあると思います。",
                                 "",
@@ -5377,8 +5383,13 @@
                     .map((line) => String(line || "").trim())
                     .filter(Boolean);
                 if (multiLine.length > 1) {
+                    const supportVideoLabel = "★自宅練習サポート動画付き";
                     return multiLine
-                        .map((line, index) => `<span class="${index === 0 ? "pricing-cell-main" : "pricing-cell-sub"}">${formatTableTextWithNumericSpan(line)}</span>`)
+                        .map((line, index) => {
+                            const baseClass = index === 0 ? "pricing-cell-main" : "pricing-cell-sub";
+                            const extraClass = line.includes(supportVideoLabel) ? " pricing-cell-sub--support-video" : "";
+                            return `<span class="${baseClass}${extraClass}">${formatTableTextWithNumericSpan(line)}</span>`;
+                        })
                         .join("");
                 }
                 const marker = "※空4・時間帯要相談";
