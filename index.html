@@ -917,37 +917,47 @@
             outline: none;
         }
 
+        .hero-cta-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0.56rem 1rem 0.68rem;
+            border-bottom: 1px solid rgba(74, 55, 40, 0.14);
+            background: rgba(253, 246, 240, 0.86);
+        }
+
         .hero-primary-cta {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             min-height: 44px;
-            margin-top: 0.2rem;
-            padding: 0.46rem 1.14rem;
-            border: 1px solid rgba(74, 55, 40, 0.2);
+            margin: 0;
+            padding: 0.44rem 1.04rem;
+            border: 1px solid rgba(74, 55, 40, 0.3);
             border-radius: 999px;
-            background: var(--gold);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d2017;
             text-decoration: none;
             font-family: var(--hero-utility-font);
-            font-size: clamp(0.78rem, 0.95vw, 0.92rem);
+            font-size: clamp(0.76rem, 0.9vw, 0.88rem);
             font-weight: 600;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
             line-height: 1.2;
             box-sizing: border-box;
         }
 
         .hero-primary-cta:hover,
         .hero-primary-cta:focus-visible {
-            filter: brightness(1.02);
+            border-color: rgba(74, 55, 40, 0.5);
+            background: rgba(255, 255, 255, 1);
             outline: none;
         }
 
         body.hero-band-inphoto-top-plain .hero-primary-cta {
-            align-self: flex-start;
-            background: #c38b94;
-            border-color: rgba(74, 55, 40, 0.26);
-            box-shadow: 0 6px 16px rgba(74, 55, 40, 0.14);
+            align-self: auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(74, 55, 40, 0.3);
+            box-shadow: none;
         }
 
         /* コンテンツ */
@@ -2435,10 +2445,15 @@
                 font-size: 0.76rem;
             }
 
+            .hero-cta-row {
+                justify-content: center;
+                padding: 0.46rem 0.72rem 0.56rem;
+            }
+
             .hero-primary-cta {
                 min-height: 44px;
-                padding: 0.42rem 0.98rem;
-                font-size: 0.8rem;
+                padding: 0.4rem 0.92rem;
+                font-size: 0.77rem;
             }
 
             .mobile-quick-nav {
@@ -2874,8 +2889,7 @@
                 grid-template-areas:
                     "endorsement"
                     "brand"
-                    "meta"
-                    "cta";
+                    "meta";
                 row-gap: clamp(0.6rem, 1.02vw, 0.98rem);
                 align-items: stretch;
                 padding: calc(clamp(2.24rem, 3.4vw, 3.24rem) + var(--hero-nav-overlap-offset, 0px)) clamp(1.46rem, 2.52vw, 2.36rem) clamp(2.08rem, 3.16vw, 2.96rem);
@@ -2905,13 +2919,6 @@
                 max-inline-size: min(100%, var(--hero-brand-inline-size, 100%));
                 column-gap: clamp(0.48rem, 1.2vw, 1.02rem);
                 row-gap: clamp(0.36rem, 0.7vw, 0.62rem);
-            }
-
-            body.hero-band-inphoto-top-plain .hero-primary-cta {
-                grid-area: cta;
-                justify-self: start;
-                align-self: start;
-                margin-top: clamp(0.04rem, 0.12vw, 0.16rem);
             }
 
             body.hero-band-inphoto-top-plain .hero-meta-row .h-sub {
@@ -3137,10 +3144,12 @@
                 <span id="hero-sub" class="h-sub"></span>
                 <span id="hero-location" class="h-loc h-loc--badge"></span>
             </div>
-            <a id="hero-primary-cta" class="hero-primary-cta" href="#" hidden>お問合せ</a>
         </div>
     </div>
     <div id="hero-notice" class="hero-notice" hidden></div>
+    <div id="hero-cta-row" class="hero-cta-row" hidden>
+        <a id="hero-primary-cta" class="hero-primary-cta" href="#" hidden>お問合せ</a>
+    </div>
     <nav id="mobile-quick-nav" class="mobile-quick-nav" aria-label="クイック導線" hidden>
         <div id="mobile-quick-nav-list" class="mobile-quick-nav-list"></div>
     </nav>
@@ -3276,18 +3285,10 @@
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
                                 ["単発レッスン", "60分×1回/5,000円"],
-                                ["回数券レッスン", "60分×6回/27,000円"]
-                            ],
-                            note: "※回数券は1レッスンあたり4,500円です。料金は初回レッスン日にいただきます。オンライン対応可。"
-                        },
-                        {
-                            type: "text",
-                            lines: [
-                                "〈曜日・時間〉",
-                                "・月曜日／火曜日／木曜日／金曜日",
-                                "・A枠 9:50〜10:50",
-                                "・B枠 11:00〜12:00",
-                                "※曜日・時間枠は固定不要です。レッスンの都度、お仕事や園・学校行事等に合わせてご相談ください。"
+                                ["回数券レッスン", "60分×6回/27,000円"],
+                                ["曜日・時間", "月・火・木・金（A枠・B枠）/都度相談"],
+                                ["回数券の補足", "1回あたり4,500円/料金は初回日にお預かり"],
+                                ["オンライン", "対応可/希望時は要相談"]
                             ]
                         },
                         {
@@ -3297,7 +3298,7 @@
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
                                 ["子どもレッスン", "30分×月3回〜/6,500円〜"],
-                                ["土曜日枠", "13:00〜14:00/都度相談"]
+                                ["曜日・時間", "土曜日 13:00〜14:00/都度相談"]
                             ]
                         }
                     ]
@@ -4121,6 +4122,7 @@
             if (isDesktopSplitEnabled) {
                 const quickNav = document.getElementById("mobile-quick-nav");
                 const noticeEl = document.getElementById("hero-notice");
+                const ctaRowEl = document.getElementById("hero-cta-row");
                 const viewportHeight = Math.max(
                     0,
                     Math.floor(
@@ -4142,7 +4144,10 @@
                 const noticeHeight = noticeEl && !noticeEl.hidden
                     ? Math.ceil(noticeEl.getBoundingClientRect().height)
                     : 0;
-                const floorHeight = Math.max(0, Math.floor(viewportHeight - navHeight - navBottomClearance - noticeHeight));
+                const ctaHeight = ctaRowEl && !ctaRowEl.hidden
+                    ? Math.ceil(ctaRowEl.getBoundingClientRect().height)
+                    : 0;
+                const floorHeight = Math.max(0, Math.floor(viewportHeight - navHeight - navBottomClearance - noticeHeight - ctaHeight));
                 hero.style.setProperty("--hero-desktop-floor-height", `${floorHeight}px`);
             } else {
                 hero.style.removeProperty("--hero-desktop-floor-height");
@@ -4483,6 +4488,7 @@
 
         function renderHeroPrimaryCta() {
             const ctaEl = document.getElementById("hero-primary-cta");
+            const ctaRowEl = document.getElementById("hero-cta-row");
             if (!ctaEl) return;
             const heroConfig = config.hero || {};
             const primaryCta = heroConfig.primaryCta || {};
@@ -4495,6 +4501,9 @@
                 ctaEl.hidden = true;
                 ctaEl.removeAttribute("href");
                 ctaEl.textContent = "";
+                if (ctaRowEl) {
+                    ctaRowEl.hidden = true;
+                }
                 return;
             }
 
@@ -4508,6 +4517,9 @@
                 ctaEl.removeAttribute("rel");
             }
             ctaEl.hidden = false;
+            if (ctaRowEl) {
+                ctaRowEl.hidden = false;
+            }
         }
 
         function syncMobileQuickNavVisibility() {
@@ -4528,13 +4540,17 @@
 
             const heroEl = document.getElementById("hero-slider");
             const noticeEl = document.getElementById("hero-notice");
+            const ctaRowEl = document.getElementById("hero-cta-row");
             const heroBottom = heroEl
                 ? Math.max(0, heroEl.getBoundingClientRect().bottom + window.scrollY)
                 : 0;
             const noticeBottom = noticeEl && !noticeEl.hidden
                 ? Math.max(heroBottom, noticeEl.getBoundingClientRect().bottom + window.scrollY)
                 : heroBottom;
-            const revealAt = Math.max(72, Math.round(noticeBottom));
+            const ctaRowBottom = ctaRowEl && !ctaRowEl.hidden
+                ? Math.max(noticeBottom, ctaRowEl.getBoundingClientRect().bottom + window.scrollY)
+                : noticeBottom;
+            const revealAt = Math.max(72, Math.round(ctaRowBottom));
             const shouldShow = window.scrollY >= revealAt;
 
             nav.hidden = !shouldShow;

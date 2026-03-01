@@ -180,18 +180,7 @@ https://koguma-rythmique.netlify.app/
       "title": "料金・曜日・時間",
       "subtitle": "",
       "textFlow": "structured",
-      "blocks": [
-        {
-          "type": "text",
-          "lines": [
-            "〈曜日・時間〉",
-            "・月曜日／火曜日／木曜日／金曜日",
-            "・A枠 9:50〜10:50",
-            "・B枠 11:00〜12:00",
-            "※曜日・時間枠は固定不要です。レッスンの都度、お仕事や園・学校行事等に合わせてご相談ください。"
-          ]
-        }
-      ]
+      "blocks": []
     },
     {
       "title": "大人向けへの想い",
