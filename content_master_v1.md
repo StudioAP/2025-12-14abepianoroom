@@ -7,19 +7,19 @@
 
 ## ヒーロー仕様
 - title: 安部ピアノルーム
-- sub: 初心者〜中級の大人（女性）・子ども向け個人レッスン
+- sub: 大人・子ども向け 自宅個人レッスン
 - location: 京都市北区上賀茂（上賀茂・西賀茂・市原エリア）
-- mobileSplitTopFirstImage: image/main1.jpg
+- mobileSplitTopFirstImage: ピアノルーム横.jpg
 - mobileSplitBottomImage: image/main3.jpg
 - rotationImages:
-  - image/main1.jpg
-  - image/main2.jpg
+  - ピアノルーム横.jpg
+  - 花_つくった花束.jpg
   - image/main3.jpg
 
 ## セクション本文・写真
 ### 1. ごあいさつ
 - subtitle: 〜音楽で、日常に深呼吸を。〜
-- textFlow: natural
+- textFlow: structured
 
 #### Text 1
 ```text
@@ -58,13 +58,11 @@
 ### 3. 料金・曜日・時間
 - textFlow: structured
 
-#### Text 1
+#### Text 1（子どもレッスン補足）
 ```text
-〈曜日・時間〉
-・月曜日／火曜日／木曜日／金曜日
-・A枠 9:50〜10:50
-・B枠 11:00〜12:00
-※曜日・時間枠は固定不要です。レッスンの都度、お仕事や園・学校行事等に合わせてご相談ください。
+自宅練習サポート動画付き
+5分間の自宅練習サポート動画を月3回配信します。
+※補足（高校生まで）：現在、満室につき新規受付を行っておりません。再開の場合は改めてご案内します。
 ```
 
 
@@ -119,21 +117,21 @@ https://koguma-rythmique.netlify.app/
   "schemaVersion": 1,
   "hero": {
     "title": "安部ピアノルーム",
-    "sub": "初心者〜中級の大人（女性）・子ども向け個人レッスン",
+    "sub": "大人・子ども向け 自宅個人レッスン",
     "location": "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）",
     "rotationImages": [
-      "image/main1.jpg",
-      "image/main2.jpg",
+      "ピアノルーム横.jpg",
+      "花_つくった花束.jpg",
       "image/main3.jpg"
     ],
-    "mobileSplitTopFirstImage": "image/main1.jpg",
+    "mobileSplitTopFirstImage": "ピアノルーム横.jpg",
     "mobileSplitBottomImage": "image/main3.jpg"
   },
   "sections": [
     {
       "title": "ごあいさつ",
       "subtitle": "〜音楽で、日常に深呼吸を。〜",
-      "textFlow": "natural",
+      "textFlow": "structured",
       "blocks": [
         {
           "type": "text",
@@ -180,7 +178,16 @@ https://koguma-rythmique.netlify.app/
       "title": "料金・曜日・時間",
       "subtitle": "",
       "textFlow": "structured",
-      "blocks": []
+      "blocks": [
+        {
+          "type": "text",
+          "lines": [
+            "自宅練習サポート動画付き",
+            "5分間の自宅練習サポート動画を月3回配信します。",
+            "※補足（高校生まで）：現在、満室につき新規受付を行っておりません。再開の場合は改めてご案内します。"
+          ]
+        }
+      ]
     },
     {
       "title": "大人向けへの想い",
