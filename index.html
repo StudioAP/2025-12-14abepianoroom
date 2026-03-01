@@ -24,6 +24,9 @@
     <meta property="og:url" content="https://abepianoroom.netlify.app/">
     <meta property="og:locale" content="ja_JP">
     <meta property="og:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:alt" content="安部ピアノルーム｜京都市北区上賀茂のピアノ教室・リトミック">
 
     <!-- Twitter Card -->
@@ -31,6 +34,38 @@
     <meta name="twitter:title" content="安部ピアノルーム｜京都市北区上賀茂のピアノ教室・リトミック">
     <meta name="twitter:description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミッククラスをご案内。体験レッスン1,000円。">
     <meta name="twitter:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
+    <meta name="twitter:url" content="https://abepianoroom.netlify.app/">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "MusicSchool",
+            "name": "安部ピアノルーム",
+            "url": "https://abepianoroom.netlify.app/",
+            "image": "https://abepianoroom.netlify.app/image/ogp.jpg",
+            "description": "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室。大人・子ども向けの自宅個人レッスンとリトミッククラスをご案内しています。",
+            "areaServed": [
+                "京都市北区上賀茂",
+                "西賀茂",
+                "市原",
+                "北大路エリア"
+            ],
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "JP",
+                "addressRegion": "京都府",
+                "addressLocality": "京都市北区上賀茂"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "url": "https://forms.gle/7JeN5nX7z1ajVziV6"
+            },
+            "sameAs": [
+                "https://koguma-rythmique.netlify.app/"
+            ]
+        }
+    </script>
 
     <!-- Hero image preload -->
     <link id="hero-preload" rel="preload" as="image" href="image/hero-lead-opt.jpg" fetchpriority="high">
@@ -3186,17 +3221,17 @@
     </nav>
 
     <div class="hero" id="hero-slider">
-        <div class="slide active" data-boot="1" style="background-image: url('image/main1.jpg');"></div>
+        <div class="slide active" data-boot="1" style="background-image: url('image/hero-lead-opt.jpg');"></div>
         <div class="hero-desktop-top-fixed" id="hero-desktop-top-fixed"></div>
         <div class="hero-mobile-top-fixed" id="hero-mobile-top-fixed"></div>
         <div class="hero-txt">
-            <span id="hero-endorsement" class="h-endorsement" hidden></span>
+            <span id="hero-endorsement" class="h-endorsement">depuis 2009</span>
             <div id="hero-brand-lockup" class="hero-brand-lockup">
-                <h1 id="hero-title" class="h-title"></h1>
+                <h1 id="hero-title" class="h-title">安部ピアノルーム</h1>
             </div>
             <div id="hero-meta-row" class="hero-meta-row">
-                <span id="hero-sub" class="h-sub"></span>
-                <span id="hero-location" class="h-loc h-loc--badge"></span>
+                <span id="hero-sub" class="h-sub">大人・子ども向け 自宅個人レッスン</span>
+                <span id="hero-location" class="h-loc h-loc--badge">京都市北区上賀茂・西賀茂・市原エリア</span>
             </div>
         </div>
     </div>
@@ -3210,6 +3245,16 @@
 
     <div class="content">
         <section id="rooms" class="stream-sec">
+            <noscript>
+                <article class="stream-section">
+                    <h2 class="stream-header">教室のご案内</h2>
+                    <div class="stream-body">
+                        <p class="stream-p">京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、大人・子ども向けの自宅個人レッスンを行っています。</p>
+                        <p class="stream-p">体験レッスンは1,000円です。お問い合わせは下記フォームからご連絡ください。</p>
+                        <p class="stream-p"><a class="stream-inline-link" href="https://forms.gle/7JeN5nX7z1ajVziV6" target="_blank" rel="noopener">お問合せフォーム</a></p>
+                    </div>
+                </article>
+            </noscript>
         </section>
     </div>
 
@@ -4047,6 +4092,14 @@
             }
             const topImage = getSectionGalleryImages(section).find((image) => includesNormalized(image, "_トップ"));
             return normalizeImagePath(topImage || "");
+        }
+
+        function resolveSectionCoverAlt(section) {
+            const manualAlt = String((section && section.coverAlt) || "").trim();
+            if (manualAlt) return manualAlt;
+            const sectionTitle = String((section && section.title) || "").trim();
+            if (!sectionTitle) return "教室案内写真";
+            return `${sectionTitle}の案内写真`;
         }
 
         function getHeroSequence(heroConfig) {
@@ -5700,8 +5753,9 @@
                 const coverCaptionHtml = coverCaption
                     ? `<figcaption class="stream-cover-caption">${escapeHtml(coverCaption)}</figcaption>`
                     : "";
+                const coverAlt = resolveSectionCoverAlt(section);
                 const coverHtml = coverImage
-                    ? `<figure class="stream-cover"><img src="${toSrc(coverImage)}" data-image-path="${escapeHtml(coverImage)}" alt="" loading="lazy" decoding="async">${coverCaptionHtml}</figure>`
+                    ? `<figure class="stream-cover"><img src="${toSrc(coverImage)}" data-image-path="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" loading="lazy" decoding="async">${coverCaptionHtml}</figure>`
                     : "";
                 const bodyHtml = section.title === "コース・曜日・料金"
                     ? renderCourseBodyInline(section, coverImage, textFlow)
