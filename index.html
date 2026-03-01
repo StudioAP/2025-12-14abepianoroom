@@ -74,6 +74,8 @@
             --hero-photo-radius-mobile: 6px;
             --content-photo-radius: 6px;
             --content-photo-radius-mobile: 4px;
+            --section-nav-safe-height: 0px;
+            --hero-nav-overlap-offset: 0px;
         }
 
         body {
@@ -561,7 +563,7 @@
             align-items: flex-start;
             flex: 0 0 auto;
             gap: 0.56rem;
-            padding: 1.3rem 1.16rem 1.34rem;
+            padding: calc(1.3rem + var(--hero-nav-overlap-offset, 0px)) 1.16rem 1.34rem;
             color: #151515;
             text-shadow: none;
             --hero-stroke-color: transparent;
@@ -1042,6 +1044,34 @@
 
         .stream-text:last-child {
             margin-bottom: 0;
+        }
+
+        .stream-inline-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            margin: 0.2rem 0 0.14rem;
+            padding: 0.42rem 0.96rem;
+            border: 1px solid rgba(74, 55, 40, 0.25);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text);
+            text-decoration: none;
+            font-family: var(--hero-utility-font);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            line-height: 1.28;
+            box-sizing: border-box;
+            vertical-align: middle;
+        }
+
+        .stream-inline-link:hover,
+        .stream-inline-link:focus-visible {
+            border-color: rgba(74, 55, 40, 0.42);
+            background: rgba(255, 255, 255, 1);
+            outline: none;
         }
 
         .stream-text--profile-bio {
@@ -2025,6 +2055,11 @@
                 margin-bottom: 1.58rem;
             }
 
+            .stream-inline-link {
+                font-size: 0.8rem;
+                padding: 0.42rem 0.9rem;
+            }
+
             .stream-text--profile-bio {
                 margin: 0.58rem 0 1.5rem;
                 padding: 0.78rem 0.74rem;
@@ -2176,6 +2211,10 @@
                 background: transparent;
                 backdrop-filter: none;
                 -webkit-backdrop-filter: none;
+            }
+
+            body.mobile-nav-primary-quick .section-nav {
+                display: none;
             }
 
             .menu-toggle {
@@ -2839,7 +2878,7 @@
                     "cta";
                 row-gap: clamp(0.6rem, 1.02vw, 0.98rem);
                 align-items: stretch;
-                padding: clamp(2.24rem, 3.4vw, 3.24rem) clamp(1.46rem, 2.52vw, 2.36rem) clamp(2.08rem, 3.16vw, 2.96rem);
+                padding: calc(clamp(2.24rem, 3.4vw, 3.24rem) + var(--hero-nav-overlap-offset, 0px)) clamp(1.46rem, 2.52vw, 2.36rem) clamp(2.08rem, 3.16vw, 2.96rem);
             }
 
             body.hero-band-inphoto-top-plain .h-endorsement {
@@ -3198,12 +3237,6 @@
                                 "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、初心者〜中級くらいの方に向けたピアノレッスンを行っています。",
                                 "体験レッスンは1,000円です。「お問合せ」からお気軽にご質問ください。"
                             ]
-                        },
-                        {
-                            type: "gallery",
-                            images: [
-                                { src: "image/image1.jpg", caption: "レッスン空間" }
-                            ]
                         }
                     ]
                 },
@@ -3266,12 +3299,6 @@
                                 ["子どもレッスン", "30分×月3回〜/6,500円〜"],
                                 ["土曜日枠", "13:00〜14:00/都度相談"]
                             ]
-                        },
-                        {
-                            type: "gallery",
-                            images: [
-                                { src: "image/image2.jpg", caption: "レッスンイメージ" }
-                            ]
                         }
                     ]
                 },
@@ -3291,12 +3318,6 @@
                                 "",
                                 "都合がつかない時期には休み、時間ができたらまた再開する...というのも「続け方」だと思います。生活に合わせて、歩いたり、立ち止まったり、時には走ってピアノに打ち込んでみたり...",
                                 "長い長い目で見て、「弾きたい」気持ちを大切に、ピアノを楽しんでいただけたらと思っています。"
-                            ]
-                        },
-                        {
-                            type: "gallery",
-                            images: [
-                                { src: "image/image3.jpg", caption: "日々のレッスンより" }
                             ]
                         }
                     ]
@@ -3318,12 +3339,6 @@
                                 "卒業後、ピアノレッスンの傍らホテルレストラン奏者、ブライダル奏者、またジャズ奏者としても活動経験あり。",
                                 "音楽以外に好きなものは料理・お菓子作り、おいしいものを食べること。"
                             ]
-                        },
-                        {
-                            type: "gallery",
-                            images: [
-                                { src: "image/image4.jpg", caption: "教室風景" }
-                            ]
                         }
                     ]
                 },
@@ -3340,12 +3355,6 @@
                                 "https://koguma-rythmique.netlify.app/",
                                 "",
                                 "※上記に関しまして、ご不明な点等についてはお気軽にご質問・ご相談ください。"
-                            ]
-                        },
-                        {
-                            type: "gallery",
-                            images: [
-                                { src: "image/image5.jpg", caption: "リトミッククラスの様子" }
                             ]
                         }
                     ]
@@ -3769,8 +3778,11 @@
             if (!hero) return;
             if (!body || !body.classList.contains("hero-band-inphoto-top-plain")) {
                 hero.style.removeProperty("--hero-header-height");
+                body && body.style.removeProperty("--section-nav-safe-height");
+                body && body.style.removeProperty("--hero-nav-overlap-offset");
                 return;
             }
+            syncSectionNavSafeHeight();
             const heroText = hero.querySelector(".hero-txt");
             if (!heroText) {
                 hero.style.removeProperty("--hero-header-height");
@@ -3779,6 +3791,36 @@
             const rect = heroText.getBoundingClientRect();
             const headerHeight = Math.max(1, Math.ceil(rect.height));
             hero.style.setProperty("--hero-header-height", `${headerHeight}px`);
+        }
+
+        function syncSectionNavSafeHeight() {
+            const body = document.body;
+            const nav = document.getElementById("section-nav");
+            const heroTitle = document.getElementById("hero-title");
+            if (!body || !nav || !heroTitle) return;
+
+            const isDesktopViewport = window.matchMedia("(min-width: 769px)").matches;
+            const isInPhotoBand = body.classList.contains("hero-band-inphoto-top-plain");
+            if (!isDesktopViewport || !isInPhotoBand) {
+                body.style.setProperty("--section-nav-safe-height", "0px");
+                body.style.setProperty("--hero-nav-overlap-offset", "0px");
+                return;
+            }
+
+            const navRect = nav.getBoundingClientRect();
+            const requiredTop = Math.ceil(navRect.bottom + 12);
+            const safeHeight = Math.max(0, Math.ceil(navRect.height + navRect.top + 12));
+            body.style.setProperty("--section-nav-safe-height", `${safeHeight}px`);
+
+            let extraOffset = 0;
+            for (let i = 0; i < 4; i += 1) {
+                body.style.setProperty("--hero-nav-overlap-offset", `${Math.max(0, Math.ceil(extraOffset))}px`);
+                const titleRect = heroTitle.getBoundingClientRect();
+                const remaining = Math.ceil(requiredTop - titleRect.top);
+                if (remaining <= 0) break;
+                extraOffset += remaining;
+            }
+            body.style.setProperty("--hero-nav-overlap-offset", `${Math.max(0, Math.ceil(extraOffset))}px`);
         }
 
         function renderSectionNav() {
@@ -3814,6 +3856,7 @@
             if (!navList) return;
             if (!window.matchMedia("(min-width: 769px)").matches) {
                 applyNavScale(1);
+                syncSectionNavSafeHeight();
                 return;
             }
 
@@ -3825,6 +3868,19 @@
                 applyNavScale(currentScale);
                 safetyCounter += 1;
             }
+            syncSectionNavSafeHeight();
+        }
+
+        function closeSectionNavMenu(options = {}) {
+            const { blurToggle = false } = options;
+            const nav = document.getElementById("section-nav");
+            const toggle = document.getElementById("menu-toggle");
+            if (!nav || !toggle) return;
+            nav.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+            if (blurToggle && typeof toggle.blur === "function") {
+                toggle.blur();
+            }
         }
 
         function setupSectionNavMenu() {
@@ -3833,17 +3889,13 @@
             const navList = document.getElementById("section-nav-list");
             if (!nav || !toggle || !navList) return;
 
-            const closeMenu = () => {
-                nav.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-            };
             const openMenu = () => {
                 nav.classList.add("is-open");
                 toggle.setAttribute("aria-expanded", "true");
             };
             const toggleMenu = () => {
                 if (nav.classList.contains("is-open")) {
-                    closeMenu();
+                    closeSectionNavMenu({ blurToggle: true });
                 } else {
                     openMenu();
                 }
@@ -3855,24 +3907,24 @@
             });
             navList.addEventListener("click", (event) => {
                 if (event.target.closest(".section-link")) {
-                    closeMenu();
+                    closeSectionNavMenu();
                 }
             });
             document.addEventListener("click", (event) => {
                 if (!nav.contains(event.target)) {
-                    closeMenu();
+                    closeSectionNavMenu();
                 }
             });
             document.addEventListener("keydown", (event) => {
                 if (event.key === "Escape") {
-                    closeMenu();
+                    closeSectionNavMenu({ blurToggle: true });
                 }
             });
 
             const desktopMedia = window.matchMedia("(min-width: 769px)");
             const handleDesktopEnter = (event) => {
                 if (event.matches) {
-                    closeMenu();
+                    closeSectionNavMenu();
                 }
             };
             if (typeof desktopMedia.addEventListener === "function") {
@@ -3880,7 +3932,7 @@
             } else {
                 desktopMedia.addListener(handleDesktopEnter);
             }
-            closeMenu();
+            closeSectionNavMenu();
         }
 
         function getSectionGalleryImages(section) {
@@ -4460,12 +4512,17 @@
 
         function syncMobileQuickNavVisibility() {
             const nav = document.getElementById("mobile-quick-nav");
+            const sectionNav = document.getElementById("section-nav");
             if (!nav) return;
             const hasLinks = nav.dataset.hasLinks === "true";
             const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
             if (!hasLinks || !isMobileViewport) {
                 nav.hidden = true;
                 document.body.classList.remove("has-mobile-quick-nav");
+                document.body.classList.remove("mobile-nav-primary-quick");
+                if (sectionNav) {
+                    sectionNav.hidden = false;
+                }
                 return;
             }
 
@@ -4482,6 +4539,13 @@
 
             nav.hidden = !shouldShow;
             document.body.classList.toggle("has-mobile-quick-nav", shouldShow);
+            document.body.classList.toggle("mobile-nav-primary-quick", shouldShow);
+            if (sectionNav) {
+                sectionNav.hidden = shouldShow;
+            }
+            if (shouldShow) {
+                closeSectionNavMenu({ blurToggle: true });
+            }
         }
 
         function renderMobileQuickLinks() {
@@ -4915,17 +4979,28 @@
         }
 
         function formatParagraphLines(lines, mode = "natural") {
+            const KOGUMA_URL = "https://koguma-rythmique.netlify.app/";
+            const KOGUMA_LINK_HTML = `<a class="stream-inline-link" href="${escapeHtml(KOGUMA_URL)}" target="_blank" rel="noopener">こぐまリトミッククラスを見る</a>`;
+
+            const replaceKnownLinks = (htmlText) => {
+                if (!htmlText) return "";
+                const escapedUrl = escapeHtml(KOGUMA_URL);
+                return htmlText.split(escapedUrl).join(KOGUMA_LINK_HTML);
+            };
+
             const normalizedMode = normalizeTextFlow(mode);
-            const preparedLines = (lines || [])
+            const rawLines = (lines || [])
                 .map((line) => String(line || "").trim())
-                .filter(Boolean);
+            const preparedLines = rawLines.filter(Boolean);
             if (preparedLines.length === 0) return "";
-            if (normalizedMode === "structured") {
-                return preparedLines.map((line) => escapeHtml(line)).join("<br>");
+            const hasKnownLinkLine = rawLines.some((line) => line === KOGUMA_URL);
+            if (normalizedMode === "structured" || hasKnownLinkLine) {
+                const sourceLines = hasKnownLinkLine ? rawLines : preparedLines;
+                return replaceKnownLinks(sourceLines.map((line) => escapeHtml(line)).join("<br>"));
             }
             const mergedText = preparedLines.join("");
             const sentenceLines = splitLineBySentence(mergedText);
-            return sentenceLines.map((line) => escapeHtml(line)).join("<br>");
+            return replaceKnownLinks(sentenceLines.map((line) => escapeHtml(line)).join("<br>"));
         }
 
         function filterGalleryImages(images, sectionCoverImage) {
@@ -5440,6 +5515,7 @@
                         return;
                     }
                     remainderHtml.push(tableHtml);
+                    return;
                 }
             });
 

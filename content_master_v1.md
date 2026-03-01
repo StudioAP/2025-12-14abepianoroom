@@ -35,10 +35,6 @@
 体験レッスンは1,000円です。「お問合せ」からお気軽にご質問ください。
 ```
 
-#### Gallery 1
-| # | src | caption | displayRule |
-| --- | --- | --- | --- |
-| 1 | image/image1.jpg | レッスン空間 | cover_4_3 |
 
 ### 2. 対象・場所
 - textFlow: natural
@@ -71,10 +67,6 @@
 ※曜日・時間枠は固定不要です。レッスンの都度、お仕事や園・学校行事等に合わせてご相談ください。
 ```
 
-#### Gallery 1
-| # | src | caption | displayRule |
-| --- | --- | --- | --- |
-| 1 | image/image2.jpg | レッスンイメージ | cover_4_3 |
 
 ### 4. 大人向けへの想い
 - textFlow: natural
@@ -91,10 +83,6 @@
 長い長い目で見て、「弾きたい」気持ちを大切に、ピアノを楽しんでいただけたらと思っています。
 ```
 
-#### Gallery 1
-| # | src | caption | displayRule |
-| --- | --- | --- | --- |
-| 1 | image/image3.jpg | 日々のレッスンより | cover_4_3 |
 
 ### 5. 教室概要・講師略歴
 - textFlow: structured
@@ -111,10 +99,6 @@
 音楽以外に好きなものは料理・お菓子作り、おいしいものを食べること。
 ```
 
-#### Gallery 1
-| # | src | caption | displayRule |
-| --- | --- | --- | --- |
-| 1 | image/image4.jpg | 教室風景 | cover_4_3 |
 
 ### 6. 小さいお子様向け（リトミック）
 - textFlow: natural
@@ -127,11 +111,6 @@ https://koguma-rythmique.netlify.app/
 
 ※上記に関しまして、ご不明な点等についてはお気軽にご質問・ご相談ください。
 ```
-
-#### Gallery 1
-| # | src | caption | displayRule |
-| --- | --- | --- | --- |
-| 1 | image/image5.jpg | リトミッククラスの様子 | cover_4_3 |
 
 
 <!-- CONTENT_MASTER_DATA_START -->
@@ -169,16 +148,6 @@ https://koguma-rythmique.netlify.app/
             "",
             "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、初心者〜中級くらいの方に向けたピアノレッスンを行っています。",
             "体験レッスンは1,000円です。「お問合せ」からお気軽にご質問ください。"
-          ]
-        },
-        {
-          "type": "gallery",
-          "images": [
-            {
-              "src": "image/image1.jpg",
-              "caption": "レッスン空間",
-              "displayRule": "cover_4_3"
-            }
           ]
         }
       ]
@@ -221,16 +190,6 @@ https://koguma-rythmique.netlify.app/
             "・B枠 11:00〜12:00",
             "※曜日・時間枠は固定不要です。レッスンの都度、お仕事や園・学校行事等に合わせてご相談ください。"
           ]
-        },
-        {
-          "type": "gallery",
-          "images": [
-            {
-              "src": "image/image2.jpg",
-              "caption": "レッスンイメージ",
-              "displayRule": "cover_4_3"
-            }
-          ]
         }
       ]
     },
@@ -250,16 +209,6 @@ https://koguma-rythmique.netlify.app/
             "",
             "都合がつかない時期には休み、時間ができたらまた再開する...というのも「続け方」だと思います。生活に合わせて、歩いたり、立ち止まったり、時には走ってピアノに打ち込んでみたり...",
             "長い長い目で見て、「弾きたい」気持ちを大切に、ピアノを楽しんでいただけたらと思っています。"
-          ]
-        },
-        {
-          "type": "gallery",
-          "images": [
-            {
-              "src": "image/image3.jpg",
-              "caption": "日々のレッスンより",
-              "displayRule": "cover_4_3"
-            }
           ]
         }
       ]
@@ -281,16 +230,6 @@ https://koguma-rythmique.netlify.app/
             "卒業後、ピアノレッスンの傍らホテルレストラン奏者、ブライダル奏者、またジャズ奏者としても活動経験あり。",
             "音楽以外に好きなものは料理・お菓子作り、おいしいものを食べること。"
           ]
-        },
-        {
-          "type": "gallery",
-          "images": [
-            {
-              "src": "image/image4.jpg",
-              "caption": "教室風景",
-              "displayRule": "cover_4_3"
-            }
-          ]
         }
       ]
     },
@@ -307,16 +246,6 @@ https://koguma-rythmique.netlify.app/
             "https://koguma-rythmique.netlify.app/",
             "",
             "※上記に関しまして、ご不明な点等についてはお気軽にご質問・ご相談ください。"
-          ]
-        },
-        {
-          "type": "gallery",
-          "images": [
-            {
-              "src": "image/image5.jpg",
-              "caption": "リトミッククラスの様子",
-              "displayRule": "cover_4_3"
-            }
           ]
         }
       ]
