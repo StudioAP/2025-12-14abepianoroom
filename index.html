@@ -1870,7 +1870,7 @@
         .pricing-cell-main {
             display: block;
             line-height: 1.38;
-            white-space: nowrap;
+            white-space: normal;
         }
 
         .pricing-cell-price {
@@ -1879,6 +1879,14 @@
             font-weight: 500;
             line-height: 1.32;
             white-space: nowrap;
+        }
+
+        .pricing-cell-sub {
+            display: block;
+            margin-top: 0.08rem;
+            line-height: 1.32;
+            font-size: 0.92em;
+            white-space: normal;
         }
 
         .pricing-note-break {
@@ -3246,9 +3254,7 @@
                                 "お腹の赤ちゃんと音楽を楽しみたい…",
                                 "育休中、乳児を連れて一息つきたい…",
                                 "教職課程で必要になった…",
-                                "そんな方に。",
-                                "",
-                                "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、初心者〜中級くらいの方に向けたピアノレッスンを行っています。",
+                                "そのような、初心者〜中級くらいの方に向けたピアノレッスンを行っています。",
                                 "体験レッスンは1,000円です。「お問合せ」からお気軽にご質問ください。"
                             ]
                         }
@@ -3267,11 +3273,10 @@
                                 "・大人は女性の方のみを対象としています",
                                 "",
                                 "【場所】",
-                                "京都市北区上賀茂（自宅教室）",
-                                "バス停「柊野別れ」「ゴルフ場前」",
-                                "柊野小学校 徒歩10分",
+                                "京都市北区上賀茂",
+                                "バス停「柊野別れ」「ゴルフ場前」柊野小学校 徒歩10分",
                                 "北大路からバス12〜13分",
-                                "西賀茂・市原からも通いやすい立地です。",
+                                "北大路エリア、西賀茂、市原からも通いやすい立地です。",
                                 "",
                                 "※自宅教室につき住所詳細は、お問合せくださった方にお伝えしております。駐車可。"
                             ]
@@ -3291,11 +3296,9 @@
                             rows: [
                                 ["単発レッスン", "60分×1回/5,000円"],
                                 ["回数券レッスン", "60分×6回/27,000円"],
-                                ["曜日", "月・火・木・金/都度相談"],
-                                ["A枠", "9:50〜10:50/都度相談"],
-                                ["B枠", "11:00〜12:00/都度相談"],
-                                ["オンライン", "対応可/希望時は要相談"]
-                            ]
+                                ["曜日・時間帯", "月・木・金 9:50〜10:50／11:00〜12:00/都度ご相談ください"]
+                            ],
+                            note: "※オンライン対応希望時はご相談ください。"
                         },
                         {
                             type: "table",
@@ -3303,15 +3306,12 @@
                             caption: "子どもレッスン（高校生まで）",
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
-                                ["子どもレッスン", "30分×月3回/7,500円"],
-                                ["曜日・時間", "土曜日 13:00〜14:00/都度相談"]
+                                [{ value: "子どもレッスン\n自宅練習サポート動画付き" }, "30分×月3回/7,500円/土曜日 13:00-14:00（都度相談）"]
                             ]
                         },
                         {
                             type: "text",
                             lines: [
-                                "自宅練習サポート動画付き",
-                                "5分間の自宅練習サポート動画を月3回配信します。",
                                 "※補足（高校生まで）：現在、満室につき新規受付を行っておりません。再開の場合は改めてご案内します。"
                             ]
                         }
@@ -5210,16 +5210,28 @@
                 const source = String(rawValue ?? "").trim();
                 if (!source || source === "—") return escapeHtml(source || "—");
                 const segments = source.split("/");
-                if (segments.length !== 2) return escapeHtml(source);
+                if (segments.length < 2) return escapeHtml(source);
                 const main = formatTableTextWithNumericSpan(String(segments[0] || "").trim());
                 const price = formatTableTextWithNumericSpan(String(segments[1] || "").trim());
+                const subSource = String(segments.slice(2).join("/")).trim();
+                const sub = subSource ? formatTableTextWithNumericSpan(subSource) : "";
                 if (!main || !price) return escapeHtml(source);
-                return `<span class="pricing-cell-main">${main}</span><span class="pricing-cell-price">${price}</span>`;
+                const subHtml = sub ? `<span class="pricing-cell-sub">${sub}</span>` : "";
+                return `<span class="pricing-cell-main">${main}</span><span class="pricing-cell-price">${price}</span>${subHtml}`;
             }
 
             function formatPricingFirstColumnHtml(rawValue) {
                 const source = String(rawValue ?? "");
                 if (!source || source === "—") return escapeHtml(source || "—");
+                const multiLine = source
+                    .split(/\r?\n/)
+                    .map((line) => String(line || "").trim())
+                    .filter(Boolean);
+                if (multiLine.length > 1) {
+                    return multiLine
+                        .map((line, index) => `<span class="${index === 0 ? "pricing-cell-main" : "pricing-cell-sub"}">${formatTableTextWithNumericSpan(line)}</span>`)
+                        .join("");
+                }
                 const marker = "※空4・時間帯要相談";
                 if (!source.includes(marker)) return formatTableTextWithNumericSpan(source);
                 const startTag = "%%PRICING_NOTE_BREAK_START%%";
