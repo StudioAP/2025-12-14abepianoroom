@@ -98,7 +98,7 @@
 
 #### Text 1
 ```text
-小さいお子様向けに、リトミックルームを開講しています。
+小さいお子様向けに、リトミッククラスを開講しています。
 こちらをご覧ください：
 https://koguma-rythmique.netlify.app/
 
@@ -227,7 +227,7 @@ https://koguma-rythmique.netlify.app/
         {
           "type": "text",
           "lines": [
-            "小さいお子様向けに、リトミックルームを開講しています。",
+            "小さいお子様向けに、リトミッククラスを開講しています。",
             "こちらをご覧ください：",
             "https://koguma-rythmique.netlify.app/",
             "",
