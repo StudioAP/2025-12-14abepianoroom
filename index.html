@@ -1169,6 +1169,11 @@
             letter-spacing: 0.04em;
         }
 
+        .stream-text > .stream-h3:first-child,
+        .stream-text > .stream-h3-strong:first-child {
+            margin-top: 0.32rem;
+        }
+
         .stream-h4 {
             font-size: 1.03rem;
             padding-left: 0.68rem;
@@ -4853,10 +4858,10 @@
         function classifyHeadingLine(line) {
             const text = String(line || "").trim();
             if (!text) return "";
-            if (/^[◉✴]/.test(text) || /^【[^】]+】/.test(text)) {
+            if (/^[◉✴]/.test(text) || /^【[^】]+】/.test(text) || /^〈[^〉]+〉/.test(text)) {
                 return "h3";
             }
-            if (/^・/.test(text) || /^〈[^〉]+〉/.test(text)) {
+            if (/^・{2,}/.test(text)) {
                 return "h4";
             }
             return "";
