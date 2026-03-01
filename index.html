@@ -4861,9 +4861,6 @@
             if (/^[◉✴]/.test(text) || /^【[^】]+】/.test(text) || /^〈[^〉]+〉/.test(text)) {
                 return "h3";
             }
-            if (/^・{2,}/.test(text)) {
-                return "h4";
-            }
             return "";
         }
 
