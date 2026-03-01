@@ -99,16 +99,16 @@
         }
 
         .section-nav {
-            display: none !important;
             position: fixed;
-            left: 1rem;
-            right: 1rem;
-            bottom: 0.2rem;
-            width: auto;
-            z-index: 120;
-            padding: 0.5rem 0.7rem;
+            top: 0.86rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1120px, calc(100% - 2rem));
+            z-index: 140;
+            padding: 0.4rem 0.72rem;
             border: 1px solid rgba(74, 55, 40, 0.24);
-            background: rgba(253, 246, 240, 0.88);
+            border-radius: 999px;
+            background: rgba(253, 246, 240, 0.92);
             backdrop-filter: blur(8px) saturate(112%);
             -webkit-backdrop-filter: blur(8px) saturate(112%);
             box-sizing: border-box;
@@ -118,22 +118,27 @@
             display: flex;
             flex-wrap: nowrap;
             justify-content: flex-start;
-            gap: 0.2rem;
-            max-width: none;
+            gap: 0.26rem;
+            width: 100%;
+            max-width: 100%;
             white-space: nowrap;
-            overflow: visible;
+            overflow: hidden;
             align-items: center;
             --nav-scale: 1;
-            --nav-base-size: 0.76rem;
+            --nav-base-size: 0.84rem;
         }
 
         .section-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
             text-decoration: none;
             color: var(--text);
             font-size: calc(var(--nav-base-size) * var(--nav-scale));
             letter-spacing: 0.02em;
-            line-height: 1.2;
-            padding: 0.12rem 0.03rem;
+            line-height: 1.22;
+            padding: 0.2rem 0.12rem;
             border-bottom: 1px solid transparent;
             transition: opacity 0.2s ease, border-color 0.2s ease;
         }
@@ -151,14 +156,15 @@
             align-items: center;
             justify-content: center;
             gap: 0.28rem;
-            padding: 0.26rem 0.56rem;
+            min-height: 44px;
+            padding: 0.28rem 0.84rem;
             border: 1px solid rgba(74, 55, 40, 0.18);
             border-radius: 999px;
             color: #fff;
             background: var(--gold);
             font-weight: 500;
             letter-spacing: 0.06em;
-            line-height: 1;
+            line-height: 1.18;
         }
 
         .section-link-contact-icon {
@@ -865,9 +871,9 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 0.6rem;
+            gap: 0.7rem;
             margin: 0;
-            padding: 0.78rem 1rem 0.84rem;
+            padding: 0.86rem 1rem 0.92rem;
             border-top: 1px solid rgba(74, 55, 40, 0.18);
             border-bottom: 1px solid rgba(74, 55, 40, 0.18);
             background: rgba(253, 246, 240, 0.9);
@@ -886,12 +892,60 @@
         .hero-notice-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
+            justify-content: center;
+            gap: 0.32rem;
+            min-height: 44px;
+            padding: 0.44rem 1.05rem;
             color: #2d2017;
             text-decoration: none;
-            border-bottom: 1px solid rgba(74, 55, 40, 0.34);
-            font-size: 0.85rem;
+            border: 1px solid rgba(74, 55, 40, 0.3);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.94);
+            box-sizing: border-box;
+            font-size: 0.86rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
             line-height: 1.2;
+        }
+
+        .hero-notice-link:hover,
+        .hero-notice-link:focus-visible {
+            border-color: rgba(74, 55, 40, 0.5);
+            background: rgba(255, 255, 255, 1);
+            outline: none;
+        }
+
+        .hero-primary-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            margin-top: 0.2rem;
+            padding: 0.46rem 1.14rem;
+            border: 1px solid rgba(74, 55, 40, 0.2);
+            border-radius: 999px;
+            background: var(--gold);
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--hero-utility-font);
+            font-size: clamp(0.78rem, 0.95vw, 0.92rem);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            line-height: 1.2;
+            box-sizing: border-box;
+        }
+
+        .hero-primary-cta:hover,
+        .hero-primary-cta:focus-visible {
+            filter: brightness(1.02);
+            outline: none;
+        }
+
+        body.hero-band-inphoto-top-plain .hero-primary-cta {
+            align-self: flex-start;
+            background: #c38b94;
+            border-color: rgba(74, 55, 40, 0.26);
+            box-shadow: 0 6px 16px rgba(74, 55, 40, 0.14);
         }
 
         /* コンテンツ */
@@ -973,7 +1027,7 @@
         .stream-body {
             text-align: left;
             color: var(--text);
-            line-height: 1.95;
+            line-height: 1.88;
             font-size: 1rem;
             max-width: 100%;
             word-break: normal;
@@ -1499,7 +1553,7 @@
 
         .stream-p {
             margin: 0 0 0.95rem;
-            line-height: 2;
+            line-height: 1.9;
             word-break: normal;
             overflow-wrap: normal;
             line-break: auto;
@@ -1799,12 +1853,16 @@
         }
 
         .mobile-quick-nav {
-            display: block;
+            display: none;
             position: fixed;
             left: 0.8rem;
             right: 0.8rem;
             bottom: calc(0.56rem + env(safe-area-inset-bottom));
             z-index: 130;
+        }
+
+        .mobile-quick-nav[hidden] {
+            display: none !important;
         }
 
         .mobile-quick-nav-list {
@@ -1827,7 +1885,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 2.28rem;
+            min-height: 2.75rem;
             text-decoration: none;
             color: #2f2219;
             border: 1px solid rgba(74, 55, 40, 0.18);
@@ -1854,14 +1912,6 @@
             border-color: rgba(74, 55, 40, 0.34);
             background: rgba(212, 160, 138, 0.18);
             outline: none;
-        }
-
-        .has-mobile-quick-nav .content {
-            padding-bottom: calc(10.8rem + env(safe-area-inset-bottom));
-        }
-
-        .has-mobile-quick-nav .business-overview {
-            padding-bottom: calc(11rem + env(safe-area-inset-bottom));
         }
 
         /* 事業概要 */
@@ -1963,12 +2013,12 @@
 
             .stream-body {
                 font-size: 0.96rem;
-                line-height: 1.82;
+                line-height: 1.76;
             }
 
             .stream-p {
                 font-size: 0.96rem;
-                line-height: 1.86;
+                line-height: 1.8;
             }
 
             .stream-text {
@@ -2106,7 +2156,7 @@
             }
 
             .content {
-                padding: 6.2rem 0.72rem 4rem;
+                padding: 5.2rem 0.72rem 4rem;
             }
 
             .has-mobile-quick-nav .content {
@@ -2119,8 +2169,10 @@
                 left: auto;
                 bottom: auto;
                 width: auto;
+                transform: none;
                 padding: 0;
                 border: none;
+                border-radius: 0;
                 background: transparent;
                 backdrop-filter: none;
                 -webkit-backdrop-filter: none;
@@ -2339,10 +2391,19 @@
             }
 
             .hero-notice-link {
-                font-size: 0.74rem;
+                min-height: 44px;
+                padding: 0.4rem 0.9rem;
+                font-size: 0.76rem;
+            }
+
+            .hero-primary-cta {
+                min-height: 44px;
+                padding: 0.42rem 0.98rem;
+                font-size: 0.8rem;
             }
 
             .mobile-quick-nav {
+                display: block;
                 left: 0.7rem;
                 right: 0.7rem;
                 bottom: calc(0.52rem + env(safe-area-inset-bottom));
@@ -2354,7 +2415,7 @@
             }
 
             .mobile-quick-link {
-                min-height: 2.24rem;
+                min-height: 2.75rem;
                 font-size: clamp(0.72rem, 2.6vw, 0.82rem);
                 letter-spacing: 0.01em;
                 line-height: 1.26;
@@ -2583,11 +2644,11 @@
 
             .mobile-quick-link {
                 font-size: clamp(0.7rem, 3.3vw, 0.8rem);
-                min-height: 2.18rem;
+                min-height: 2.75rem;
             }
 
             .content {
-                padding: 6.1rem 0.62rem 4rem;
+                padding: 5.1rem 0.62rem 4rem;
             }
 
             .stream-text--profile-bio {
@@ -2739,7 +2800,7 @@
             }
 
             .content {
-                padding: 5.9rem 0.56rem 4rem;
+                padding: 4.9rem 0.56rem 4rem;
             }
 
             .stream-quote--yasuno .stream-quote-text {
@@ -2774,7 +2835,8 @@
                 grid-template-areas:
                     "endorsement"
                     "brand"
-                    "meta";
+                    "meta"
+                    "cta";
                 row-gap: clamp(0.6rem, 1.02vw, 0.98rem);
                 align-items: stretch;
                 padding: clamp(2.24rem, 3.4vw, 3.24rem) clamp(1.46rem, 2.52vw, 2.36rem) clamp(2.08rem, 3.16vw, 2.96rem);
@@ -2804,6 +2866,13 @@
                 max-inline-size: min(100%, var(--hero-brand-inline-size, 100%));
                 column-gap: clamp(0.48rem, 1.2vw, 1.02rem);
                 row-gap: clamp(0.36rem, 0.7vw, 0.62rem);
+            }
+
+            body.hero-band-inphoto-top-plain .hero-primary-cta {
+                grid-area: cta;
+                justify-self: start;
+                align-self: start;
+                margin-top: clamp(0.04rem, 0.12vw, 0.16rem);
             }
 
             body.hero-band-inphoto-top-plain .hero-meta-row .h-sub {
@@ -3006,7 +3075,7 @@
     </style>
 </head>
 
-<body class="hero-band-top hero-variant-c">
+<body class="hero-band-inphoto-top-plain hero-variant-c">
     <nav id="section-nav" class="section-nav" aria-label="セクションナビゲーション">
         <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="section-nav-list" aria-label="メニューを開閉">
             <span class="menu-toggle-bar"></span>
@@ -3029,6 +3098,7 @@
                 <span id="hero-sub" class="h-sub"></span>
                 <span id="hero-location" class="h-loc h-loc--badge"></span>
             </div>
+            <a id="hero-primary-cta" class="hero-primary-cta" href="#" hidden>お問合せ</a>
         </div>
     </div>
     <div id="hero-notice" class="hero-notice" hidden></div>
@@ -3076,8 +3146,13 @@
                     label: "こぐまリトミッククラス",
                     href: "https://koguma-rythmique.netlify.app/"
                 },
+                primaryCta: {
+                    label: "お問合せ",
+                    href: "https://forms.gle/Hr1M1yYeJrhTdtyi9",
+                    external: true
+                },
                 variantDefault: "C",
-                bandDefault: "top",
+                bandDefault: "inPhotoTopPlain",
                 leadImage: "image/main1.jpg",
                 mobileSplitBottomImage: "image/main3.jpg",
                 mobileSplitTopFirstImage: "image/main1.jpg",
@@ -3098,7 +3173,7 @@
                 { label: "TOP", href: "#hero-slider" },
                 { label: "ごあいさつ", href: "#section-1" },
                 { label: "対象・場所", href: "#section-2" },
-                { label: "料金・曜日・時間", href: "#section-3" },
+                { label: "料金・曜日", href: "#section-3" },
                 { label: "教室概要", href: "#section-5" },
                 { label: "お問合せ", href: "https://forms.gle/Hr1M1yYeJrhTdtyi9", external: true }
             ],
@@ -3316,11 +3391,23 @@
             applyHeroBand(heroBand);
             setHeroText();
             renderHeroNotice();
+            renderHeroPrimaryCta();
             const heroTextElement = document.querySelector(".hero-txt");
             if (heroTextElement) {
                 heroTextElement.classList.add("hero-theme-initializing");
             }
             renderMobileQuickLinks();
+            const mobileQuickNavMedia = window.matchMedia("(max-width: 768px)");
+            const handleMobileQuickNavViewport = () => {
+                renderMobileQuickLinks();
+            };
+            if (typeof mobileQuickNavMedia.addEventListener === "function") {
+                mobileQuickNavMedia.addEventListener("change", handleMobileQuickNavViewport);
+            } else {
+                mobileQuickNavMedia.addListener(handleMobileQuickNavViewport);
+            }
+            window.addEventListener("scroll", syncMobileQuickNavVisibility, { passive: true });
+            window.addEventListener("resize", syncMobileQuickNavVisibility, { passive: true });
 
             const heroBaseSequence = getHeroSequence(config.hero);
             let heroSplitState = {
@@ -3359,7 +3446,10 @@
                 : heroBaseSequence;
             let currentSlideIndex = 0;
             syncHeroPreload(heroSequence[0] || "");
+            renderSectionNav();
             renderSectionStream();
+            setupSectionNavMenu();
+            window.addEventListener("resize", fitDesktopNavScale, { passive: true });
             setupMobileCollapsibleGalleries();
             attachImageFallbackHandlers(document);
 
@@ -4339,12 +4429,68 @@
             noticeEl.hidden = false;
         }
 
+        function renderHeroPrimaryCta() {
+            const ctaEl = document.getElementById("hero-primary-cta");
+            if (!ctaEl) return;
+            const heroConfig = config.hero || {};
+            const primaryCta = heroConfig.primaryCta || {};
+            const fallbackContact = config.contactNav || {};
+            const label = String(primaryCta.label || fallbackContact.label || "お問合せ").trim();
+            const href = String(primaryCta.href || fallbackContact.href || "").trim();
+            const isExternal = Boolean(primaryCta.external) || /^https?:\/\//.test(href);
+
+            if (!label || !href) {
+                ctaEl.hidden = true;
+                ctaEl.removeAttribute("href");
+                ctaEl.textContent = "";
+                return;
+            }
+
+            ctaEl.textContent = label;
+            ctaEl.setAttribute("href", href);
+            if (isExternal) {
+                ctaEl.setAttribute("target", "_blank");
+                ctaEl.setAttribute("rel", "noopener");
+            } else {
+                ctaEl.removeAttribute("target");
+                ctaEl.removeAttribute("rel");
+            }
+            ctaEl.hidden = false;
+        }
+
+        function syncMobileQuickNavVisibility() {
+            const nav = document.getElementById("mobile-quick-nav");
+            if (!nav) return;
+            const hasLinks = nav.dataset.hasLinks === "true";
+            const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
+            if (!hasLinks || !isMobileViewport) {
+                nav.hidden = true;
+                document.body.classList.remove("has-mobile-quick-nav");
+                return;
+            }
+
+            const heroEl = document.getElementById("hero-slider");
+            const noticeEl = document.getElementById("hero-notice");
+            const heroBottom = heroEl
+                ? Math.max(0, heroEl.getBoundingClientRect().bottom + window.scrollY)
+                : 0;
+            const noticeBottom = noticeEl && !noticeEl.hidden
+                ? Math.max(heroBottom, noticeEl.getBoundingClientRect().bottom + window.scrollY)
+                : heroBottom;
+            const revealAt = Math.max(72, Math.round(noticeBottom));
+            const shouldShow = window.scrollY >= revealAt;
+
+            nav.hidden = !shouldShow;
+            document.body.classList.toggle("has-mobile-quick-nav", shouldShow);
+        }
+
         function renderMobileQuickLinks() {
             const nav = document.getElementById("mobile-quick-nav");
             const navList = document.getElementById("mobile-quick-nav-list");
             if (!nav || !navList) return;
             const links = (config.mobileQuickLinks || []).filter((link) => link && link.label && link.href);
             if (links.length === 0) {
+                nav.dataset.hasLinks = "false";
                 nav.hidden = true;
                 navList.innerHTML = "";
                 document.body.classList.remove("has-mobile-quick-nav");
@@ -4358,8 +4504,8 @@
                 const target = isExternal ? ` target="_blank" rel="noopener"` : "";
                 return `<a class="mobile-quick-link" href="${href}"${target}>${label}</a>`;
             }).join("");
-            nav.hidden = false;
-            document.body.classList.add("has-mobile-quick-nav");
+            nav.dataset.hasLinks = "true";
+            syncMobileQuickNavVisibility();
         }
 
         function mountHeroSlides(images, options = {}) {
