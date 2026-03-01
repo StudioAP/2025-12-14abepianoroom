@@ -9,12 +9,12 @@
 - title: 安部ピアノルーム
 - sub: 大人・子ども向け 自宅個人レッスン
 - location: 京都市北区上賀茂（上賀茂・西賀茂・市原エリア）
-- mobileSplitTopFirstImage: ピアノルーム横.jpg
-- mobileSplitBottomImage: image/main3.jpg
+- mobileSplitTopFirstImage: image/hero-lead-opt.jpg
+- mobileSplitBottomImage: image/hero-bottom-opt.jpg
 - rotationImages:
-  - ピアノルーム横.jpg
-  - 花_つくった花束.jpg
-  - image/main3.jpg
+  - image/hero-lead-opt.jpg
+  - image/hero-top-opt.jpg
+  - image/hero-bottom-opt.jpg
 
 ## セクション本文・写真
 ### 1. ごあいさつ
@@ -98,7 +98,7 @@
 
 #### Text 1
 ```text
-小さいお子様向けに、リトミッククラスを開講しています。
+小さいお子様向けに、リトミックルームを開講しています。
 こちらをご覧ください：
 https://koguma-rythmique.netlify.app/
 
@@ -115,12 +115,12 @@ https://koguma-rythmique.netlify.app/
     "sub": "大人・子ども向け 自宅個人レッスン",
     "location": "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）",
     "rotationImages": [
-      "ピアノルーム横.jpg",
-      "花_つくった花束.jpg",
-      "image/main3.jpg"
+      "image/hero-lead-opt.jpg",
+      "image/hero-top-opt.jpg",
+      "image/hero-bottom-opt.jpg"
     ],
-    "mobileSplitTopFirstImage": "ピアノルーム横.jpg",
-    "mobileSplitBottomImage": "image/main3.jpg"
+    "mobileSplitTopFirstImage": "image/hero-lead-opt.jpg",
+    "mobileSplitBottomImage": "image/hero-bottom-opt.jpg"
   },
   "sections": [
     {
@@ -227,7 +227,7 @@ https://koguma-rythmique.netlify.app/
         {
           "type": "text",
           "lines": [
-            "小さいお子様向けに、リトミッククラスを開講しています。",
+            "小さいお子様向けに、リトミックルームを開講しています。",
             "こちらをご覧ください：",
             "https://koguma-rythmique.netlify.app/",
             "",

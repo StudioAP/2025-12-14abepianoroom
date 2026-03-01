@@ -13,13 +13,13 @@
     <meta name="robots" content="index, follow">
 
     <title>安部ピアノルーム｜京都市北区上賀茂のピアノ教室・リトミック</title>
-    <meta name="description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミッククラスをご案内。体験レッスン1,000円。">
+    <meta name="description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミックルームをご案内。体験レッスン1,000円。">
     <link rel="canonical" href="https://abepianoroom.netlify.app/">
 
     <!-- OGP -->
     <meta property="og:site_name" content="安部ピアノルーム">
     <meta property="og:title" content="安部ピアノルーム｜京都市北区上賀茂のピアノ教室・リトミック">
-    <meta property="og:description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミッククラスをご案内。体験レッスン1,000円。">
+    <meta property="og:description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミックルームをご案内。体験レッスン1,000円。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://abepianoroom.netlify.app/">
     <meta property="og:locale" content="ja_JP">
@@ -29,11 +29,11 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="安部ピアノルーム｜京都市北区上賀茂のピアノ教室・リトミック">
-    <meta name="twitter:description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミッククラスをご案内。体験レッスン1,000円。">
+    <meta name="twitter:description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミックルームをご案内。体験レッスン1,000円。">
     <meta name="twitter:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
 
     <!-- Hero image preload -->
-    <link id="hero-preload" rel="preload" as="image" href="image/main1.jpg" fetchpriority="high">
+    <link id="hero-preload" rel="preload" as="image" href="image/hero-lead-opt.jpg" fetchpriority="high">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
@@ -101,6 +101,7 @@
         }
 
         .section-nav {
+            display: none !important;
             position: fixed;
             top: 0.86rem;
             left: 50%;
@@ -968,6 +969,14 @@
             overflow-x: hidden;
         }
 
+        .has-mobile-quick-nav .content {
+            padding-bottom: calc(8.7rem + env(safe-area-inset-bottom));
+        }
+
+        .has-mobile-quick-nav .business-overview {
+            padding-bottom: calc(9rem + env(safe-area-inset-bottom));
+        }
+
         .stream-sec {
             padding: 0;
         }
@@ -1760,12 +1769,38 @@
 
         .stream-table-caption {
             margin: 0;
-            padding: 0.58rem 0.74rem 0.52rem;
+            padding: 0.62rem 0.78rem 0.56rem;
             border-bottom: 1px solid rgba(74, 55, 40, 0.14);
-            font-size: 0.9rem;
-            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.52rem;
+            font-size: 0.94rem;
+            letter-spacing: 0.03em;
             color: #32261d;
             font-weight: 500;
+        }
+
+        .stream-table-caption-text {
+            display: inline-flex;
+            align-items: center;
+            line-height: 1.4;
+        }
+
+        .stream-table-caption-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.22rem 0.58rem;
+            border: 1px solid rgba(166, 33, 46, 0.32);
+            border-radius: 999px;
+            background: rgba(255, 233, 236, 0.92);
+            color: #7c1023;
+            font-size: 0.78rem;
+            font-family: var(--hero-utility-font);
+            line-height: 1.15;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
         }
 
         .stream-table-scroll {
@@ -1825,8 +1860,8 @@
         .stream-table--pricing {
             table-layout: fixed;
             min-width: 0;
-            font-size: 0.87rem;
-            line-height: 1.52;
+            font-size: 0.96rem;
+            line-height: 1.62;
         }
 
         .stream-table--pricing th,
@@ -1834,11 +1869,12 @@
             border: 1px solid rgba(74, 55, 40, 0.14);
             background: rgba(255, 255, 255, 0.98);
             color: #241a13;
-            padding: 0.52rem 0.56rem;
+            padding: 0.66rem 0.72rem;
             word-break: normal;
-            overflow-wrap: break-word;
+            overflow-wrap: normal;
             line-break: auto;
             text-wrap: pretty;
+            white-space: normal;
         }
 
         .stream-table--pricing th {
@@ -1848,22 +1884,22 @@
 
         .stream-table--pricing th:nth-child(1),
         .stream-table--pricing td:nth-child(1) {
-            width: 72%;
+            width: 48%;
         }
 
         .stream-table--pricing th:nth-child(2),
         .stream-table--pricing td:nth-child(2) {
-            width: 28%;
+            width: 52%;
         }
 
         @media (min-width: 769px) {
             .stream-table--pricing th:nth-child(1),
             .stream-table--pricing td:nth-child(1) {
-                white-space: nowrap;
+                white-space: normal;
             }
 
             .stream-table--pricing th:nth-child(2) {
-                white-space: nowrap;
+                white-space: normal;
             }
         }
 
@@ -1875,17 +1911,17 @@
 
         .pricing-cell-price {
             display: block;
-            margin-top: 0.08rem;
-            font-weight: 500;
-            line-height: 1.32;
-            white-space: nowrap;
+            margin-top: 0.14rem;
+            font-weight: 600;
+            line-height: 1.4;
+            white-space: normal;
         }
 
         .pricing-cell-sub {
             display: block;
-            margin-top: 0.08rem;
-            line-height: 1.32;
-            font-size: 0.92em;
+            margin-top: 0.14rem;
+            line-height: 1.42;
+            font-size: 0.94em;
             white-space: normal;
         }
 
@@ -1906,7 +1942,7 @@
         }
 
         .mobile-quick-nav {
-            display: none;
+            display: block;
             position: fixed;
             left: 0.8rem;
             right: 0.8rem;
@@ -2432,6 +2468,11 @@
                 padding: 0.5rem 0.56rem 0.46rem;
             }
 
+            .stream-table-caption-badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+
             .stream-table-note {
                 font-size: 0.69rem;
                 padding: 0.38rem 0.5rem 0.46rem;
@@ -2789,8 +2830,8 @@
                 min-width: 0;
                 border-collapse: collapse;
                 table-layout: fixed;
-                font-size: 0.72rem;
-                line-height: 1.42;
+                font-size: 0.88rem;
+                line-height: 1.5;
             }
 
             .stream-table--pricing thead {
@@ -2813,12 +2854,12 @@
                 display: table-cell;
                 width: auto;
                 border: 1px solid rgba(74, 55, 40, 0.14);
-                padding: 0.34rem 0.36rem;
-                line-height: 1.4;
+                padding: 0.52rem 0.56rem;
+                line-height: 1.5;
                 vertical-align: top;
                 background: rgba(255, 255, 255, 0.98);
                 word-break: normal;
-                overflow-wrap: break-word;
+                overflow-wrap: normal;
                 line-break: auto;
                 white-space: normal;
             }
@@ -2838,12 +2879,12 @@
 
             .stream-table--pricing th:nth-child(1),
             .stream-table--pricing td:nth-child(1) {
-                width: 66%;
+                width: 48%;
             }
 
             .stream-table--pricing th:nth-child(2),
             .stream-table--pricing td:nth-child(2) {
-                width: 34%;
+                width: 52%;
             }
 
             .stream-table-wrap--pricing .stream-table-scroll {
@@ -3185,7 +3226,7 @@
         </div>
         <div class="bo-links">
             <p><a href="https://forms.gle/7JeN5nX7z1ajVziV6" class="bo-mail" target="_blank" rel="noopener">お問合せ</a></p>
-            <p><a href="https://koguma-rythmique.netlify.app/" class="bo-mail" target="_blank" rel="noopener">こぐまリトミッククラスはこちら</a></p>
+            <p><a href="https://koguma-rythmique.netlify.app/" class="bo-mail" target="_blank" rel="noopener">こぐまリトミックルームはこちら</a></p>
         </div>
     </div>
 
@@ -3202,9 +3243,9 @@
                 locationPrimary: "京都市北区上賀茂",
                 locationSecondary: "上賀茂・西賀茂・市原エリア",
                 endorsementText: "depuis 2009",
-                notice: "リトミッククラスのご案内はこちら",
+                notice: "リトミックルームのご案内はこちら",
                 noticeLink: {
-                    label: "こぐまリトミッククラス",
+                    label: "こぐまリトミックルーム",
                     href: "https://koguma-rythmique.netlify.app/"
                 },
                 primaryCta: {
@@ -3214,15 +3255,15 @@
                 },
                 variantDefault: "C",
                 bandDefault: "inPhotoTopPlain",
-                leadImage: "ピアノルーム横.jpg",
-                mobileSplitBottomImage: "image/main3.jpg",
-                mobileSplitTopFirstImage: "ピアノルーム横.jpg",
-                desktopSplitTopImage: "花_つくった花束.jpg",
-                desktopSplitBottomImage: "image/main3.jpg",
+                leadImage: "image/hero-lead-opt.jpg",
+                mobileSplitBottomImage: "image/hero-bottom-opt.jpg",
+                mobileSplitTopFirstImage: "image/hero-lead-opt.jpg",
+                desktopSplitTopImage: "image/hero-top-opt.jpg",
+                desktopSplitBottomImage: "image/hero-bottom-opt.jpg",
                 rotationImages: [
-                    "ピアノルーム横.jpg",
-                    "花_つくった花束.jpg",
-                    "image/main3.jpg"
+                    "image/hero-lead-opt.jpg",
+                    "image/hero-top-opt.jpg",
+                    "image/hero-bottom-opt.jpg"
                 ]
             },
             contactNav: {
@@ -3296,7 +3337,7 @@
                             rows: [
                                 ["単発レッスン", "60分×1回/5,000円"],
                                 ["回数券レッスン", "60分×6回/27,000円"],
-                                ["曜日・時間帯", "月・木・金 9:50〜10:50／11:00〜12:00/都度ご相談ください"]
+                                ["曜日・時間帯", "月・火・木・金 9:50〜10:50／11:00〜12:00/都度ご相談ください"]
                             ],
                             note: "※オンライン対応希望時はご相談ください。"
                         },
@@ -3304,6 +3345,7 @@
                             type: "table",
                             variant: "pricing",
                             caption: "子どもレッスン（高校生まで）",
+                            captionBadge: "現在満室",
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
                                 [{ value: "子どもレッスン\n自宅練習サポート動画付き" }, "30分×月3回/7,500円/土曜日 13:00-14:00（都度相談）"]
@@ -3365,7 +3407,7 @@
                         {
                             type: "text",
                             lines: [
-                                "小さいお子様向けに、リトミッククラスを開講しています。",
+                                "小さいお子様向けに、リトミックルームを開講しています。",
                                 "こちらをご覧ください：",
                                 "https://koguma-rythmique.netlify.app/",
                                 "",
@@ -3421,16 +3463,6 @@
                 heroTextElement.classList.add("hero-theme-initializing");
             }
             renderMobileQuickLinks();
-            const mobileQuickNavMedia = window.matchMedia("(max-width: 768px)");
-            const handleMobileQuickNavViewport = () => {
-                renderMobileQuickLinks();
-            };
-            if (typeof mobileQuickNavMedia.addEventListener === "function") {
-                mobileQuickNavMedia.addEventListener("change", handleMobileQuickNavViewport);
-            } else {
-                mobileQuickNavMedia.addListener(handleMobileQuickNavViewport);
-            }
-            window.addEventListener("scroll", syncMobileQuickNavVisibility, { passive: true });
             window.addEventListener("resize", syncMobileQuickNavVisibility, { passive: true });
 
             const heroBaseSequence = getHeroSequence(config.hero);
@@ -3543,38 +3575,67 @@
                         finalizeInitialHeroTheme();
                     });
             };
+            const primeInitialHeroRatio = () => {
+                const activeImagePath = normalizeImagePath(activeHeroSequence[currentSlideIndex] || "");
+                if (!activeImagePath) {
+                    return;
+                }
+                sampleImageAspectRatio(activeImagePath)
+                    .then((ratio) => {
+                        heroImageRatioMap.set(activeImagePath, normalizeHeroAspectRatio(ratio));
+                        syncHeroLayout();
+                    })
+                    .catch(() => {
+                        heroImageRatioMap.set(activeImagePath, HERO_ACTIVE_RATIO_DEFAULT);
+                        syncHeroLayout();
+                    });
+            };
+            const normalizedHeroSequence = Array.from(
+                new Set((heroSequence || []).map((image) => normalizeImagePath(image)).filter(Boolean))
+            );
+            const scheduleDeferredHeroAnalytics = () => {
+                const activeImagePath = normalizeImagePath(
+                    activeHeroSequence[currentSlideIndex]
+                    || normalizedHeroSequence[0]
+                    || ""
+                );
+                const deferredImages = normalizedHeroSequence.filter((image) => image !== activeImagePath);
+                if (deferredImages.length === 0) return;
+
+                runWhenIdle(() => {
+                    buildHeroTextThemeMap(deferredImages)
+                        .then((themeMap) => {
+                            themeMap.forEach((theme, imagePath) => {
+                                heroTextThemeMap.set(imagePath, theme);
+                            });
+                            applyHeroTextTheme(resolveHeroTextTheme(activeHeroSequence[currentSlideIndex]));
+                        })
+                        .catch(() => { });
+                }, 900);
+
+                runWhenIdle(() => {
+                    buildHeroImageRatioMap(deferredImages)
+                        .then((ratioMap) => {
+                            ratioMap.forEach((ratio, imagePath) => {
+                                heroImageRatioMap.set(imagePath, ratio);
+                            });
+                            syncHeroLayout();
+                        })
+                        .catch(() => { });
+                }, 1200);
+            };
             if (activeHeroSequence.length > 0) {
                 applyHeroSceneState(activeHeroSequence[currentSlideIndex]);
                 syncHeroLayout();
                 primeInitialHeroTheme();
+                primeInitialHeroRatio();
             } else {
                 applyHeroSceneState("");
                 syncHeroLayout();
                 applyHeroTextTheme(HERO_TEXT_FALLBACK_THEME);
                 finalizeInitialHeroTheme();
             }
-
-            buildHeroTextThemeMap(heroSequence)
-                .then((themeMap) => {
-                    heroTextThemeMap = themeMap;
-                    applyHeroSceneState(activeHeroSequence[currentSlideIndex] || "");
-                    applyHeroTextTheme(resolveHeroTextTheme(activeHeroSequence[currentSlideIndex]));
-                })
-                .catch(() => {
-                    heroTextThemeMap = new Map();
-                    applyHeroSceneState(activeHeroSequence[currentSlideIndex] || "");
-                    applyHeroTextTheme(HERO_TEXT_FALLBACK_THEME);
-                });
-
-            buildHeroImageRatioMap(heroSequence)
-                .then((ratioMap) => {
-                    heroImageRatioMap = ratioMap;
-                    syncHeroLayout();
-                })
-                .catch(() => {
-                    heroImageRatioMap = new Map();
-                    syncHeroLayout();
-                });
+            scheduleDeferredHeroAnalytics();
 
             loadRemainingHeroSlides(heroSequence)
                 .then((loadedTail) => {
@@ -3670,6 +3731,15 @@
             pushUnique(rawPath.normalize("NFC"));
             pushUnique(rawPath.normalize("NFD"));
             return candidates;
+        }
+
+        function runWhenIdle(callback, timeout = 1000) {
+            if (typeof callback !== "function") return;
+            if (typeof window.requestIdleCallback === "function") {
+                window.requestIdleCallback(() => callback(), { timeout });
+                return;
+            }
+            window.setTimeout(() => callback(), Math.min(timeout, 240));
         }
 
         function toSrc(path) {
@@ -3813,6 +3883,12 @@
             const nav = document.getElementById("section-nav");
             const heroTitle = document.getElementById("hero-title");
             if (!body || !nav || !heroTitle) return;
+            const navStyle = window.getComputedStyle(nav);
+            if (nav.hidden || navStyle.display === "none" || navStyle.visibility === "hidden") {
+                body.style.setProperty("--section-nav-safe-height", "0px");
+                body.style.setProperty("--hero-nav-overlap-offset", "0px");
+                return;
+            }
 
             const isDesktopViewport = window.matchMedia("(min-width: 769px)").matches;
             const isInPhotoBand = body.classList.contains("hero-band-inphoto-top-plain");
@@ -4232,14 +4308,22 @@
                 }
             };
 
-            const resolvedDesktopTopImage = await resolveLoadableImage(fixedDesktopTopImage);
-            const resolvedDesktopBottomImage = await resolveLoadableImage(fixedDesktopBottomImage);
+            const [resolvedDesktopTopImage, resolvedDesktopBottomImage] = await Promise.all([
+                resolveLoadableImage(fixedDesktopTopImage),
+                resolveLoadableImage(fixedDesktopBottomImage)
+            ]);
             const leftReferenceImage = normalizeImagePath(topSequence[0] || normalizedBaseSequence[0] || "");
 
-            const resolvedDesktopReferenceRatio = (await resolveImageRatioOrNull(leftReferenceImage))
-                || HERO_DESKTOP_REFERENCE_RATIO_FALLBACK;
-            const resolvedDesktopTopImageRatio = await resolveImageRatioOrNull(resolvedDesktopTopImage);
-            const resolvedDesktopBottomImageRatio = await resolveImageRatioOrNull(resolvedDesktopBottomImage);
+            const [
+                resolvedDesktopReferenceRatioRaw,
+                resolvedDesktopTopImageRatio,
+                resolvedDesktopBottomImageRatio
+            ] = await Promise.all([
+                resolveImageRatioOrNull(leftReferenceImage),
+                resolveImageRatioOrNull(resolvedDesktopTopImage),
+                resolveImageRatioOrNull(resolvedDesktopBottomImage)
+            ]);
+            const resolvedDesktopReferenceRatio = resolvedDesktopReferenceRatioRaw || HERO_DESKTOP_REFERENCE_RATIO_FALLBACK;
 
             let desktopRightWidthPercent = HERO_DESKTOP_RIGHT_WIDTH_FALLBACK;
             let desktopTopRatio = HERO_DESKTOP_TOP_SHARE_FALLBACK;
@@ -4266,14 +4350,13 @@
             let mobileBottomImageRatio = null;
             const mobileBottomCandidate = normalizeImagePath(splitConfig.mobileBottomImage) || resolvedDesktopBottomImage;
             if (mobileBottomCandidate) {
-                const mobileBottomImageLoadable = await canLoadHeroImage(mobileBottomCandidate);
+                const [mobileBottomImageLoadable, resolvedMobileBottomRatio] = await Promise.all([
+                    canLoadHeroImage(mobileBottomCandidate),
+                    resolveImageRatioOrNull(mobileBottomCandidate)
+                ]);
                 if (mobileBottomImageLoadable) {
                     resolvedMobileBottomImage = mobileBottomCandidate;
-                    try {
-                        mobileBottomImageRatio = normalizeHeroAspectRatio(await sampleImageAspectRatio(mobileBottomCandidate));
-                    } catch (_) {
-                        mobileBottomImageRatio = null;
-                    }
+                    mobileBottomImageRatio = resolvedMobileBottomRatio;
                 }
             }
 
@@ -4541,8 +4624,7 @@
             const sectionNav = document.getElementById("section-nav");
             if (!nav) return;
             const hasLinks = nav.dataset.hasLinks === "true";
-            const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
-            if (!hasLinks || !isMobileViewport) {
+            if (!hasLinks) {
                 nav.hidden = true;
                 document.body.classList.remove("has-mobile-quick-nav");
                 document.body.classList.remove("mobile-nav-primary-quick");
@@ -4551,31 +4633,13 @@
                 }
                 return;
             }
-
-            const heroEl = document.getElementById("hero-slider");
-            const noticeEl = document.getElementById("hero-notice");
-            const ctaRowEl = document.getElementById("hero-cta-row");
-            const heroBottom = heroEl
-                ? Math.max(0, heroEl.getBoundingClientRect().bottom + window.scrollY)
-                : 0;
-            const noticeBottom = noticeEl && !noticeEl.hidden
-                ? Math.max(heroBottom, noticeEl.getBoundingClientRect().bottom + window.scrollY)
-                : heroBottom;
-            const ctaRowBottom = ctaRowEl && !ctaRowEl.hidden
-                ? Math.max(noticeBottom, ctaRowEl.getBoundingClientRect().bottom + window.scrollY)
-                : noticeBottom;
-            const revealAt = Math.max(72, Math.round(ctaRowBottom));
-            const shouldShow = window.scrollY >= revealAt;
-
-            nav.hidden = !shouldShow;
-            document.body.classList.toggle("has-mobile-quick-nav", shouldShow);
-            document.body.classList.toggle("mobile-nav-primary-quick", shouldShow);
+            nav.hidden = false;
+            document.body.classList.add("has-mobile-quick-nav");
+            document.body.classList.add("mobile-nav-primary-quick");
             if (sectionNav) {
-                sectionNav.hidden = shouldShow;
+                sectionNav.hidden = true;
             }
-            if (shouldShow) {
-                closeSectionNavMenu({ blurToggle: true });
-            }
+            closeSectionNavMenu({ blurToggle: true });
         }
 
         function renderMobileQuickLinks() {
@@ -4588,6 +4652,7 @@
                 nav.hidden = true;
                 navList.innerHTML = "";
                 document.body.classList.remove("has-mobile-quick-nav");
+                document.body.classList.remove("mobile-nav-primary-quick");
                 return;
             }
             navList.innerHTML = links.map((link) => {
@@ -4673,33 +4738,33 @@
         }
 
         async function buildHeroImageRatioMap(images) {
-            const ratioMap = new Map();
-            for (const imagePath of images || []) {
-                const normalizedImagePath = normalizeImagePath(imagePath);
-                if (!normalizedImagePath || ratioMap.has(normalizedImagePath)) continue;
+            const uniqueImages = Array.from(
+                new Set((images || []).map((image) => normalizeImagePath(image)).filter(Boolean))
+            );
+            const entries = await Promise.all(uniqueImages.map(async (imagePath) => {
                 try {
-                    const ratio = await sampleImageAspectRatio(normalizedImagePath);
-                    ratioMap.set(normalizedImagePath, normalizeHeroAspectRatio(ratio));
+                    const ratio = await sampleImageAspectRatio(imagePath);
+                    return [imagePath, normalizeHeroAspectRatio(ratio)];
                 } catch (_) {
-                    ratioMap.set(normalizedImagePath, HERO_ACTIVE_RATIO_DEFAULT);
+                    return [imagePath, HERO_ACTIVE_RATIO_DEFAULT];
                 }
-            }
-            return ratioMap;
+            }));
+            return new Map(entries);
         }
 
         async function buildHeroTextThemeMap(images) {
-            const themeMap = new Map();
-            for (const imagePath of images || []) {
-                const normalizedImagePath = normalizeImagePath(imagePath);
-                if (!normalizedImagePath) continue;
+            const uniqueImages = Array.from(
+                new Set((images || []).map((image) => normalizeImagePath(image)).filter(Boolean))
+            );
+            const entries = await Promise.all(uniqueImages.map(async (imagePath) => {
                 try {
-                    const luminanceStats = await sampleLuminanceFromImage(normalizedImagePath, HERO_TEXT_REGION);
-                    themeMap.set(normalizedImagePath, createHeroTextTheme(luminanceStats));
+                    const luminanceStats = await sampleLuminanceFromImage(imagePath, HERO_TEXT_REGION);
+                    return [imagePath, createHeroTextTheme(luminanceStats)];
                 } catch (_) {
-                    themeMap.set(normalizedImagePath, HERO_TEXT_FALLBACK_THEME);
+                    return [imagePath, HERO_TEXT_FALLBACK_THEME];
                 }
-            }
-            return themeMap;
+            }));
+            return new Map(entries);
         }
 
         async function sampleImageAspectRatio(imagePath) {
@@ -5007,7 +5072,7 @@
 
         function formatParagraphLines(lines, mode = "natural") {
             const KOGUMA_URL = "https://koguma-rythmique.netlify.app/";
-            const KOGUMA_LINK_HTML = `<a class="stream-inline-link" href="${escapeHtml(KOGUMA_URL)}" target="_blank" rel="noopener">こぐまリトミッククラスを見る</a>`;
+            const KOGUMA_LINK_HTML = `<a class="stream-inline-link" href="${escapeHtml(KOGUMA_URL)}" target="_blank" rel="noopener">こぐまリトミックルームを見る</a>`;
 
             const replaceKnownLinks = (htmlText) => {
                 if (!htmlText) return "";
@@ -5171,6 +5236,7 @@
             const wrapClass = isPricing ? "stream-table-wrap stream-table-wrap--pricing" : "stream-table-wrap";
             const tableClass = isPricing ? "stream-table stream-table--pricing" : "stream-table";
             const caption = escapeHtml(String((block && block.caption) || ""));
+            const captionBadge = escapeHtml(String((block && block.captionBadge) || ""));
             const note = escapeHtml(String((block && block.note) || ""));
             const headHtml = columns
                 .map((column) => `<th scope="col">${escapeHtml(String(column || ""))}</th>`)
@@ -5302,7 +5368,11 @@
                     return `<tr>${rowHtml}</tr>`;
                 })
                 .join("");
-            const captionHtml = caption ? `<p class="stream-table-caption">${caption}</p>` : "";
+            const captionTextHtml = caption ? `<span class="stream-table-caption-text">${caption}</span>` : "";
+            const captionBadgeHtml = captionBadge ? `<span class="stream-table-caption-badge">${captionBadge}</span>` : "";
+            const captionHtml = (captionTextHtml || captionBadgeHtml)
+                ? `<p class="stream-table-caption">${captionTextHtml}${captionBadgeHtml}</p>`
+                : "";
             const noteHtml = note ? `<p class="stream-table-note">${note}</p>` : "";
             return `
                 <section class="${wrapClass}">
