@@ -2053,6 +2053,25 @@
             outline: none;
         }
 
+        @media (min-width: 769px) {
+            .mobile-quick-nav-list {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                gap: 0.28rem;
+                padding: 0.3rem;
+            }
+
+            .mobile-quick-link {
+                min-height: 2.4rem;
+                font-size: clamp(0.62rem, 0.78vw, 0.72rem);
+                line-height: 1.18;
+                padding: 0.14rem 0.16rem;
+                white-space: nowrap;
+                text-wrap: nowrap;
+                word-break: keep-all;
+                overflow-wrap: normal;
+            }
+        }
+
         /* 事業概要 */
         .business-overview {
             background: var(--bg);
@@ -3415,7 +3434,7 @@
                             captionBadge: "現在満室",
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
-                                [{ value: "子どもレッスン\n★自宅練習サポート動画付き" }, "30分×月3回/7,500円/土曜日 13:00-14:00"]
+                                [{ value: "子どもレッスン\n★自宅練習サポート動画付き" }, "30分×月3回/7,500円/土曜日 13:00-13:30／13:30-14:00"]
                             ]
                         },
                         {
