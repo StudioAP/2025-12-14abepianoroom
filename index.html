@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="REPLACE_WITH_SEARCH_CONSOLE_TOKEN">
 
     <title>安部ピアノルーム｜京都市北区上賀茂のピアノ教室・リトミック</title>
     <meta name="description" content="京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室「安部ピアノルーム」。大人・子ども向け 自宅個人レッスンと、リトミッククラスをご案内。体験レッスン1,000円。">
@@ -36,20 +37,29 @@
     <meta name="twitter:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
     <meta name="twitter:url" content="https://abepianoroom.netlify.app/">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
             "@type": "MusicSchool",
+            "@id": "https://abepianoroom.netlify.app/#music-school",
             "name": "安部ピアノルーム",
             "url": "https://abepianoroom.netlify.app/",
             "image": "https://abepianoroom.netlify.app/image/ogp.jpg",
             "description": "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）のピアノ教室。大人・子ども向けの自宅個人レッスンとリトミッククラスをご案内しています。",
+            "inLanguage": "ja-JP",
             "areaServed": [
                 "京都市北区上賀茂",
                 "西賀茂",
                 "市原",
                 "北大路エリア"
             ],
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://abepianoroom.netlify.app/"
+            },
             "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "JP",
@@ -61,6 +71,11 @@
                 "contactType": "customer support",
                 "url": "https://forms.gle/7JeN5nX7z1ajVziV6"
             },
+            "potentialAction": {
+                "@type": "ContactAction",
+                "name": "お問合せ",
+                "target": "https://forms.gle/7JeN5nX7z1ajVziV6"
+            },
             "sameAs": [
                 "https://kogumarr.netlify.app/"
             ]
@@ -68,7 +83,7 @@
     </script>
 
     <!-- Hero image preload -->
-    <link id="hero-preload" rel="preload" as="image" href="image/hero-lead-opt.jpg" fetchpriority="high">
+    <link id="hero-preload" rel="preload" as="image" href="image/hero-lead-opt.webp" type="image/webp" fetchpriority="high">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
@@ -3276,7 +3291,7 @@
     </nav>
 
     <div class="hero" id="hero-slider">
-        <div class="slide active" data-boot="1" style="background-image: url('image/hero-lead-opt.jpg');"></div>
+        <div class="slide active" data-boot="1" style="background-image: image-set(url('image/hero-lead-opt.webp') type('image/webp'), url('image/hero-lead-opt.jpg') type('image/jpeg'));"></div>
         <div class="hero-desktop-top-fixed" id="hero-desktop-top-fixed"></div>
         <div class="hero-mobile-top-fixed" id="hero-mobile-top-fixed"></div>
         <div class="hero-txt">
@@ -3550,6 +3565,17 @@
         const HERO_DESKTOP_REFERENCE_RATIO_FALLBACK = 1.5;
         const HERO_DESKTOP_TOP_SHARE_FALLBACK = 0.5;
         const HERO_DESKTOP_BOTTOM_SHARE_FALLBACK = 0.5;
+        const GA4_MEASUREMENT_ID = "G-XXXXXXXXXX";
+        const GA4_PLACEHOLDER_ID = "G-XXXXXXXXXX";
+        const CONTACT_FORM_HOST = "forms.gle";
+        const CONTACT_FORM_PATH_TOKEN = "/7JeN5nX7z1ajVziV6";
+        const RHYTHMIC_ROOM_HOST = "kogumarr.netlify.app";
+        const analyticsState = {
+            enabled: false,
+            clickTrackingBound: false,
+            scrollTrackingBound: false,
+            scrollMilestones: new Set()
+        };
         const HERO_TEXT_FALLBACK_THEME = {
             color: HERO_TEXT_LIGHT_COLOR,
             textShadow: "0 2px 14px rgba(0, 0, 0, 0.84), 0 0 2px rgba(0, 0, 0, 0.76)",
@@ -3619,6 +3645,7 @@
             syncHeroPreload(heroSequence[0] || "");
             renderSectionNav();
             renderSectionStream();
+            initializeSeoAnalytics();
             setupSectionNavMenu();
             window.addEventListener("resize", fitDesktopNavScale, { passive: true });
             setupMobileCollapsibleGalleries();
@@ -3861,6 +3888,227 @@
             const candidates = buildImagePathCandidates(path);
             const preferredPath = candidates[0] || normalizeImagePath(path);
             return encodeURI(preferredPath);
+        }
+
+        function toWebpPath(path) {
+            const normalizedPath = normalizeImagePath(path);
+            if (!/\.(jpe?g|png)$/i.test(normalizedPath)) return "";
+            return normalizedPath.replace(/\.(jpe?g|png)$/i, ".webp");
+        }
+
+        function toImageMimeType(path) {
+            const lowerPath = normalizeImagePath(path).toLowerCase();
+            if (lowerPath.endsWith(".jpg") || lowerPath.endsWith(".jpeg")) return "image/jpeg";
+            if (lowerPath.endsWith(".png")) return "image/png";
+            if (lowerPath.endsWith(".webp")) return "image/webp";
+            return "";
+        }
+
+        function toPreferredImageSrc(path) {
+            const webpPath = toWebpPath(path);
+            if (webpPath) {
+                return toSrc(webpPath);
+            }
+            return toSrc(path);
+        }
+
+        function buildPreferredImageSrcCandidates(path) {
+            const preferred = toPreferredImageSrc(path);
+            const fallback = toSrc(path);
+            return preferred === fallback ? [preferred] : [preferred, fallback];
+        }
+
+        function toBackgroundImageValue(path) {
+            const normalizedPath = normalizeImagePath(path);
+            if (!normalizedPath) return "";
+            const fallbackSrc = toSrc(normalizedPath);
+            const webpPath = toWebpPath(normalizedPath);
+            const fallbackMimeType = toImageMimeType(normalizedPath);
+            if (!webpPath || !fallbackMimeType) {
+                return `url('${fallbackSrc}')`;
+            }
+            return `image-set(url('${toSrc(webpPath)}') type('image/webp'), url('${fallbackSrc}') type('${fallbackMimeType}'))`;
+        }
+
+        function renderResponsiveImageTag(options = {}) {
+            const className = String(options.className || "").trim();
+            const imagePath = normalizeImagePath(options.imagePath || "");
+            const altText = String(options.altText || "");
+            const loading = String(options.loading || "lazy");
+            const decoding = String(options.decoding || "async");
+            if (!imagePath) return "";
+
+            const classAttr = className ? ` class="${escapeHtml(className)}"` : "";
+            const imgHtml = `<img${classAttr} src="${toSrc(imagePath)}" data-image-path="${escapeHtml(imagePath)}" alt="${escapeHtml(altText)}" loading="${escapeHtml(loading)}" decoding="${escapeHtml(decoding)}">`;
+            const webpPath = toWebpPath(imagePath);
+            if (!webpPath) {
+                return imgHtml;
+            }
+            return `<picture><source srcset="${toSrc(webpPath)}" type="image/webp">${imgHtml}</picture>`;
+        }
+
+        function safeParseUrl(url) {
+            try {
+                return new URL(String(url || ""), window.location.href);
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function isValidGa4MeasurementId(measurementId) {
+            const safeId = String(measurementId || "").trim().toUpperCase();
+            if (!safeId || safeId === GA4_PLACEHOLDER_ID) return false;
+            return /^G-[A-Z0-9]+$/.test(safeId);
+        }
+
+        function bootstrapGtagQueue() {
+            window.dataLayer = window.dataLayer || [];
+            if (typeof window.gtag !== "function") {
+                window.gtag = function gtag() {
+                    window.dataLayer.push(arguments);
+                };
+            }
+        }
+
+        function loadGa4Script(measurementId) {
+            if (!measurementId) return;
+            const existing = document.querySelector(`script[data-ga4-id="${measurementId}"]`);
+            if (existing) return;
+            const gaScript = document.createElement("script");
+            gaScript.async = true;
+            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+            gaScript.dataset.ga4Id = measurementId;
+            document.head.appendChild(gaScript);
+        }
+
+        function trackSeoEvent(eventName, params = {}) {
+            if (!analyticsState.enabled || typeof window.gtag !== "function") return;
+            window.gtag("event", eventName, params);
+        }
+
+        function resolveAnalyticsPlacement(anchor) {
+            if (!anchor) return "section_link";
+            if (
+                anchor.id === "hero-primary-cta"
+                || anchor.classList.contains("hero-notice-link")
+                || anchor.closest("#hero-notice")
+                || anchor.closest("#hero-cta-row")
+            ) {
+                return "hero";
+            }
+            if (anchor.closest("#mobile-quick-nav")) {
+                return "floating_nav";
+            }
+            if (anchor.closest(".business-overview")) {
+                return "footer";
+            }
+            return "section_link";
+        }
+
+        function isContactLink(anchor, parsedUrl) {
+            if (!anchor) return false;
+            const href = String(anchor.getAttribute("href") || "").trim();
+            const label = String(anchor.textContent || "").trim();
+            if (anchor.classList.contains("section-link-contact") || anchor.id === "hero-primary-cta") {
+                return true;
+            }
+            if (label.includes("お問合せ")) {
+                return true;
+            }
+            if (parsedUrl && parsedUrl.hostname === CONTACT_FORM_HOST && parsedUrl.pathname.includes(CONTACT_FORM_PATH_TOKEN)) {
+                return true;
+            }
+            return /forms\.gle\/7JeN5nX7z1ajVziV6/i.test(href);
+        }
+
+        function isRhythmicLink(anchor, parsedUrl) {
+            if (!anchor) return false;
+            if (parsedUrl && parsedUrl.hostname === RHYTHMIC_ROOM_HOST) {
+                return true;
+            }
+            const href = String(anchor.getAttribute("href") || "").trim();
+            return /kogumarr\.netlify\.app/i.test(href);
+        }
+
+        function setupAnalyticsLinkTracking() {
+            if (analyticsState.clickTrackingBound) return;
+            analyticsState.clickTrackingBound = true;
+
+            document.addEventListener("click", (event) => {
+                const target = event.target;
+                if (!target || typeof target.closest !== "function") return;
+                const anchor = target.closest("a[href]");
+                if (!anchor) return;
+
+                const parsedUrl = safeParseUrl(anchor.getAttribute("href"));
+                const placement = resolveAnalyticsPlacement(anchor);
+                const linkUrl = parsedUrl ? parsedUrl.href : String(anchor.getAttribute("href") || "");
+
+                if (isContactLink(anchor, parsedUrl)) {
+                    trackSeoEvent("contact_click", {
+                        placement,
+                        link_url: linkUrl
+                    });
+                }
+
+                if (isRhythmicLink(anchor, parsedUrl)) {
+                    trackSeoEvent("rhythmic_link_click", {
+                        placement,
+                        link_url: linkUrl
+                    });
+                }
+            }, { passive: true });
+        }
+
+        function setupAnalyticsScrollDepthTracking() {
+            if (analyticsState.scrollTrackingBound) return;
+            analyticsState.scrollTrackingBound = true;
+
+            const notify = (milestone) => {
+                if (analyticsState.scrollMilestones.has(milestone)) return;
+                analyticsState.scrollMilestones.add(milestone);
+                trackSeoEvent(`scroll_depth_${milestone}`, {
+                    percent_scrolled: milestone
+                });
+            };
+
+            const onScroll = () => {
+                const doc = document.documentElement;
+                const scrollable = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
+                const current = Math.max(window.scrollY || 0, window.pageYOffset || 0);
+                const percent = (current / scrollable) * 100;
+                if (percent >= 50) notify(50);
+                if (percent >= 90) notify(90);
+                if (analyticsState.scrollMilestones.has(50) && analyticsState.scrollMilestones.has(90)) {
+                    window.removeEventListener("scroll", onScroll);
+                    window.removeEventListener("resize", onScroll);
+                }
+            };
+
+            window.addEventListener("scroll", onScroll, { passive: true });
+            window.addEventListener("resize", onScroll, { passive: true });
+            onScroll();
+        }
+
+        function initializeSeoAnalytics() {
+            bootstrapGtagQueue();
+            setupAnalyticsLinkTracking();
+            setupAnalyticsScrollDepthTracking();
+
+            if (!isValidGa4MeasurementId(GA4_MEASUREMENT_ID)) {
+                return;
+            }
+
+            loadGa4Script(GA4_MEASUREMENT_ID);
+            const debugMode = /\bga_debug=1\b/.test(String(window.location.search || ""));
+            window.gtag("js", new Date());
+            window.gtag("config", GA4_MEASUREMENT_ID, {
+                anonymize_ip: true,
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false,
+                debug_mode: debugMode
+            });
+            analyticsState.enabled = true;
         }
 
         function includesNormalized(text, keyword) {
@@ -4300,10 +4548,10 @@
                 : "";
 
             if (isMobileSplitEnabled && hasMobileBottomImage) {
-                mobileBottomLayer.style.backgroundImage = `url('${toSrc(mobileBottomImage)}')`;
+                mobileBottomLayer.style.backgroundImage = toBackgroundImageValue(mobileBottomImage);
                 mobileBottomLayer.setAttribute("data-image-path", mobileBottomImage);
             } else if (isDesktopSplitEnabled && hasDesktopBottomImage) {
-                mobileBottomLayer.style.backgroundImage = `url('${toSrc(desktopBottomImage)}')`;
+                mobileBottomLayer.style.backgroundImage = toBackgroundImageValue(desktopBottomImage);
                 mobileBottomLayer.setAttribute("data-image-path", desktopBottomImage);
             } else {
                 mobileBottomLayer.style.removeProperty("background-image");
@@ -4315,7 +4563,7 @@
             );
 
             if (isDesktopSplitEnabled && hasDesktopTopImage) {
-                desktopTopLayer.style.backgroundImage = `url('${toSrc(desktopTopImage)}')`;
+                desktopTopLayer.style.backgroundImage = toBackgroundImageValue(desktopTopImage);
                 desktopTopLayer.setAttribute("data-image-path", desktopTopImage);
             } else {
                 desktopTopLayer.style.removeProperty("background-image");
@@ -4374,8 +4622,17 @@
                 const image = new Image();
                 image.decoding = "async";
                 image.onload = () => resolve(true);
-                image.onerror = () => resolve(false);
-                image.src = toSrc(normalizedImagePath);
+                const srcCandidates = buildPreferredImageSrcCandidates(normalizedImagePath);
+                let candidateIndex = 0;
+                image.onerror = () => {
+                    candidateIndex += 1;
+                    if (candidateIndex < srcCandidates.length) {
+                        image.src = srcCandidates[candidateIndex];
+                        return;
+                    }
+                    resolve(false);
+                };
+                image.src = srcCandidates[candidateIndex];
             });
         }
 
@@ -4502,7 +4759,13 @@
             if (!imagePath) return;
             const preload = document.getElementById('hero-preload');
             if (!preload) return;
-            preload.setAttribute('href', toSrc(imagePath));
+            preload.setAttribute('href', toPreferredImageSrc(imagePath));
+            const preloadType = toWebpPath(imagePath) ? "image/webp" : toImageMimeType(imagePath);
+            if (preloadType) {
+                preload.setAttribute("type", preloadType);
+            } else {
+                preload.removeAttribute("type");
+            }
         }
 
         function preloadHeroImages(images) {
@@ -4510,8 +4773,17 @@
             const loadImage = (imagePath) => new Promise((resolve) => {
                 const image = new Image();
                 image.onload = () => resolve({ imagePath, ok: true });
-                image.onerror = () => resolve({ imagePath, ok: false });
-                image.src = toSrc(imagePath);
+                const srcCandidates = buildPreferredImageSrcCandidates(imagePath);
+                let candidateIndex = 0;
+                image.onerror = () => {
+                    candidateIndex += 1;
+                    if (candidateIndex < srcCandidates.length) {
+                        image.src = srcCandidates[candidateIndex];
+                        return;
+                    }
+                    resolve({ imagePath, ok: false });
+                };
+                image.src = srcCandidates[candidateIndex];
             });
 
             return Promise.all(uniqueImages.map(loadImage)).then((results) => {
@@ -4535,7 +4807,7 @@
                         slide.remove();
                     }
                 });
-                bootSlide.style.backgroundImage = `url('${toSrc(imagePath)}')`;
+                bootSlide.style.backgroundImage = toBackgroundImageValue(imagePath);
                 bootSlide.classList.add('active');
                 bootSlide.removeAttribute("data-boot");
                 return { images: [imagePath], slides: [bootSlide] };
@@ -4804,7 +5076,7 @@
                 if (!normalizedImage) return;
                 const div = document.createElement('div');
                 div.className = 'slide';
-                div.style.backgroundImage = `url('${toSrc(normalizedImage)}')`;
+                div.style.backgroundImage = toBackgroundImageValue(normalizedImage);
                 if (activateFirst && index === 0) {
                     div.classList.add('active');
                 }
@@ -4899,8 +5171,17 @@
                     const height = Math.max(1, Number(image.naturalHeight) || 1);
                     resolve(width / height);
                 };
-                image.onerror = () => reject(new Error(`hero image ratio load failed: ${imagePath}`));
-                image.src = toSrc(imagePath);
+                const srcCandidates = buildPreferredImageSrcCandidates(imagePath);
+                let candidateIndex = 0;
+                image.onerror = () => {
+                    candidateIndex += 1;
+                    if (candidateIndex < srcCandidates.length) {
+                        image.src = srcCandidates[candidateIndex];
+                        return;
+                    }
+                    reject(new Error(`hero image ratio load failed: ${imagePath}`));
+                };
+                image.src = srcCandidates[candidateIndex];
             });
         }
 
@@ -5015,8 +5296,17 @@
                         reject(error);
                     }
                 };
-                image.onerror = () => reject(new Error(`hero image load failed: ${imagePath}`));
-                image.src = toSrc(imagePath);
+                const srcCandidates = buildPreferredImageSrcCandidates(imagePath);
+                let candidateIndex = 0;
+                image.onerror = () => {
+                    candidateIndex += 1;
+                    if (candidateIndex < srcCandidates.length) {
+                        image.src = srcCandidates[candidateIndex];
+                        return;
+                    }
+                    reject(new Error(`hero image load failed: ${imagePath}`));
+                };
+                image.src = srcCandidates[candidateIndex];
             });
         }
 
@@ -5324,7 +5614,13 @@
                         : "stream-gallery-image";
                     const captionText = String(imageEntry.caption || "").trim();
                     const altText = String(imageEntry.alt || captionText || "").trim();
-                    const imageHtml = `<img class="${imageClass}" src="${toSrc(imagePath)}" data-image-path="${escapeHtml(imagePath)}" alt="${escapeHtml(altText)}" loading="lazy" decoding="async">`;
+                    const imageHtml = renderResponsiveImageTag({
+                        className: imageClass,
+                        imagePath,
+                        altText,
+                        loading: "lazy",
+                        decoding: "async"
+                    });
                     const captionHtml = captionText
                         ? `<figcaption class="stream-gallery-caption">${escapeHtml(captionText)}</figcaption>`
                         : "";
@@ -5834,7 +6130,7 @@
                     : "";
                 const coverAlt = resolveSectionCoverAlt(section);
                 const coverHtml = coverImage
-                    ? `<figure class="stream-cover"><img src="${toSrc(coverImage)}" data-image-path="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" loading="lazy" decoding="async">${coverCaptionHtml}</figure>`
+                    ? `<figure class="stream-cover">${renderResponsiveImageTag({ className: "stream-cover-image", imagePath: coverImage, altText: coverAlt, loading: "lazy", decoding: "async" })}${coverCaptionHtml}</figure>`
                     : "";
                 const bodyHtml = section.title === "コース・曜日・料金"
                     ? renderCourseBodyInline(section, coverImage, textFlow)
