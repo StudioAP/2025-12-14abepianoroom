@@ -3396,6 +3396,7 @@
                 locationPrimary: "京都市北区上賀茂",
                 locationSecondary: "上賀茂・西賀茂・市原エリア",
                 endorsementText: "depuis 2009",
+                showPrimaryCta: false,
                 primaryCta: {
                     label: "お問合せ",
                     href: "https://forms.gle/7JeN5nX7z1ajVziV6",
@@ -3443,7 +3444,7 @@
                                 "お腹の赤ちゃんと音楽を楽しみたい…",
                                 "育休中、乳児を連れて一息つきたい…",
                                 "教職課程で必要になった…",
-                                "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、ピアノレッスンを行っています。",
+                                "そんな方に向けた、ピアノレッスンを行っています。",
                                 "体験レッスンは1,000円です。",
                                 "「お問合せ」からお気軽にご質問ください。"
                             ]
@@ -3499,27 +3500,21 @@
                             captionBadge: "現在満室",
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
-                                [{ value: "子どもレッスン\n★自宅練習サポート動画付き" }, "30分×月3回/7,500円/月・火・木 16:30-18:00／土 午前中〜14:00"]
+                                [{ value: "子どもレッスン\n<自宅練習サポート動画付き>" }, "30分×月3回/7,500円/月・火・木 16:30-18:00／土 午前中〜14:00"]
                             ]
                         },
                         {
                             type: "text",
                             lines: [
-                                "【★子どもレッスンの、「自宅練習サポート動画」について】",
+                                "※「自宅練習サポート動画」について",
                                 "",
-                                "保護者の皆さま・お子さま双方の生活スタイルが多様化する中で、練習時間を確保することが簡単ではないこともあると思います。",
+                                "子どもレッスンにおいては、保護者の皆さま・お子さま双方の生活スタイルが多様化する中で、練習時間を確保することが簡単ではないこともあると思います。",
                                 "",
                                 "新しく学んだこと、難しかった箇所、音符の読み方、音の聞き取りクイズ、指の体操などなど、",
                                 "お一人お一人のその日のレッスンで学んだことを楽しく復習できる内容でサポート動画をお付けします。",
                                 "短い時間でもピアノに向かう時間が積み重なれば必ず弾けるように成長していきます。",
                                 "",
                                 "焦らずゆっくり、自分の練習ペースが掴めるように時間をかけて指導いたします。"
-                            ]
-                        },
-                        {
-                            type: "text",
-                            lines: [
-                                "※補足（高校生まで）：現在満室です。受付再開時は本ページでお知らせします。"
                             ]
                         }
                     ]
@@ -5019,6 +5014,15 @@
             const ctaRowEl = document.getElementById("hero-cta-row");
             if (!ctaEl) return;
             const heroConfig = config.hero || {};
+            if (heroConfig.showPrimaryCta === false) {
+                ctaEl.hidden = true;
+                ctaEl.removeAttribute("href");
+                ctaEl.textContent = "";
+                if (ctaRowEl) {
+                    ctaRowEl.hidden = true;
+                }
+                return;
+            }
             const primaryCta = heroConfig.primaryCta || {};
             const fallbackContact = config.contactNav || {};
             const label = String(primaryCta.label || fallbackContact.label || "お問合せ").trim();
@@ -5752,7 +5756,7 @@
                     .map((line) => String(line || "").trim())
                     .filter(Boolean);
                 if (multiLine.length > 1) {
-                    const supportVideoLabel = "★自宅練習サポート動画付き";
+                    const supportVideoLabel = "<自宅練習サポート動画付き>";
                     return multiLine
                         .map((line, index) => {
                             const isSupportVideoLine = line.includes(supportVideoLabel);
