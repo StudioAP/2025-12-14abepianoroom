@@ -1935,6 +1935,11 @@
             font-weight: 500;
         }
 
+        .stream-table-wrap--pricing .stream-table-caption-text {
+            font-size: 1.08em;
+            font-weight: 600;
+        }
+
         .stream-table--pricing {
             table-layout: fixed;
             min-width: 0;
@@ -1985,6 +1990,12 @@
             display: block;
             line-height: 1.38;
             white-space: normal;
+        }
+
+        .pricing-cell-main--detail {
+            margin-top: 0.16rem;
+            font-size: 1.02em;
+            line-height: 1.46;
         }
 
         .pricing-cell-price {
@@ -3426,8 +3437,8 @@
                                 "",
                                 "【場所】",
                                 "京都市北区上賀茂（自宅教室）",
-                                "最寄りバス停、京都市バス・京都バスゴルフ場前より徒歩12分",
-                                "北大路からバス12〜13分",
+                                "最寄りバス停（京都市バス・京都バス「ゴルフ場前」）より徒歩12分",
+                                "（※同バス停へは北大路からバス12〜13分）",
                                 "西賀茂・市原からも通いやすい立地です。",
                                 "",
                                 "※自宅教室につき住所詳細は、お問合せくださった方にお伝えしております。駐車可。"
@@ -5712,7 +5723,12 @@
                     const supportVideoLabel = "★自宅練習サポート動画付き";
                     return multiLine
                         .map((line, index) => {
-                            const baseClass = index === 0 ? "pricing-cell-main" : "pricing-cell-sub";
+                            const isSupportVideoLine = line.includes(supportVideoLabel);
+                            const baseClass = index === 0
+                                ? "pricing-cell-main"
+                                : isSupportVideoLine
+                                    ? "pricing-cell-sub"
+                                    : "pricing-cell-main pricing-cell-main--detail";
                             const extraClass = line.includes(supportVideoLabel) ? " pricing-cell-sub--support-video" : "";
                             return `<span class="${baseClass}${extraClass}">${formatTableTextWithNumericSpan(line)}</span>`;
                         })
