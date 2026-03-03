@@ -1844,13 +1844,40 @@
             font-weight: 500;
         }
 
+        .stream-table-caption-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.52rem;
+            width: 100%;
+            min-width: 0;
+        }
+
         .stream-table-caption-text {
             display: inline-flex;
             align-items: center;
             line-height: 1.4;
         }
 
-        .stream-table-caption--with-badge {
+        .stream-table-caption--with-sub {
+            display: block;
+        }
+
+        .stream-table-caption--with-sub .stream-table-caption-main {
+            margin-bottom: 0.24rem;
+        }
+
+        .stream-table-caption-sub {
+            display: block;
+            font-size: 0.84rem;
+            line-height: 1.52;
+            letter-spacing: 0.01em;
+            color: rgba(50, 38, 29, 0.88);
+            font-weight: 400;
+            white-space: normal;
+        }
+
+        .stream-table-caption--with-badge .stream-table-caption-main {
             justify-content: flex-start;
             gap: 0.38rem;
             flex-wrap: wrap;
@@ -3455,9 +3482,10 @@
                             type: "table",
                             variant: "pricing",
                             caption: "大人レッスン",
+                            captionSubtext: "初めての音符読みから、ジャズ、ポピュラー、ソナチネ、ショパン、ワルツなど、クラシックまでお好きな曲でのレッスン。",
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
-                                [{ value: "単発レッスン\n初めての音符読みから、ジャズ、ポピュラー、ソナチネ、ショパン、ワルツなど、\nクラシックまでお好きな曲でのレッスン。" }, "60分×1回/5,000円"],
+                                ["単発レッスン", "60分×1回/5,000円"],
                                 ["回数券レッスン", "60分×6回/27,000円"],
                                 ["曜日・時間帯", "月・火・木・金/9:50〜10:50／11:00〜12:00/都度ご相談ください"]
                             ],
@@ -3467,10 +3495,11 @@
                             type: "table",
                             variant: "pricing",
                             caption: "子どもレッスン（高校生まで）",
+                            captionSubtext: "ピアノの導入初歩からブルクミュラー、ソナチネソナタの基礎から。ときには、お好きな曲にチャレンジも。",
                             captionBadge: "現在満室",
                             columns: ["内容", "時間・回数・料金"],
                             rows: [
-                                [{ value: "子どもレッスン\n★自宅練習サポート動画付き\nピアノの導入初歩からブルクミュラー、ソナチネソナタの基礎から。\nときには、お好きな曲にチャレンジも。" }, "30分×月3回/7,500円/月・火・木 16:30-18:00／土 午前中〜14:00"]
+                                [{ value: "子どもレッスン\n★自宅練習サポート動画付き" }, "30分×月3回/7,500円/月・火・木 16:30-18:00／土 午前中〜14:00"]
                             ]
                         },
                         {
@@ -5662,6 +5691,7 @@
             const wrapClass = isPricing ? "stream-table-wrap stream-table-wrap--pricing" : "stream-table-wrap";
             const tableClass = isPricing ? "stream-table stream-table--pricing" : "stream-table";
             const caption = escapeHtml(String((block && block.caption) || ""));
+            const captionSubtext = escapeHtml(String((block && block.captionSubtext) || "").trim());
             const rawCaptionBadge = String((block && block.captionBadge) || "").trim();
             const captionBadge = escapeHtml(rawCaptionBadge);
             const hasAlertCaptionBadge = /満室|満席/.test(rawCaptionBadge);
@@ -5809,9 +5839,13 @@
             const captionTextHtml = caption ? `<span class="stream-table-caption-text">${caption}</span>` : "";
             const captionBadgeClass = `stream-table-caption-badge${hasAlertCaptionBadge ? " stream-table-caption-badge--alert" : ""}`;
             const captionBadgeHtml = captionBadge ? `<span class="${captionBadgeClass}">${captionBadge}</span>` : "";
-            const captionClass = `stream-table-caption${captionBadge ? " stream-table-caption--with-badge" : ""}`;
-            const captionHtml = (captionTextHtml || captionBadgeHtml)
-                ? `<p class="${captionClass}">${captionTextHtml}${captionBadgeHtml}</p>`
+            const captionMainHtml = (captionTextHtml || captionBadgeHtml)
+                ? `<span class="stream-table-caption-main">${captionTextHtml}${captionBadgeHtml}</span>`
+                : "";
+            const captionSubHtml = captionSubtext ? `<span class="stream-table-caption-sub">${captionSubtext}</span>` : "";
+            const captionClass = `stream-table-caption${captionBadge ? " stream-table-caption--with-badge" : ""}${captionSubtext ? " stream-table-caption--with-sub" : ""}`;
+            const captionHtml = (captionMainHtml || captionSubHtml)
+                ? `<p class="${captionClass}">${captionMainHtml}${captionSubHtml}</p>`
                 : "";
             const noteHtml = note ? `<p class="stream-table-note">${note}</p>` : "";
             return `
