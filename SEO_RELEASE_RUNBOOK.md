@@ -5,10 +5,18 @@
 - SEO stack: GA4 + Google Search Console
 - Address policy: district-level only
 
+## Status Snapshot (2026-03-04)
+- Google Search Console verification tag: configured in `index.html`
+- GA4 measurement ID: configured in `index.html` (`G-YJ8P67WYLQ`)
+- Local checks: `node scripts/seo_release_audit.mjs` = PASS
+- Local checks: `node scripts/check_content_master_consistency.mjs` = PASS
+- Handoff details: `GSC_GA4_HANDOFF_2026-03-04.md`
+
 ## Phase 0 (before release)
-1. Set real credentials
-- Replace `GA4_MEASUREMENT_ID` in `index.html`
-- Replace `google-site-verification` token in `index.html`
+1. Confirm credentials
+- Confirm `GA4_MEASUREMENT_ID` in `index.html` is not placeholder
+- Confirm `google-site-verification` in `index.html` is not placeholder
+- Only if rotated, replace both values and rerun checks
 
 2. Run local checks
 - `node scripts/check_content_master_consistency.mjs`
