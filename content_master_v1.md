@@ -54,6 +54,11 @@
 ### 3. 料金・曜日・時間
 - textFlow: structured
 
+#### Text 0（共通注記）
+```text
+※2026年3月、内容・料金一部改定（大人・子ども共通）
+```
+
 #### Text 1
 ```text
 ※「自宅練習サポート動画」について
@@ -177,6 +182,13 @@ https://kogumarr.netlify.app/
       "subtitle": "",
       "textFlow": "structured",
       "blocks": [
+        {
+          "type": "text",
+          "className": "stream-text--pricing-revision-note",
+          "lines": [
+            "※2026年3月、内容・料金一部改定（大人・子ども共通）"
+          ]
+        },
         {
           "type": "text",
           "lines": [
