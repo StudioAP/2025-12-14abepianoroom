@@ -2227,6 +2227,13 @@
         }
 
         @media (max-width: 768px) {
+            .fade-in,
+            .fade-in.active {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
             .hero {
                 border-radius: var(--hero-photo-radius-mobile, 6px);
             }
