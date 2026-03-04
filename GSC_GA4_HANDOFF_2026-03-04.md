@@ -71,3 +71,29 @@
 - `changefreq` / `priority` は不要なら削除して運用簡素化
 - AI検索ポリシーを明示したい場合、`robots.txt` に
   `OAI-SearchBot` / `GPTBot` 方針を追加するか検討
+
+## 6) 運用担当AIへの返答テンプレ（実行文）
+- サイト側実装は完了済みです。
+- 対象: `https://abepianoroom.netlify.app/`
+- Search Consoleで所有権確認・sitemap送信・URL検査を実施してください。
+- GA4 DebugView/Realtimeで `page_view` / `contact_click` / `rhythmic_link_click` / `scroll_depth_50` / `scroll_depth_90` の疎通確認をお願いします。
+- 結果は `PASS/FAIL/保留` と原因分類（反映待ち・権限・計測未到達）で返却してください。
+
+## 7) 失敗時の切り分けルール（管理画面側）
+- GSC所有権失敗:
+  - メタタグ反映待ち（キャッシュ）またはURL-prefix不一致を確認
+- sitemap失敗:
+  - 送信URL誤り、HTTP到達不可、対象プロパティ不一致を確認
+- GA4未到達:
+  - データストリーム選択ミス、DebugView対象端末不一致、反映待ちを確認
+- イベント未発火:
+  - `forms.gle` 問い合わせリンクとリトミック外部リンク（`kogumarr.netlify.app`）のクリック導線を再確認
+
+## 8) 補足（要件解釈）
+- 「全ページ `head` にGA4タグ」は、現行実装ではJSが `gtag.js` を `head` に動的挿入する方式です。
+- 機能要件は充足しています。管理画面側で問題が出た場合のみ、静的タグ化を再検討してください。
+
+## 9) 前提条件
+- 正規URLは `https://abepianoroom.netlify.app/`
+- サイト構成は実質1ページ（`index.html`）
+- 今回はコード追加実装ではなく、管理画面側の受け入れ確認を優先する

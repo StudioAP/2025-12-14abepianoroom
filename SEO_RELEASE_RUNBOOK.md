@@ -12,6 +12,17 @@
 - Local checks: `node scripts/check_content_master_consistency.mjs` = PASS
 - Handoff details: `GSC_GA4_HANDOFF_2026-03-04.md`
 
+## Google Admin Handoff Rule
+- Current phase is operations handoff, not code implementation.
+- Use a single response to the admin operator:
+  - Site-side implementation is complete for `https://abepianoroom.netlify.app/`.
+  - Proceed with Search Console ownership/sitemap/URL inspection and GA4 DebugView/Realtime checks.
+  - Return status as `PASS/FAIL/保留` with cause classification:
+    - 反映待ち
+    - 権限不足
+    - 計測未到達
+- Escalate to code changes only if admin-side checks fail after cache/latency windows.
+
 ## Phase 0 (before release)
 1. Confirm credentials
 - Confirm `GA4_MEASUREMENT_ID` in `index.html` is not placeholder
