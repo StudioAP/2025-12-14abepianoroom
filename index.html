@@ -3100,6 +3100,28 @@
             }
         }
 
+        @media (min-width: 390px) and (max-width: 430px) {
+            .mobile-quick-nav-list {
+                gap: 0.22rem;
+                padding: 0.24rem;
+            }
+
+            .mobile-quick-link {
+                min-height: 2.38rem;
+                line-height: 1.16;
+                padding: 0.1rem 0.14rem;
+                font-size: clamp(0.62rem, 2.15vw, 0.72rem);
+            }
+
+            .has-mobile-quick-nav .content {
+                padding-bottom: calc(8.5rem + env(safe-area-inset-bottom));
+            }
+
+            .has-mobile-quick-nav .business-overview {
+                padding-bottom: calc(8.7rem + env(safe-area-inset-bottom));
+            }
+        }
+
         @media (min-width: 1024px) {
             .stream-quote--yasuno .stream-quote-text {
                 white-space: nowrap;
