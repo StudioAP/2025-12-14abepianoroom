@@ -11,6 +11,8 @@
 - Local checks: `node scripts/seo_release_audit.mjs` = PASS
 - Local checks: `node scripts/check_content_master_consistency.mjs` = PASS
 - Handoff details: `GSC_GA4_HANDOFF_2026-03-04.md`
+- User instructions: `USER_SEO_AI_ACTIONS_2026-03-04.md`
+- Admin execution brief: `GOOGLE_ADMIN_AI_EXECUTION_BRIEF_2026-03-04.md`
 
 ## Google Admin Handoff Rule
 - Current phase is operations handoff, not code implementation.
@@ -22,6 +24,22 @@
     - 権限不足
     - 計測未到達
 - Escalate to code changes only if admin-side checks fail after cache/latency windows.
+
+## Definition Of Done (Ops Acceptance)
+- GSC ownership is verified.
+- Sitemap submission is successful.
+- Top URL inspection result is obtained (and request indexing if needed).
+- GA4 Realtime receives `page_view`.
+- GA4 DebugView receives `contact_click`, `rhythmic_link_click`, `scroll_depth_50`, `scroll_depth_90`.
+- `contact_click` is set as Key event.
+- Status report is submitted in the standard table format with evidence links.
+- T+1 / T+3 / T+7 / T+14 checkpoints are completed.
+
+## AI Search Crawler Policy (Decision)
+- Policy: allow search bot only.
+- `OAI-SearchBot`: Allow
+- `GPTBot`: Disallow
+- Note: this requires `robots.txt` update and is a separate request for the site implementation owner.
 
 ## Phase 0 (before release)
 1. Confirm credentials
