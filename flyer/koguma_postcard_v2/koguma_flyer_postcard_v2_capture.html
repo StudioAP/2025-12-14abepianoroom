@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>こぐまリトミックルーム ハガキフライヤー V2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fdf6f0;
+      --text: #4a3728;
+      --accent-red: #f7708f;
+      --accent-cyan: #28c0cb;
+      --accent-green: #62d1b6;
+      --finish-w: 1178px;
+      --finish-h: 1747px;
+      --safe-inset: 59px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #efe6dd 0%, #f7efe7 100%);
+      color: var(--text);
+      font-family: "Noto Sans JP", sans-serif;
+      padding: 24px;
+    }
+
+    body.export {
+      padding: 0;
+      background: none;
+    }
+
+    .sheet {
+      width: 1249px;
+      height: 1816px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(54, 31, 18, 0.2);
+      isolation: isolate;
+    }
+
+    body.export .sheet {
+      box-shadow: none;
+    }
+
+    .guide-finish,
+    .guide-safe {
+      position: absolute;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .guide-finish {
+      inset: calc((1816px - var(--finish-h)) / 2) calc((1249px - var(--finish-w)) / 2);
+      border: 1.5px dashed rgba(40, 192, 203, 0.5);
+    }
+
+    .guide-safe {
+      inset: calc((1816px - var(--finish-h)) / 2 + var(--safe-inset)) calc((1249px - var(--finish-w)) / 2 + var(--safe-inset));
+      border: 1.5px dashed rgba(247, 112, 143, 0.45);
+    }
+
+    .artboard {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: 42% 43% 15%;
+    }
+
+    .hero-zone {
+      position: relative;
+      overflow: hidden;
+      padding: 84px 84px 56px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-zone::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(253, 246, 240, 0.2) 0%, rgba(253, 246, 240, 0.82) 72%, rgba(253, 246, 240, 0.96) 100%),
+                  url("assets/hero-illustration.jpg") center 24% / cover no-repeat;
+      transform: scale(1.04);
+      z-index: -2;
+    }
+
+    .hero-zone::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 28%, rgba(40, 192, 203, 0.13) 0%, rgba(40, 192, 203, 0) 56%),
+                  radial-gradient(circle at 24% 74%, rgba(247, 112, 143, 0.14) 0%, rgba(247, 112, 143, 0) 52%);
+      z-index: -1;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-family: "Shippori Mincho", serif;
+      font-size: 88px;
+      line-height: 1.06;
+      letter-spacing: 0.02em;
+      color: #3a2a1d;
+      text-shadow: 0 3px 22px rgba(255, 255, 255, 0.35);
+    }
+
+    .hero-copy p {
+      margin: 20px 0 0;
+      display: inline-block;
+      font-size: 35px;
+      line-height: 1.45;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      padding: 9px 20px;
+      border-radius: 999px;
+      color: #3f3024;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(74, 55, 40, 0.18);
+    }
+
+    .content-zone {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 44px;
+      padding: 56px 84px 44px;
+      align-items: stretch;
+    }
+
+    .left-stack {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 30px;
+      min-height: 0;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-family: "Shippori Mincho", serif;
+      font-size: 38px;
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      color: #3b2a1d;
+    }
+
+    .rhythmic-summary {
+      border-left: 6px solid var(--accent-cyan);
+      padding: 0 0 0 20px;
+    }
+
+    .rhythmic-summary p {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1.52;
+      letter-spacing: 0.02em;
+    }
+
+    .rhythmic-summary p + p {
+      margin-top: 10px;
+    }
+
+    .feature-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .feature {
+      padding: 17px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(74, 55, 40, 0.14);
+      background: #fffefc;
+      box-shadow: 0 6px 18px rgba(74, 55, 40, 0.08);
+      font-size: 30px;
+      line-height: 1.38;
+      font-weight: 500;
+    }
+
+    .feature strong {
+      color: #352418;
+      font-weight: 700;
+    }
+
+    .feature.tag-1 {
+      border-left: 8px solid var(--accent-red);
+    }
+
+    .feature.tag-2 {
+      border-left: 8px solid var(--accent-green);
+    }
+
+    .feature.tag-3 {
+      border-left: 8px solid var(--accent-cyan);
+    }
+
+    .location-block {
+      align-self: end;
+      padding-top: 2px;
+    }
+
+    .location-block p {
+      margin: 10px 0 0;
+      font-size: 24px;
+      line-height: 1.58;
+      letter-spacing: 0.02em;
+    }
+
+    .location-block .location-em {
+      color: #332215;
+      font-weight: 700;
+    }
+
+    .right-stack {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 22px;
+    }
+
+    .pichan-frame {
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      min-height: 0;
+      box-shadow: 0 14px 36px rgba(74, 55, 40, 0.2);
+    }
+
+    .pichan-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 36%;
+    }
+
+    .pichan-chip {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #3b2a1d;
+      font-size: 18px;
+      line-height: 1;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(74, 55, 40, 0.16);
+      font-weight: 500;
+    }
+
+    .qr-panel {
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(74, 55, 40, 0.18);
+      box-shadow: 0 8px 22px rgba(74, 55, 40, 0.1);
+      padding: 18px 18px 16px;
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      align-content: start;
+    }
+
+    .qr-panel p {
+      margin: 0;
+      text-align: center;
+      font-size: 22px;
+      line-height: 1.35;
+      font-weight: 700;
+      color: #3a2a1d;
+    }
+
+    .qr-panel img {
+      width: 210px;
+      height: 210px;
+      background: #fff;
+      padding: 8px;
+      border: 1px solid rgba(74, 55, 40, 0.16);
+      border-radius: 10px;
+    }
+
+    .footer-zone {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: 0 84px 44px;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .main-note {
+      font-size: 18px;
+      line-height: 1.5;
+      color: rgba(74, 55, 40, 0.84);
+      letter-spacing: 0.02em;
+    }
+
+    .adult-strip {
+      min-height: 58px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #362317 0%, #4a3728 58%, #5a4434 100%);
+      color: #fdf6f0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 14px;
+    }
+
+    .adult-strip .text {
+      font-size: 24px;
+      letter-spacing: 0.06em;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    .adult-strip img {
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+      background: #fff;
+      padding: 3px;
+    }
+
+    .guide-label {
+      position: absolute;
+      z-index: 21;
+      right: 12px;
+      top: 8px;
+      font-size: 14px;
+      color: rgba(74, 55, 40, 0.62);
+      letter-spacing: 0.04em;
+    }
+
+    body.export .guide-finish,
+    body.export .guide-safe,
+    body.export .guide-label {
+      display: none;
+    }
+
+    @media print {
+      @page {
+        size: 106mm 154mm;
+        margin: 0;
+      }
+
+      body {
+        padding: 0;
+        background: none;
+      }
+
+      .sheet {
+        box-shadow: none;
+      }
+
+      .guide-finish,
+      .guide-safe,
+      .guide-label {
+        display: none;
+      }
+    }
+  </style>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+  <article class="sheet" role="img" aria-label="こぐまリトミックルームのハガキフライヤー案">
+    <div class="guide-label">BLEED 3mm / SAFE 5mm</div>
+    <div class="guide-finish"></div>
+    <div class="guide-safe"></div>
+
+    <div class="artboard">
+      <section class="hero-zone">
+        <div class="hero-copy">
+          <h1>こぐまリトミックルーム</h1>
+          <p>感じる心と考える力を育む</p>
+        </div>
+      </section>
+
+      <section class="content-zone">
+        <div class="left-stack">
+          <div class="rhythmic-summary">
+            <h2 class="section-title">リトミックってなに？</h2>
+            <p>音楽に合わせて、聴く・感じる・動く。</p>
+            <p>遊びの体験の中で、リズム感と表現力、考える力を育てます。</p>
+          </div>
+
+          <div class="feature-grid">
+            <p class="feature tag-1"><strong>個人〜3人までの少人数制</strong></p>
+            <p class="feature tag-2"><strong>体験会：</strong>2026年3・4月予定<br><strong>本開講：</strong>2026年5月予定</p>
+          </div>
+
+          <div class="location-block">
+            <h2 class="section-title">立地</h2>
+            <p class="location-em">京都市北区上賀茂（上賀茂・西賀茂・市原エリア）</p>
+            <p>京都市バス・京都バス「ゴルフ場前」徒歩約12分</p>
+            <p>北大路駅から車で12分</p>
+          </div>
+        </div>
+
+        <div class="right-stack">
+          <figure class="pichan-frame">
+            <img src="assets/pichan.jpg" alt="ぴーちゃん" />
+            <figcaption class="pichan-chip">ぴーちゃん</figcaption>
+          </figure>
+
+          <div class="qr-panel">
+            <p>詳細・お申し込みはこちら</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=0&data=https%3A%2F%2Fkogumarr.netlify.app%2F" alt="こぐまリトミックルーム QRコード" />
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer-zone">
+        <p class="main-note">※体験会・本開講日程は変更となる場合があります。最新情報はQR先のWebサイトでご確認ください。</p>
+        <div class="adult-strip">
+          <div class="text">安部ピアノルーム　大人レッスン募集中</div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Fabepianoroom.netlify.app%2F" alt="安部ピアノルーム QRコード" />
+        </div>
+      </footer>
+    </div>
+  </article>
+  <script>
+    if (new URLSearchParams(window.location.search).get("export") === "1") {
+      document.body.classList.add("export");
+    }
+  </script>
+</body>
+</html>
