@@ -147,22 +147,25 @@
     .left-brand .mini {
       margin: 0;
       font-family: "Shippori Mincho", serif;
-      font-size: 43px;
-      line-height: 1.35;
-      letter-spacing: 0.06em;
+      font-size: 20px;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
       color: rgba(74, 55, 40, 0.76);
       font-weight: 500;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .left-brand h1 {
       margin: 0;
       font-family: "Shippori Mincho", serif;
-      font-size: 71px;
-      line-height: 1.18;
-      letter-spacing: 0.04em;
+      font-size: 46px;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
       color: #2f2118;
       font-weight: 600;
-      white-space: pre-line;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .left-brand-rule {
@@ -209,6 +212,8 @@
       font-size: 34px;
       letter-spacing: 0.12em;
       line-height: 1.2;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .open-banner .title {
@@ -217,17 +222,37 @@
       line-height: 1.2;
       font-weight: 600;
       letter-spacing: 0.03em;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .lead {
       margin: 0;
       font-family: "Shippori Mincho", serif;
-      font-size: 48px;
-      line-height: 1.28;
-      letter-spacing: 0.02em;
+      font-size: 0;
+      line-height: 1;
+      letter-spacing: 0;
       color: #6f4b2c;
+      display: grid;
+      gap: 4px;
+    }
+
+    .lead .lead-main {
+      font-size: 58px;
+      line-height: 1.18;
+      letter-spacing: 0.02em;
       font-weight: 600;
-      white-space: pre-line;
+      white-space: nowrap;
+      text-wrap: nowrap;
+    }
+
+    .lead .lead-subline {
+      font-size: 56px;
+      line-height: 1.16;
+      letter-spacing: 0.01em;
+      font-weight: 600;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .sub {
@@ -239,6 +264,8 @@
       font-weight: 500;
       border-bottom: 1px solid rgba(74, 55, 40, 0.18);
       padding-bottom: 10px;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .section-label {
@@ -250,6 +277,8 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .section-label::after {
@@ -292,14 +321,18 @@
       line-height: 1.2;
       font-weight: 600;
       color: #72502f;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .schedule-card .main {
       margin: 0;
-      font-size: 38px;
+      font-size: 35px;
       line-height: 1.28;
       font-weight: 700;
       color: #6e4a2a;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .schedule-card .subline {
@@ -395,10 +428,12 @@
     }
 
     .abepiano-strip .text {
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1.24;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
       font-weight: 500;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
 
     .abepiano-strip .qr-mini {
@@ -447,8 +482,7 @@
 
         <div class="left-brand">
           <p class="mini">安部ピアノルーム リトミッククラス</p>
-          <h1>こぐまリトミック
-ルーム</h1>
+          <h1>こぐまリトミックルーム</h1>
           <div class="left-brand-rule" aria-hidden="true"></div>
         </div>
 
@@ -461,8 +495,7 @@
           <div class="title">新規オープンのお知らせ</div>
         </header>
 
-        <p class="lead">感じる、考える、を育む
-1〜3名の少人数音楽教室</p>
+        <p class="lead"><span class="lead-main">感じる、考える、を育む</span><span class="lead-subline">1〜3名の少人数音楽教室</span></p>
 
         <p class="sub">京都市北区 上賀茂エリア / 1歳〜（親子ペア歓迎）</p>
 

@@ -37,7 +37,7 @@
 
 ## Figma
 - 既存ファイル: `https://www.figma.com/design/RzOW6sBqSmpoYONIQryWfI`
-- 追加ノードURL: `https://www.figma.com/design/RzOW6sBqSmpoYONIQryWfI?node-id=3-2`
+- 追加ノードURL: `https://www.figma.com/design/RzOW6sBqSmpoYONIQryWfI?node-id=4-2`
 - 追加ノード運用名: `V4_LayoutRef_Landscape`
 
 ## 備考
