@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V4_LayoutRef_Landscape | こぐまリトミックルーム ハガキフライヤー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fdf6f0;
+      --text: #4a3728;
+      --accent-red: #F7708F;
+      --accent-cyan: #28C0CB;
+      --accent-green: #62D1B6;
+      --paper-shadow: rgba(35, 23, 16, 0.19);
+      --frame-w: 1816px;
+      --frame-h: 1249px;
+      --finish-w: 1748px;
+      --finish-h: 1181px;
+      --safe-inset: 59px;
+      --left-col: 34%;
+      --right-col: 66%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: linear-gradient(180deg, #efe5da 0%, #f8efe7 100%);
+      color: var(--text);
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    }
+
+    body.export {
+      background: none;
+      padding: 0;
+    }
+
+    .sheet {
+      width: var(--frame-w);
+      height: var(--frame-h);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 48px var(--paper-shadow);
+      background: var(--bg);
+      isolation: isolate;
+    }
+
+    body.export .sheet {
+      box-shadow: none;
+    }
+
+    .guide-finish,
+    .guide-safe {
+      position: absolute;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .guide-finish {
+      inset: calc((var(--frame-h) - var(--finish-h)) / 2) calc((var(--frame-w) - var(--finish-w)) / 2);
+      border: 1.6px dashed rgba(40, 192, 203, 0.52);
+    }
+
+    .guide-safe {
+      inset: calc((var(--frame-h) - var(--finish-h)) / 2 + var(--safe-inset)) calc((var(--frame-w) - var(--finish-w)) / 2 + var(--safe-inset));
+      border: 1.6px dashed rgba(247, 112, 143, 0.48);
+    }
+
+    .guide-label {
+      position: absolute;
+      z-index: 21;
+      right: 16px;
+      top: 10px;
+      font-size: 14px;
+      color: rgba(74, 55, 40, 0.58);
+      letter-spacing: 0.04em;
+      font-weight: 500;
+    }
+
+    body.export .guide-finish,
+    body.export .guide-safe,
+    body.export .guide-label {
+      display: none;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--left-col) var(--right-col);
+      width: 100%;
+      height: 100%;
+    }
+
+    .left-panel {
+      position: relative;
+      padding: 48px 44px 38px;
+      background:
+        linear-gradient(180deg, rgba(74, 55, 40, 0.03) 0%, rgba(74, 55, 40, 0.09) 100%),
+        #efe4cd;
+      border-right: 1px solid rgba(74, 55, 40, 0.14);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .left-panel::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 72%;
+      height: 18px;
+      background: linear-gradient(90deg, rgba(119, 82, 44, 0.9), rgba(119, 82, 44, 0.65));
+    }
+
+    .left-visual {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .left-visual img {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      display: block;
+      filter: saturate(0.92) contrast(1.03);
+    }
+
+    .left-brand {
+      text-align: center;
+      display: grid;
+      gap: 12px;
+      align-content: center;
+      justify-items: center;
+    }
+
+    .left-brand .mini {
+      margin: 0;
+      font-family: "Shippori Mincho", serif;
+      font-size: 43px;
+      line-height: 1.35;
+      letter-spacing: 0.06em;
+      color: rgba(74, 55, 40, 0.76);
+      font-weight: 500;
+    }
+
+    .left-brand h1 {
+      margin: 0;
+      font-family: "Shippori Mincho", serif;
+      font-size: 71px;
+      line-height: 1.18;
+      letter-spacing: 0.04em;
+      color: #2f2118;
+      font-weight: 600;
+      white-space: pre-line;
+    }
+
+    .left-brand-rule {
+      width: min(80%, 300px);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(74, 55, 40, 0.42), transparent);
+    }
+
+    .left-access {
+      margin: 0;
+      text-align: center;
+      font-size: 30px;
+      line-height: 1.44;
+      letter-spacing: 0.02em;
+      color: rgba(74, 55, 40, 0.86);
+    }
+
+    .left-access .icon {
+      color: var(--accent-red);
+      margin-right: 0.14em;
+    }
+
+    .right-panel {
+      padding: 32px 34px 24px;
+      background: #fffefc;
+      display: grid;
+      grid-template-rows: auto auto auto auto auto auto auto;
+      gap: 12px;
+    }
+
+    .open-banner {
+      border-radius: 11px;
+      background: linear-gradient(135deg, #8b5f35 0%, #7c522e 100%);
+      color: #fff8ef;
+      text-align: center;
+      padding: 16px 20px 17px;
+      display: grid;
+      gap: 4px;
+      box-shadow: 0 7px 18px rgba(53, 34, 20, 0.14);
+    }
+
+    .open-banner .season {
+      font-family: "Shippori Mincho", serif;
+      font-size: 34px;
+      letter-spacing: 0.12em;
+      line-height: 1.2;
+    }
+
+    .open-banner .title {
+      font-family: "Shippori Mincho", serif;
+      font-size: 52px;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .lead {
+      margin: 0;
+      font-family: "Shippori Mincho", serif;
+      font-size: 48px;
+      line-height: 1.28;
+      letter-spacing: 0.02em;
+      color: #6f4b2c;
+      font-weight: 600;
+      white-space: pre-line;
+    }
+
+    .sub {
+      margin: 0;
+      font-size: 37px;
+      line-height: 1.34;
+      letter-spacing: 0.01em;
+      color: rgba(74, 55, 40, 0.78);
+      font-weight: 500;
+      border-bottom: 1px solid rgba(74, 55, 40, 0.18);
+      padding-bottom: 10px;
+    }
+
+    .section-label {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      color: #8b5f35;
+      letter-spacing: 0.18em;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: rgba(139, 95, 53, 0.44);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .schedule-card {
+      border-radius: 14px;
+      border: 3px solid rgba(74, 55, 40, 0.2);
+      background: #fff;
+      padding: 11px 14px;
+      display: grid;
+      gap: 5px;
+      align-content: start;
+    }
+
+    .schedule-card.spring {
+      border-color: rgba(212, 158, 72, 0.75);
+      background: rgba(255, 244, 220, 0.62);
+    }
+
+    .schedule-card.may {
+      border-color: rgba(98, 186, 114, 0.72);
+      background: rgba(232, 248, 233, 0.65);
+    }
+
+    .schedule-card .head {
+      margin: 0;
+      font-family: "Shippori Mincho", serif;
+      font-size: 51px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: #72502f;
+    }
+
+    .schedule-card .main {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.28;
+      font-weight: 700;
+      color: #6e4a2a;
+    }
+
+    .schedule-card .subline {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.35;
+      color: rgba(74, 55, 40, 0.8);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px 15px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      border-top: 1px solid rgba(74, 55, 40, 0.17);
+      border-bottom: 1px solid rgba(74, 55, 40, 0.17);
+      padding-block: 14px;
+    }
+
+    .feature-item {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.34;
+      color: #3f2f22;
+      font-weight: 600;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .feature-item .icon {
+      color: #ab8445;
+      font-size: 26px;
+      transform: translateY(0.2em);
+    }
+
+    .feature-item small {
+      display: block;
+      margin-top: 2px;
+      font-size: 26px;
+      line-height: 1.35;
+      color: rgba(74, 55, 40, 0.84);
+      font-weight: 500;
+    }
+
+    .contact-zone {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 16px;
+      padding-top: 4px;
+    }
+
+    .contact-copy {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.34;
+      font-weight: 600;
+      color: #69492d;
+    }
+
+    .contact-copy .url {
+      display: block;
+      color: #5b442f;
+      font-size: 35px;
+      margin-top: 2px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      word-break: break-all;
+    }
+
+    .qr-main {
+      width: 124px;
+      height: 124px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 6px;
+      border: 2px solid rgba(74, 55, 40, 0.24);
+    }
+
+    .abepiano-strip {
+      min-height: 60px;
+      border-radius: 9px;
+      background: linear-gradient(90deg, #362317 0%, #4a3728 58%, #5a4434 100%);
+      color: #fdf6f0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 14px;
+    }
+
+    .abepiano-strip .text {
+      font-size: 26px;
+      line-height: 1.24;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .abepiano-strip .qr-mini {
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+      background: #fff;
+      padding: 3px;
+    }
+
+    @media print {
+      @page {
+        size: 154mm 106mm;
+        margin: 0;
+      }
+
+      body {
+        padding: 0;
+        background: none;
+      }
+
+      .sheet {
+        box-shadow: none;
+      }
+
+      .guide-finish,
+      .guide-safe,
+      .guide-label {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet" role="img" aria-label="こぐまリトミックルーム 告知ハガキ 2026年春 横向き V4">
+    <div class="guide-label">BLEED 3mm / SAFE 5mm</div>
+    <div class="guide-finish"></div>
+    <div class="guide-safe"></div>
+
+    <div class="layout">
+      <aside class="left-panel">
+        <figure class="left-visual">
+          <img src="assets/koguma-illustration.png" alt="こぐまリトミックルーム こぐまイラスト" />
+        </figure>
+
+        <div class="left-brand">
+          <p class="mini">安部ピアノルーム リトミッククラス</p>
+          <h1>こぐまリトミック
+ルーム</h1>
+          <div class="left-brand-rule" aria-hidden="true"></div>
+        </div>
+
+        <p class="left-access"><span class="icon">📍</span>京都市北区上賀茂 柊野<br>北大路バスターミナルより<br>北3系統「ゴルフ場前」徒歩12分<br>北大路駅から車で12分</p>
+      </aside>
+
+      <section class="right-panel">
+        <header class="open-banner">
+          <div class="season">— 2026年春 —</div>
+          <div class="title">新規オープンのお知らせ</div>
+        </header>
+
+        <p class="lead">感じる、考える、を育む
+1〜3名の少人数音楽教室</p>
+
+        <p class="sub">京都市北区 上賀茂エリア / 1歳〜（親子ペア歓迎）</p>
+
+        <p class="section-label">2026 SCHEDULE</p>
+
+        <div class="schedule-grid">
+          <article class="schedule-card spring">
+            <p class="head">3月・4月</p>
+            <p class="main">体験レッスン受付中</p>
+            <p class="subline">日程は随時お知らせ</p>
+          </article>
+          <article class="schedule-card may">
+            <p class="head">5月〜</p>
+            <p class="main">本開講スタート</p>
+            <p class="subline">定員になり次第締切</p>
+          </article>
+        </div>
+
+        <div class="feature-grid">
+          <p class="feature-item"><span class="icon">♪</span><span>完全少人数制<small>1〜3名で丁寧な指導</small></span></p>
+          <p class="feature-item"><span class="icon">✦</span><span>NPO認定カリキュラム<small>リトミック研究センター準拠</small></span></p>
+          <p class="feature-item"><span class="icon">♫</span><span>体験型レッスン<small>見て・聞いて・感じる音楽教育</small></span></p>
+          <p class="feature-item"><span class="icon">◎</span><span>集中力・表現力を育む<small>音楽を通した総合発育</small></span></p>
+        </div>
+
+        <div class="contact-zone">
+          <p class="contact-copy">お問合せ・ご予約<br>Googleフォームより受付中<br><span class="url">kogumarr.netlify.app</span></p>
+          <img class="qr-main" src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=0&data=https%3A%2F%2Fkogumarr.netlify.app%2F" alt="こぐまリトミックルーム QRコード" />
+        </div>
+
+        <div class="abepiano-strip">
+          <div class="text">安部ピアノルーム　大人レッスン募集中</div>
+          <img class="qr-mini" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Fabepianoroom.netlify.app%2F" alt="安部ピアノルーム QRコード" />
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <script>
+    if (new URLSearchParams(window.location.search).get("export") === "1") {
+      document.body.classList.add("export");
+    }
+  </script>
+</body>
+</html>
