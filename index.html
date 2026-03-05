@@ -10,6 +10,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light only">
+    <meta name="supported-color-schemes" content="light">
+    <meta name="theme-color" content="#fcf6f4">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#fcf6f4">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="Ba4qap8XP56DDNrc1ybWkaMPgTZiPMZ_C9DApIcjh54">
 
@@ -101,6 +105,7 @@
             /* 文字色（ダークブラウン） */
             --bg: #fcf6f4;
             /* 背景色（クリーム系） */
+            color-scheme: light only;
             --gold: #c38b94;
             --brand-main: #8e4b5e;
             --brand-soft: rgba(142, 75, 94, 0.18);
@@ -128,6 +133,12 @@
             --hero-nav-overlap-offset: 0px;
         }
 
+        html,
+        body {
+            background: var(--bg, #fcf6f4);
+            color: var(--text, #4b3633);
+        }
+
         body {
             margin: 0;
             background: var(--bg);
@@ -136,6 +147,76 @@
             overflow-x: hidden;
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html,
+            body {
+                background: var(--bg, #fcf6f4);
+                color: var(--text, #4b3633);
+            }
+        }
+
+        .dark-color-notice {
+            position: fixed;
+            top: calc(0.72rem + env(safe-area-inset-top));
+            left: 0.72rem;
+            right: 0.72rem;
+            z-index: 220;
+            pointer-events: none;
+        }
+
+        .dark-color-notice[hidden] {
+            display: none !important;
+        }
+
+        .dark-color-notice__inner {
+            width: min(100%, 640px);
+            margin: 0 auto;
+            padding: 0.62rem 0.68rem;
+            border: 1px solid rgba(74, 55, 40, 0.26);
+            border-radius: 12px;
+            background: rgba(253, 246, 240, 0.97);
+            box-shadow: 0 8px 22px rgba(38, 28, 20, 0.16);
+            color: var(--text, #4b3633);
+            display: flex;
+            gap: 0.56rem;
+            align-items: flex-start;
+            justify-content: space-between;
+            pointer-events: auto;
+            box-sizing: border-box;
+        }
+
+        .dark-color-notice__text {
+            margin: 0;
+            font-family: var(--hero-utility-font);
+            font-size: 0.76rem;
+            line-height: 1.5;
+            letter-spacing: 0.01em;
+            flex: 1 1 auto;
+        }
+
+        .dark-color-notice__close {
+            appearance: none;
+            border: 1px solid rgba(74, 55, 40, 0.3);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.94);
+            color: var(--text, #4b3633);
+            font-family: var(--hero-utility-font);
+            font-size: 0.72rem;
+            line-height: 1;
+            padding: 0.34rem 0.58rem;
+            min-height: 36px;
+            cursor: pointer;
+            white-space: nowrap;
+            flex: 0 0 auto;
+        }
+
+        .dark-color-notice__close:hover,
+        .dark-color-notice__close:focus-visible {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(74, 55, 40, 0.52);
+            outline: none;
         }
 
         /* フェードイン */
@@ -3366,6 +3447,13 @@
 </head>
 
 <body class="hero-band-inphoto-top-plain hero-variant-c">
+    <div id="dark-mode-color-notice" class="dark-color-notice" role="status" aria-live="polite" hidden>
+        <div class="dark-color-notice__inner">
+            <p class="dark-color-notice__text">ダークテーマ（Night Mode / Auto Dark）により色が変わる場合は、ブラウザ設定で自動ダーク化をOFFにしてください。</p>
+            <button id="dark-mode-color-notice-close" class="dark-color-notice__close" type="button" aria-label="閉じる">閉じる</button>
+        </div>
+    </div>
+
     <nav id="section-nav" class="section-nav" aria-label="セクションナビゲーション">
         <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="section-nav-list" aria-label="メニューを開閉">
             <span class="menu-toggle-bar"></span>
@@ -3650,6 +3738,9 @@
         const HERO_DESKTOP_REFERENCE_RATIO_FALLBACK = 1.5;
         const HERO_DESKTOP_TOP_SHARE_FALLBACK = 0.5;
         const HERO_DESKTOP_BOTTOM_SHARE_FALLBACK = 0.5;
+        const DARK_NOTICE_STORAGE_KEY = "koguma_dark_notice_dismissed";
+        const COLOR_DISTANCE_THRESHOLD = 28;
+        const BG_FALLBACK_HEX = "#fcf6f4";
         const GA4_MEASUREMENT_ID = "G-YJ8P67WYLQ";
         const GA4_PLACEHOLDER_ID = "G-XXXXXXXXXX";
         const CONTACT_FORM_HOST = "forms.gle";
@@ -3682,6 +3773,7 @@
             const heroBand = getHeroBandFromQuery();
             applyHeroBand(heroBand);
             setHeroText();
+            initializeDarkColorNotice();
             renderHeroNotice();
             renderHeroPrimaryCta();
             const heroTextElement = document.querySelector(".hero-txt");
@@ -4038,6 +4130,168 @@
             } catch (_) {
                 return null;
             }
+        }
+
+        function isMobileTargetPlatform() {
+            const userAgent = String((navigator && navigator.userAgent) || "");
+            const uaDataPlatform = String(
+                (navigator && navigator.userAgentData && navigator.userAgentData.platform) || ""
+            );
+            const platform = String((navigator && navigator.platform) || "");
+            const maxTouchPoints = Number((navigator && navigator.maxTouchPoints) || 0);
+
+            const isAndroid = /Android/i.test(userAgent)
+                || /Android/i.test(uaDataPlatform)
+                || /Android/i.test(platform);
+            const isIOSDevice = /iPhone|iPad|iPod/i.test(userAgent)
+                || /iPhone|iPad|iPod|iOS/i.test(uaDataPlatform)
+                || /iPhone|iPad|iPod/i.test(platform);
+            const isIPadOSDesktopUA = platform === "MacIntel" && maxTouchPoints > 1;
+
+            return isAndroid || isIOSDevice || isIPadOSDesktopUA;
+        }
+
+        function safeGetStorage(key) {
+            try {
+                return window.localStorage.getItem(String(key || ""));
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function safeSetStorage(key, value) {
+            try {
+                window.localStorage.setItem(String(key || ""), String(value || ""));
+            } catch (_) {
+                // localStorage unavailable; continue without persistence
+            }
+        }
+
+        function parseColorToRgb(colorString) {
+            const rawColor = String(colorString || "").trim();
+            if (!rawColor) return null;
+
+            if (rawColor.startsWith("#")) {
+                const hex = rawColor.slice(1).trim();
+                if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+                    return {
+                        r: parseInt(hex[0] + hex[0], 16),
+                        g: parseInt(hex[1] + hex[1], 16),
+                        b: parseInt(hex[2] + hex[2], 16)
+                    };
+                }
+                if (/^[0-9a-fA-F]{4}$/.test(hex)) {
+                    return {
+                        r: parseInt(hex[0] + hex[0], 16),
+                        g: parseInt(hex[1] + hex[1], 16),
+                        b: parseInt(hex[2] + hex[2], 16)
+                    };
+                }
+                if (/^[0-9a-fA-F]{6}$/.test(hex) || /^[0-9a-fA-F]{8}$/.test(hex)) {
+                    return {
+                        r: parseInt(hex.slice(0, 2), 16),
+                        g: parseInt(hex.slice(2, 4), 16),
+                        b: parseInt(hex.slice(4, 6), 16)
+                    };
+                }
+                return null;
+            }
+
+            const rgbMatch = rawColor.match(/^rgba?\((.+)\)$/i);
+            if (!rgbMatch) return null;
+            const rgbValues = rgbMatch[1]
+                .split(/[,\s/]+/)
+                .map((part) => part.trim())
+                .filter(Boolean)
+                .slice(0, 3)
+                .map((part) => Number.parseFloat(part));
+            if (rgbValues.length < 3 || rgbValues.some((value) => !Number.isFinite(value))) {
+                return null;
+            }
+            return {
+                r: Math.max(0, Math.min(255, Math.round(rgbValues[0]))),
+                g: Math.max(0, Math.min(255, Math.round(rgbValues[1]))),
+                b: Math.max(0, Math.min(255, Math.round(rgbValues[2])))
+            };
+        }
+
+        function resolveExpectedBgColor() {
+            const rootStyle = window.getComputedStyle(document.documentElement);
+            const bgVariable = String(rootStyle.getPropertyValue("--bg") || "").trim();
+            return parseColorToRgb(bgVariable) || parseColorToRgb(BG_FALLBACK_HEX);
+        }
+
+        function getActualBodyBgColor() {
+            if (!document.body) return null;
+            const bodyStyle = window.getComputedStyle(document.body);
+            return parseColorToRgb(bodyStyle.backgroundColor);
+        }
+
+        function computeRgbDistance(expectedRgb, actualRgb) {
+            if (!expectedRgb || !actualRgb) return 0;
+            const dr = expectedRgb.r - actualRgb.r;
+            const dg = expectedRgb.g - actualRgb.g;
+            const db = expectedRgb.b - actualRgb.b;
+            return Math.sqrt((dr * dr) + (dg * dg) + (db * db));
+        }
+
+        function showDarkColorNotice(noticeEl) {
+            if (!noticeEl) return;
+            noticeEl.hidden = false;
+        }
+
+        function hideDarkColorNotice(noticeEl) {
+            if (!noticeEl) return;
+            noticeEl.hidden = true;
+        }
+
+        function shouldShowDarkColorNotice() {
+            try {
+                if (safeGetStorage(DARK_NOTICE_STORAGE_KEY) === "1") return false;
+                const darkModeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+                if (!darkModeMedia.matches) return false;
+                if (!isMobileTargetPlatform()) return false;
+
+                const expectedBg = resolveExpectedBgColor();
+                const actualBg = getActualBodyBgColor();
+                if (!expectedBg || !actualBg) return false;
+
+                const distance = computeRgbDistance(expectedBg, actualBg);
+                return distance >= COLOR_DISTANCE_THRESHOLD;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function initializeDarkColorNotice() {
+            const noticeEl = document.getElementById("dark-mode-color-notice");
+            const closeButton = document.getElementById("dark-mode-color-notice-close");
+            if (!noticeEl || !closeButton) return;
+
+            const updateNoticeVisibility = () => {
+                if (shouldShowDarkColorNotice()) {
+                    showDarkColorNotice(noticeEl);
+                    return;
+                }
+                hideDarkColorNotice(noticeEl);
+            };
+
+            if (noticeEl.dataset.bound !== "1") {
+                noticeEl.dataset.bound = "1";
+                closeButton.addEventListener("click", () => {
+                    safeSetStorage(DARK_NOTICE_STORAGE_KEY, "1");
+                    hideDarkColorNotice(noticeEl);
+                });
+
+                const darkModeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+                if (typeof darkModeMedia.addEventListener === "function") {
+                    darkModeMedia.addEventListener("change", updateNoticeVisibility);
+                } else if (typeof darkModeMedia.addListener === "function") {
+                    darkModeMedia.addListener(updateNoticeVisibility);
+                }
+            }
+
+            updateNoticeVisibility();
         }
 
         function isValidGa4MeasurementId(measurementId) {
