@@ -6,7 +6,7 @@
   - `index.html` に `google-site-verification` を実装済み
   - token: `Ba4qap8XP56DDNrc1ybWkaMPgTZiPMZ_C9DApIcjh54`
 - GA4:
-  - Measurement ID: `G-YJ8P67WYLQ`
+  - Measurement ID: `G-QVNNE0X4VW`
   - `gtag.js` 読み込みと `gtag('config', ...)` 実装済み
 - カスタムイベント実装済み:
   - `contact_click`

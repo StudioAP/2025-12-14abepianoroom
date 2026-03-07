@@ -7,7 +7,7 @@
 
 ## Status Snapshot (2026-03-04)
 - Google Search Console verification tag: configured in `index.html`
-- GA4 measurement ID: configured in `index.html` (`G-YJ8P67WYLQ`)
+- GA4 measurement ID: configured in `index.html` (`G-QVNNE0X4VW`)
 - Local checks: `node scripts/seo_release_audit.mjs` = PASS
 - Local checks: `node scripts/check_content_master_consistency.mjs` = PASS
 - Handoff details: `GSC_GA4_HANDOFF_2026-03-04.md`

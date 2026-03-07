@@ -7,7 +7,7 @@
 ## 現状前提
 - 本番URL: `https://abepianoroom.netlify.app/`
 - 実装済みイベント: `contact_click`, `rhythmic_link_click`, `scroll_depth_50`, `scroll_depth_90`
-- 計測ID: `G-YJ8P67WYLQ`
+- 計測ID: `G-QVNNE0X4VW`
 - GSC verification token: 実装済み
 
 ## ユーザが準備するもの
