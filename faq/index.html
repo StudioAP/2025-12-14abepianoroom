@@ -6,19 +6,52 @@
     <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light">
     <meta name="theme-color" content="#fcf6f4">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <title>よくあるご質問｜安部ピアノルーム（京都市のピアノ教室）</title>
     <meta name="description" content="京都市北区上賀茂の安部ピアノルームによくいただくご質問をまとめました。上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリア、駐車、住所公開方針、体験レッスン、オンライン対応などをご案内しています。">
     <link rel="canonical" href="https://abepianoroom.netlify.app/faq/">
+    <meta property="og:site_name" content="安部ピアノルーム">
     <meta property="og:type" content="article">
     <meta property="og:title" content="よくあるご質問｜安部ピアノルーム（京都市のピアノ教室）">
     <meta property="og:description" content="京都市北区上賀茂の安部ピアノルームによくいただくご質問をまとめました。上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリアから通っていただいています。">
     <meta property="og:url" content="https://abepianoroom.netlify.app/faq/">
+    <meta property="og:locale" content="ja_JP">
     <meta property="og:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
+    <meta property="og:image:alt" content="よくあるご質問｜安部ピアノルーム（京都市のピアノ教室）">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="よくあるご質問｜安部ピアノルーム（京都市のピアノ教室）">
     <meta name="twitter:description" content="京都市北区上賀茂の安部ピアノルームによくいただくご質問をまとめました。上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリアから通っていただいています。">
     <meta name="twitter:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
+    <meta name="twitter:image:alt" content="よくあるご質問｜安部ピアノルーム（京都市のピアノ教室）">
+    <meta name="twitter:url" content="https://abepianoroom.netlify.app/faq/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVNNE0X4VW"></script>
+    <script>
+        (function initializeGa4Head() {
+            const measurementId = "G-QVNNE0X4VW";
+            const safeId = String(measurementId || "").trim().toUpperCase();
+            const isValid = /^G-[A-Z0-9]+$/.test(safeId) && safeId !== "G-XXXXXXXXXX";
+            window.__GA4_MEASUREMENT_ID = measurementId;
+            window.__GA4_DEBUG_MODE = /\bga_debug=1\b/.test(String(window.location.search || ""));
+            window.dataLayer = window.dataLayer || [];
+            if (typeof window.gtag !== "function") {
+                window.gtag = function gtag() {
+                    window.dataLayer.push(arguments);
+                };
+            }
+            if (!isValid) {
+                window.__GA4_ENABLED = false;
+                return;
+            }
+            window.gtag("js", new Date());
+            window.gtag("config", measurementId, {
+                anonymize_ip: true,
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false,
+                debug_mode: window.__GA4_DEBUG_MODE
+            });
+            window.__GA4_ENABLED = true;
+        }());
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@400;500&display=swap" rel="stylesheet">
@@ -293,7 +326,7 @@
         </section>
 
         <div class="actions">
-            <a class="action-link action-link--primary" href="https://forms.gle/7JeN5nX7z1ajVziV6" target="_blank" rel="noopener" data-generate-lead="1">お問合せ</a>
+            <a class="action-link action-link--primary" href="https://forms.gle/7JeN5nX7z1ajVziV6" target="_blank" rel="noopener" data-contact-click="1">お問合せ</a>
             <a class="action-link" href="/kyoto-adult-piano/">大人のピアノレッスンについて</a>
             <a class="action-link" href="/kyoto-piano-school/">京都市のピアノ教室について</a>
             <a class="action-link" href="/">トップページへ戻る</a>
@@ -301,54 +334,19 @@
     </main>
 
     <script>
-        const GA4_MEASUREMENT_ID = "G-QVNNE0X4VW";
-
-        function isValidGa4MeasurementId(measurementId) {
-            const safeId = String(measurementId || "").trim().toUpperCase();
-            return /^G-[A-Z0-9]+$/.test(safeId) && safeId !== "G-XXXXXXXXXX";
-        }
-
-        function bootstrapGtagQueue() {
-            window.dataLayer = window.dataLayer || [];
-            if (typeof window.gtag !== "function") {
-                window.gtag = function gtag() {
-                    window.dataLayer.push(arguments);
-                };
-            }
-        }
-
-        function loadGa4Script(measurementId) {
-            const existing = document.querySelector(`script[data-ga4-id="${measurementId}"]`);
-            if (existing) return;
-            const gaScript = document.createElement("script");
-            gaScript.async = true;
-            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-            gaScript.dataset.ga4Id = measurementId;
-            document.head.appendChild(gaScript);
-        }
-
-        function initializeGa4() {
-            bootstrapGtagQueue();
-            if (!isValidGa4MeasurementId(GA4_MEASUREMENT_ID)) return;
-            loadGa4Script(GA4_MEASUREMENT_ID);
-            window.gtag("js", new Date());
-            window.gtag("config", GA4_MEASUREMENT_ID, { send_page_view: true });
-        }
-
-        function trackGenerateLead(event) {
-            if (typeof window.gtag !== "function") return;
+        function trackContactClick(event) {
+            if (!(window.__GA4_ENABLED === true) || typeof window.gtag !== "function") return;
             const anchor = event.currentTarget;
             const linkUrl = String(anchor && anchor.href ? anchor.href : anchor.getAttribute("href") || "");
-            window.gtag("event", "generate_lead", {
+            window.gtag("event", "contact_click", {
                 placement: "faq_page",
                 link_url: linkUrl
             });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            initializeGa4();
-            document.querySelectorAll("a[data-generate-lead]").forEach((anchor) => {
-                anchor.addEventListener("click", trackGenerateLead, { passive: true });
+            document.querySelectorAll("a[data-contact-click]").forEach((anchor) => {
+                anchor.addEventListener("click", trackContactClick, { passive: true });
             });
         });
     </script>

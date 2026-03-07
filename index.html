@@ -14,7 +14,7 @@
     <meta name="supported-color-schemes" content="light">
     <meta name="theme-color" content="#fcf6f4">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#fcf6f4">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="google-site-verification" content="Ba4qap8XP56DDNrc1ybWkaMPgTZiPMZ_C9DApIcjh54">
 
     <title>安部ピアノルーム｜京都市のピアノ教室（京都市内の幅広いエリア）</title>
@@ -39,7 +39,36 @@
     <meta name="twitter:title" content="安部ピアノルーム｜京都市のピアノ教室（京都市内の幅広いエリア）">
     <meta name="twitter:description" content="京都市でピアノ教室をお探しの方へ。安部ピアノルームは京都市北区上賀茂の自宅教室です。上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリアから通っていただいています。大人・子ども向け個人レッスンとリトミックをご案内しています。">
     <meta name="twitter:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
+    <meta name="twitter:image:alt" content="安部ピアノルーム｜京都市のピアノ教室（京都市内の幅広いエリア）">
     <meta name="twitter:url" content="https://abepianoroom.netlify.app/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVNNE0X4VW"></script>
+    <script>
+        (function initializeGa4Head() {
+            const measurementId = "G-QVNNE0X4VW";
+            const safeId = String(measurementId || "").trim().toUpperCase();
+            const isValid = /^G-[A-Z0-9]+$/.test(safeId) && safeId !== "G-XXXXXXXXXX";
+            window.__GA4_MEASUREMENT_ID = measurementId;
+            window.__GA4_DEBUG_MODE = /\bga_debug=1\b/.test(String(window.location.search || ""));
+            window.dataLayer = window.dataLayer || [];
+            if (typeof window.gtag !== "function") {
+                window.gtag = function gtag() {
+                    window.dataLayer.push(arguments);
+                };
+            }
+            if (!isValid) {
+                window.__GA4_ENABLED = false;
+                return;
+            }
+            window.gtag("js", new Date());
+            window.gtag("config", measurementId, {
+                anonymize_ip: true,
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false,
+                debug_mode: window.__GA4_DEBUG_MODE
+            });
+            window.__GA4_ENABLED = true;
+        }());
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3482,6 +3511,7 @@
         <div id="section-nav-list" class="section-nav-list"></div>
     </nav>
 
+    <main id="main-content">
     <div class="hero" id="hero-slider">
         <div class="slide active" data-boot="1" style="background-image: image-set(url('image/hero-lead-opt.webp') type('image/webp'), url('image/hero-lead-opt.jpg') type('image/jpeg'));"></div>
         <div class="hero-desktop-top-fixed" id="hero-desktop-top-fixed"></div>
@@ -3507,28 +3537,85 @@
 
     <div class="content">
         <section id="rooms" class="stream-sec">
-            <noscript>
-                <article class="stream-section">
-                    <h2 class="stream-header">教室のご案内</h2>
-                    <div class="stream-body">
-                        <p class="stream-p">京都市北区上賀茂（上賀茂・西賀茂・市原エリア）で、大人・子ども向けの自宅個人レッスンを行っています。</p>
-                        <p class="stream-p">体験レッスンは1,000円です。お問い合わせは下記フォームからご連絡ください。</p>
-                        <p class="stream-p"><a class="stream-inline-link" href="https://forms.gle/7JeN5nX7z1ajVziV6" target="_blank" rel="noopener">お問合せフォーム</a></p>
+            <article id="section-1" class="stream-section fade-in active">
+                <h2 class="stream-header">ごあいさつ</h2>
+                <figure class="stream-cover"><picture><source srcset="image/main2.webp" type="image/webp"><img class="stream-cover-image" src="image/main2.jpg" data-image-path="image/main2.jpg" alt="ごあいさつの案内写真" loading="lazy" decoding="async"></picture></figure>
+                <div class="stream-body"><div class="stream-text"><p class="stream-p">初めてだけど弾いてみたい…<br>昔習っていてまた弾きたくなった…<br>シニア世代の趣味に…<br>お腹の赤ちゃんと音楽を楽しみたい…<br>育休中、乳児を連れて一息つきたい…<br>教職課程で必要になった…<br>そんな方に向けた、ピアノレッスンを行っています。<br>体験レッスンは1,000円です。<br>「お問合せ」からお気軽にご質問ください。</p></div></div>
+            </article>
+
+            <article id="section-2" class="stream-section fade-in active">
+                <h2 class="stream-header">対象・場所</h2>
+                <figure class="stream-cover"><picture><source srcset="image/image1.webp" type="image/webp"><img class="stream-cover-image" src="image/image1.jpg" data-image-path="image/image1.jpg" alt="対象・場所の案内写真" loading="lazy" decoding="async"></picture></figure>
+                <div class="stream-body"><div class="stream-text"><h3 class="stream-h3">対象</h3><p class="stream-p">・初心者〜中級くらいの方<br>・大人は女性の方のみを対象としています</p><h3 class="stream-h3">場所</h3><p class="stream-p">京都市北区上賀茂（自宅教室）<br>最寄りバス停（京都市バス・京都バス「ゴルフ場前」）より徒歩12分<br>（※同バス停へは北大路からバス12〜13分）<br>西賀茂・市原からも通いやすい立地です。</p><p class="stream-p">※自宅教室につき住所詳細は、お問合せくださった方にお伝えしております。駐車可。</p></div><div class="stream-text stream-text--address-ad-note"><p class="stream-p">（住所登録が必須となるGoogle広告は掲載しておりません）</p></div></div>
+            </article>
+
+            <article id="section-3" class="stream-section fade-in active">
+                <h2 class="stream-header">料金・曜日・時間</h2>
+                <figure class="stream-cover"><picture><source srcset="image/image2.webp" type="image/webp"><img class="stream-cover-image" src="image/image2.jpg" data-image-path="image/image2.jpg" alt="料金・曜日・時間の案内写真" loading="lazy" decoding="async"></picture></figure>
+                <div class="stream-body"><div class="stream-text stream-text--pricing-revision-note"><p class="stream-p">※2026年3月、大人・子どもレッスンともに内容・料金一部改定</p></div>
+                <section class="stream-table-wrap stream-table-wrap--pricing">
+                    <p class="stream-table-caption stream-table-caption--with-sub"><span class="stream-table-caption-main"><span class="stream-table-caption-text">大人レッスン</span></span><span class="stream-table-caption-sub">初めての音符読みから、ジャズ、ポピュラー、ソナチネ、ショパン、ワルツなど、<br>クラシックまでお好きな曲でのレッスン。</span></p>
+                    <div class="stream-table-scroll">
+                        <table class="stream-table stream-table--pricing">
+                            <thead>
+                                <tr><th scope="col">内容</th><th scope="col">時間・回数・料金</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td data-label="内容">単発レッスン</td><td data-label="時間・回数・料金"><span class="pricing-cell-main"><span class="table-num">60分×1回</span></span><span class="pricing-cell-price"><span class="table-num">5,000円</span></span></td></tr>
+                                <tr><td data-label="内容">回数券レッスン</td><td data-label="時間・回数・料金"><span class="pricing-cell-main"><span class="table-num">60分×6回</span></span><span class="pricing-cell-price"><span class="table-num">27,000円</span></span></td></tr>
+                                <tr><td data-label="内容">曜日・時間帯</td><td data-label="時間・回数・料金"><span class="pricing-cell-main">月・火・木・金</span><span class="pricing-cell-price"><span class="table-num">9:50〜10:50</span>／<span class="table-num">11:00〜12:00</span></span><span class="pricing-cell-sub">都度ご相談ください</span></td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                </article>
-            </noscript>
+                    <p class="stream-table-note">※オンライン対応希望時はご相談ください。</p>
+                </section>
+
+                <section class="stream-table-wrap stream-table-wrap--pricing">
+                    <p class="stream-table-caption stream-table-caption--with-badge stream-table-caption--with-sub"><span class="stream-table-caption-main"><span class="stream-table-caption-text">子どもレッスン（高校生まで）</span><span class="stream-table-caption-badge stream-table-caption-badge--alert">現在満室</span></span><span class="stream-table-caption-sub">ピアノの導入初歩からブルクミュラー、ソナチネソナタの基礎から。<br>ときには、お好きな曲にチャレンジも。</span></p>
+                    <div class="stream-table-scroll">
+                        <table class="stream-table stream-table--pricing">
+                            <thead>
+                                <tr><th scope="col">内容</th><th scope="col">時間・回数・料金</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td data-label="内容"><span class="pricing-cell-main">子どもレッスン</span><span class="pricing-cell-sub pricing-cell-sub--support-video">&lt;自宅練習サポート動画付き&gt;</span></td><td data-label="時間・回数・料金"><span class="pricing-cell-main"><span class="table-num">30分×月3回</span></span><span class="pricing-cell-price"><span class="table-num">7,500円</span></span><span class="pricing-cell-sub">月・火・木 <span class="table-num">16:30-18:00</span>／土 午前中〜<span class="table-num">14:00</span></span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <div class="stream-text"><p class="stream-p">※「自宅練習サポート動画」について</p><p class="stream-p">子どもレッスンにおいては、保護者の皆さま・お子さま双方の生活スタイルが多様化する中で、練習時間を確保することが簡単ではないこともあると思います。</p><p class="stream-p">新しく学んだこと、難しかった箇所、音符の読み方、音の聞き取りクイズ、指の体操などなど、<br>お一人お一人のその日のレッスンで学んだことを楽しく復習できる内容でサポート動画をお付けします。<br>短い時間でもピアノに向かう時間が積み重なれば必ず弾けるように成長していきます。</p><p class="stream-p">焦らずゆっくり、自分の練習ペースが掴めるように時間をかけて指導いたします。</p></div></div>
+            </article>
+
+            <article id="section-4" class="stream-section fade-in active">
+                <h2 class="stream-header">大人向けへの想い</h2>
+                <figure class="stream-cover"><picture><source srcset="image/image3.webp" type="image/webp"><img class="stream-cover-image" src="image/image3.jpg" data-image-path="image/image3.jpg" alt="大人向けへの想いの案内写真" loading="lazy" decoding="async"></picture></figure>
+                <div class="stream-body"><div class="stream-text"><p class="stream-p">ピアノレッスンを始めて約18年。<br>大人向けのレッスンコースを始めました。</p><p class="stream-p">私は、娘が0歳だったころ、娘を連れてとあるお稽古ごとに通い、心身ともにとてもリフレッシュできた経験があります。<br>そんな実体験から、（いつか自分もピアノを通して、大人の方がホッとできるような、大人向けのレッスンをご提供できたら...）と、願うようになりました。</p><p class="stream-p">ピアノはこつこつと続けて上達していくものですが、仕事や子育てをしていると、続けるのが大変になることもあります。</p><p class="stream-p">都合がつかない時期には休み、時間ができたらまた再開する...というのも「続け方」だと思います。<br>生活に合わせて、歩いたり、立ち止まったり、時には走ってピアノに打ち込んでみたり。<br>長い長い目で見て、「弾きたい」気持ちを大切に、ピアノを楽しんでいただけたらと思っています。</p></div></div>
+            </article>
+
+            <article id="section-5" class="stream-section fade-in active">
+                <h2 class="stream-header">教室概要・講師略歴</h2>
+                <figure class="stream-cover"><picture><source srcset="image/image4.webp" type="image/webp"><img class="stream-cover-image" src="image/image4.jpg" data-image-path="image/image4.jpg" alt="教室概要・講師略歴の案内写真" loading="lazy" decoding="async"></picture></figure>
+                <div class="stream-body"><div class="stream-text"><h3 class="stream-h3">安部ピアノルーム</h3><p class="stream-p">・京都市北区上賀茂の自宅で2009年開室</p><h3 class="stream-h3">講師略歴</h3><p class="stream-p">大阪音楽大学短期学部卒。<br>ヤマハ指導・演奏 グレード5級。<br>NPO法人リトミック研究センター指導資格取得。<br>卒業後、ピアノレッスンの傍らホテルレストラン奏者、ブライダル奏者、またジャズ奏者としても活動経験あり。<br>音楽以外に好きなものは料理・お菓子作り、おいしいものを食べること。</p></div></div>
+            </article>
+
+            <article id="section-6" class="stream-section fade-in active">
+                <h2 class="stream-header">小さいお子様向け（リトミック）</h2>
+                <figure class="stream-cover"><picture><source srcset="image/image5.webp" type="image/webp"><img class="stream-cover-image" src="image/image5.jpg" data-image-path="image/image5.jpg" alt="小さいお子様向け（リトミック）の案内写真" loading="lazy" decoding="async"></picture></figure>
+                <div class="stream-body"><div class="stream-text"><p class="stream-p">小さいお子様向けに、リトミッククラスを開講しています。<br>こちらをご覧ください：<br><a class="stream-inline-link" href="https://kogumarr.netlify.app/" target="_blank" rel="noopener">こぐまリトミックルームを見る</a></p><p class="stream-p">※ご不明点はお気軽にお問い合わせください。</p></div></div>
+            </article>
         </section>
     </div>
+    </main>
 
-    <div class="business-overview">
+    <footer class="business-overview">
         <div id="business-hero-copy" class="hero-txt hero-txt--business" aria-label="教室名エリア（フッター）">
-            <span id="business-hero-endorsement" class="h-endorsement" hidden></span>
+            <span id="business-hero-endorsement" class="h-endorsement">depuis 2009</span>
             <div id="business-brand-lockup" class="hero-brand-lockup hero-brand-lockup--business">
-                <h2 id="business-hero-title" class="h-title"></h2>
+                <h2 id="business-hero-title" class="h-title">安部ピアノルーム</h2>
             </div>
             <div id="business-hero-meta-row" class="hero-meta-row">
-                <span id="business-hero-sub" class="h-sub"></span>
-                <span id="business-hero-location" class="h-loc h-loc--badge"></span>
+                <span id="business-hero-sub" class="h-sub">大人・子ども向け 自宅個人レッスン</span>
+                <span id="business-hero-location" class="h-loc h-loc--badge">京都市北区上賀茂・西賀茂・市原エリア</span>
             </div>
         </div>
         <div class="bo-links">
@@ -3537,7 +3624,7 @@
             <p><a href="/faq/" class="bo-mail">よくあるご質問</a></p>
             <p><a href="https://kogumarr.netlify.app/" class="bo-mail" target="_blank" rel="noopener">こぐまリトミックルームはこちら</a></p>
         </div>
-    </div>
+    </footer>
 
     <script>
         // 本文・写真仕様の正本は content_master_v1.md です。変更後は必ず
@@ -3766,8 +3853,6 @@
         const HERO_DESKTOP_REFERENCE_RATIO_FALLBACK = 1.5;
         const HERO_DESKTOP_TOP_SHARE_FALLBACK = 0.5;
         const HERO_DESKTOP_BOTTOM_SHARE_FALLBACK = 0.5;
-        const GA4_MEASUREMENT_ID = "G-QVNNE0X4VW";
-        const GA4_PLACEHOLDER_ID = "G-XXXXXXXXXX";
         const CONTACT_FORM_HOST = "forms.gle";
         const CONTACT_FORM_PATH_TOKEN = "/7JeN5nX7z1ajVziV6";
         const RHYTHMIC_ROOM_HOST = "kogumarr.netlify.app";
@@ -4156,32 +4241,6 @@
             }
         }
 
-        function isValidGa4MeasurementId(measurementId) {
-            const safeId = String(measurementId || "").trim().toUpperCase();
-            if (!safeId || safeId === GA4_PLACEHOLDER_ID) return false;
-            return /^G-[A-Z0-9]+$/.test(safeId);
-        }
-
-        function bootstrapGtagQueue() {
-            window.dataLayer = window.dataLayer || [];
-            if (typeof window.gtag !== "function") {
-                window.gtag = function gtag() {
-                    window.dataLayer.push(arguments);
-                };
-            }
-        }
-
-        function loadGa4Script(measurementId) {
-            if (!measurementId) return;
-            const existing = document.querySelector(`script[data-ga4-id="${measurementId}"]`);
-            if (existing) return;
-            const gaScript = document.createElement("script");
-            gaScript.async = true;
-            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-            gaScript.dataset.ga4Id = measurementId;
-            document.head.appendChild(gaScript);
-        }
-
         function trackSeoEvent(eventName, params = {}) {
             if (!analyticsState.enabled || typeof window.gtag !== "function") return;
             window.gtag("event", eventName, params);
@@ -4292,24 +4351,9 @@
         }
 
         function initializeSeoAnalytics() {
-            bootstrapGtagQueue();
+            analyticsState.enabled = window.__GA4_ENABLED === true && typeof window.gtag === "function";
             setupAnalyticsLinkTracking();
             setupAnalyticsScrollDepthTracking();
-
-            if (!isValidGa4MeasurementId(GA4_MEASUREMENT_ID)) {
-                return;
-            }
-
-            loadGa4Script(GA4_MEASUREMENT_ID);
-            const debugMode = /\bga_debug=1\b/.test(String(window.location.search || ""));
-            window.gtag("js", new Date());
-            window.gtag("config", GA4_MEASUREMENT_ID, {
-                anonymize_ip: true,
-                allow_google_signals: false,
-                allow_ad_personalization_signals: false,
-                debug_mode: debugMode
-            });
-            analyticsState.enabled = true;
         }
 
         function includesNormalized(text, keyword) {
