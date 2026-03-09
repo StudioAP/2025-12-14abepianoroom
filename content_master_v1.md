@@ -8,7 +8,7 @@
 ## ヒーロー仕様
 - title: 安部ピアノルーム
 - sub: 大人・子ども向け 自宅個人レッスン
-- location: 京都市北区上賀茂（上賀茂・西賀茂・市原エリア）
+- location: 京都市北区 上賀茂
 - mobileSplitTopFirstImage: image/hero-lead-opt.jpg
 - mobileSplitBottomImage: image/hero-top-opt.jpg
 - rotationImages:
@@ -124,7 +124,7 @@ https://kogumarr.netlify.app/
   "hero": {
     "title": "安部ピアノルーム",
     "sub": "大人・子ども向け 自宅個人レッスン",
-    "location": "京都市北区上賀茂（上賀茂・西賀茂・市原エリア）",
+    "location": "京都市北区 上賀茂",
     "rotationImages": [
       "image/hero-lead-opt.jpg",
       "image/hero-top-opt.jpg",
