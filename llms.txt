@@ -4,6 +4,15 @@ Site: https://abepianoroom.netlify.app/
 Language: ja-JP
 Summary: 京都市北区上賀茂のピアノ教室。上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリアから通っていただいています。大人・子ども向けの自宅個人レッスンとリトミッククラスをご案内しています。
 
+Facts:
+- Location: 京都市北区上賀茂（自宅教室）
+- Audience: 大人は女性のみ、子どもは高校生まで
+- Lessons: 大人向け個人レッスン / 子ども向け個人レッスン / リトミック
+- Trial lesson: ピアノ体験レッスンは 1,000円
+- Access: 最寄りバス停「ゴルフ場前」徒歩12分、駐車可
+- Address policy: 自宅教室のため住所詳細はお問合せ後に案内
+- Online: 大人レッスンはオンライン相談可
+
 Pages:
 - https://abepianoroom.netlify.app/ | 安部ピアノルーム｜京都市のピアノ教室（京都市内の幅広いエリア）
 - https://abepianoroom.netlify.app/kyoto-piano-school/ | 京都市のピアノ教室をお探しの方へ｜安部ピアノルーム
@@ -12,3 +21,6 @@ Pages:
 
 Contact:
 - https://forms.gle/7JeN5nX7z1ajVziV6 | お問合せ
+
+Related:
+- https://kogumarr.netlify.app/ | こぐまリトミックルーム

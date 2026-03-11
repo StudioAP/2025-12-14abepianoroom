@@ -74,6 +74,7 @@ function auditSupportPage({ label, filePath, canonicalUrl, expectedPlacement, ex
     addCheck(`${label} og:url`, new RegExp(`<meta property="og:url" content="${escapeRegExp(canonicalUrl)}">`).test(source), canonicalUrl);
     addCheck(`${label} og:site_name`, /<meta property="og:site_name" content="安部ピアノルーム">/.test(source), "安部ピアノルーム");
     addCheck(`${label} og:locale`, /<meta property="og:locale" content="ja_JP">/.test(source), "ja_JP");
+    addCheck(`${label} og:image dimensions`, /<meta property="og:image:width" content="1200">/.test(source) && /<meta property="og:image:height" content="630">/.test(source) && /<meta property="og:image:type" content="image\/jpeg">/.test(source), "1200x630 image/jpeg");
     addCheck(`${label} og:image:alt`, /<meta property="og:image:alt" content="[^"]+">/.test(source), "image alt");
     addCheck(`${label} Twitter card`, /<meta name="twitter:card" content="summary_large_image">/.test(source), "summary_large_image");
     addCheck(`${label} twitter:url`, new RegExp(`<meta name="twitter:url" content="${escapeRegExp(canonicalUrl)}">`).test(source), canonicalUrl);
@@ -81,6 +82,9 @@ function auditSupportPage({ label, filePath, canonicalUrl, expectedPlacement, ex
     addCheck(`${label} fonts preconnect`, /<link rel="preconnect" href="https:\/\/fonts.googleapis.com">/.test(source) && /<link rel="preconnect" href="https:\/\/fonts.gstatic.com" crossorigin>/.test(source), "google font origins");
     addCheck(`${label} head GA boot`, /window\.__GA4_MEASUREMENT_ID/.test(source) && /const measurementId = "G-QVNNE0X4VW"/.test(source), "GA4 head bootstrap");
     addCheck(`${label} WebPage JSON-LD`, /"@type"\s*:\s*"WebPage"/.test(source), "WebPage");
+    addCheck(`${label} WebPage primary image`, /"primaryImageOfPage"\s*:/.test(source), "primaryImageOfPage");
+    addCheck(`${label} WebPage publisher`, /"publisher"\s*:\s*\{\s*"@id"\s*:\s*"https:\/\/abepianoroom\.netlify\.app\/#organization"/.test(source), "publisher");
+    addCheck(`${label} WebPage about`, /"about"\s*:\s*\{\s*"@id"\s*:\s*"https:\/\/abepianoroom\.netlify\.app\/#organization"/.test(source), "about");
     addCheck(`${label} Breadcrumb JSON-LD`, /"@type"\s*:\s*"BreadcrumbList"/.test(source), "BreadcrumbList");
     addCheck(`${label} main landmark`, /<main\b/.test(source), "main");
     if (expectFaqLink) {
@@ -106,6 +110,7 @@ try {
     addCheck("meta description", /<meta name="description" content="[^"]+">/.test(indexSource), "description exists");
     addCheck("canonical", new RegExp(`<link rel="canonical" href="${escapeRegExp(CANONICAL_URL)}">`).test(indexSource), CANONICAL_URL);
     addCheck("OG core", /<meta property="og:title"/.test(indexSource) && /<meta property="og:description"/.test(indexSource) && /<meta property="og:image"/.test(indexSource), "og:title/description/image");
+    addCheck("OG image dimensions", /<meta property="og:image:width" content="1200">/.test(indexSource) && /<meta property="og:image:height" content="630">/.test(indexSource) && /<meta property="og:image:type" content="image\/jpeg">/.test(indexSource), "1200x630 image/jpeg");
     addCheck("Twitter card", /<meta name="twitter:card" content="summary_large_image">/.test(indexSource), "summary_large_image");
     addCheck("twitter:image:alt", /<meta name="twitter:image:alt" content="[^"]+">/.test(indexSource), "image alt");
     addCheck("fonts preconnect", /<link rel="preconnect" href="https:\/\/fonts.googleapis.com">/.test(indexSource) && /<link rel="preconnect" href="https:\/\/fonts.gstatic.com" crossorigin>/.test(indexSource), "google font origins");
@@ -118,6 +123,8 @@ try {
         addCheck("JSON-LD @type", jsonLd["@type"] === "MusicSchool", `@type=${jsonLd["@type"] || ""}`);
         addCheck("JSON-LD @id", String(jsonLd["@id"] || "").trim().length > 0, "@id");
         addCheck("JSON-LD inLanguage", jsonLd.inLanguage === "ja-JP", `inLanguage=${jsonLd.inLanguage || ""}`);
+        addCheck("JSON-LD logo", Boolean(jsonLd.logo), "logo");
+        addCheck("JSON-LD availableLanguage", jsonLd.availableLanguage === "ja", `availableLanguage=${jsonLd.availableLanguage || ""}`);
         addCheck("JSON-LD potentialAction", Boolean(jsonLd.potentialAction && jsonLd.potentialAction.target), "potentialAction.target");
     }
 
@@ -174,6 +181,8 @@ try {
     addCheck("llms root URL", llmsSource.includes(CANONICAL_URL), CANONICAL_URL);
     addCheck("llms page list", llmsSource.includes(KYOTO_SUPPORT_URL) && llmsSource.includes(ADULT_SUPPORT_URL) && llmsSource.includes(FAQ_URL), "all page URLs");
     addCheck("llms contact URL", llmsSource.includes("https://forms.gle/7JeN5nX7z1ajVziV6"), "contact URL");
+    addCheck("llms facts", llmsSource.includes("Facts:") && llmsSource.includes("Audience:") && llmsSource.includes("Address policy:"), "facts block");
+    addCheck("llms related site", llmsSource.includes("https://kogumarr.netlify.app/"), "related site");
 
     addCheck("netlify headers", /\[\[headers\]\]/.test(netlifySource) && /for = "\/image\/\*"/.test(netlifySource), "header rules + image cache");
     addCheck("netlify llms header", /for = "\/llms\.txt"/.test(netlifySource) && /Content-Type = "text\/plain; charset=UTF-8"/.test(netlifySource), LLMS_URL);
