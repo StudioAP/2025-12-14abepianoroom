@@ -17,6 +17,8 @@ const ADULT_SUPPORT_URL = "https://abepianoroom.netlify.app/kyoto-adult-piano/";
 const SITEMAP_URL = `${CANONICAL_URL}sitemap.xml`;
 const LLMS_URL = `${CANONICAL_URL}llms.txt`;
 const META_ROBOTS_CONTENT = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+const BROAD_AREA_PHRASE = "京都市内の幅広いエリア";
+const BROAD_AREA_NOSNIPPET = '<span data-nosnippet>上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリアから通っていただいています。</span>';
 const strictMode = process.argv.includes("--strict");
 
 const checks = [];
@@ -60,14 +62,21 @@ function extractGa4MeasurementId(source) {
     return legacyMatch ? String(legacyMatch[1] || "").trim() : "";
 }
 
-function auditSupportPage({ label, filePath, canonicalUrl, expectedPlacement, expectFaqLink = true }) {
+function extractHead(source) {
+    const match = source.match(/<head>[\s\S]*?<\/head>/);
+    return match ? match[0] : "";
+}
+
+function auditSupportPage({ label, filePath, canonicalUrl, expectedPlacement, expectFaqLink = true, expectBroadAreaNosnippet = false }) {
     const relativePath = path.relative(ROOT, filePath);
     const exists = fs.existsSync(filePath);
     addCheck(`${label} exists`, exists, relativePath);
     if (!exists) return;
 
     const source = readUtf8(filePath);
+    const headSource = extractHead(source);
     addCheck(`${label} meta robots`, new RegExp(`<meta name="robots" content="${escapeRegExp(META_ROBOTS_CONTENT)}">`).test(source), META_ROBOTS_CONTENT);
+    addCheck(`${label} head broad-area phrase removed`, !headSource.includes(BROAD_AREA_PHRASE), BROAD_AREA_PHRASE);
     addCheck(`${label} meta description`, /<meta name="description" content="[^"]+">/.test(source), "description exists");
     addCheck(`${label} canonical`, new RegExp(`<link rel="canonical" href="${escapeRegExp(canonicalUrl)}">`).test(source), canonicalUrl);
     addCheck(`${label} og core`, /<meta property="og:title"/.test(source) && /<meta property="og:description"/.test(source) && /<meta property="og:image"/.test(source), "og:title/description/image");
@@ -96,6 +105,9 @@ function auditSupportPage({ label, filePath, canonicalUrl, expectedPlacement, ex
     if (expectedPlacement) {
         addCheck(`${label} contact_click placement`, new RegExp(`placement:\\s*"${escapeRegExp(expectedPlacement)}"`).test(source), expectedPlacement);
     }
+    if (expectBroadAreaNosnippet) {
+        addCheck(`${label} broad-area data-nosnippet`, source.includes(BROAD_AREA_NOSNIPPET), "data-nosnippet around broad-area phrase");
+    }
 }
 
 try {
@@ -105,8 +117,10 @@ try {
     const netlifySource = readUtf8(NETLIFY_FILE);
     const llmsSource = readUtf8(LLMS_FILE);
     const jsonLd = extractJsonLd(indexSource);
+    const indexHead = extractHead(indexSource);
 
     addCheck("meta robots", new RegExp(`<meta name="robots" content="${escapeRegExp(META_ROBOTS_CONTENT)}">`).test(indexSource), META_ROBOTS_CONTENT);
+    addCheck("home head broad-area phrase removed", !indexHead.includes(BROAD_AREA_PHRASE), BROAD_AREA_PHRASE);
     addCheck("meta description", /<meta name="description" content="[^"]+">/.test(indexSource), "description exists");
     addCheck("canonical", new RegExp(`<link rel="canonical" href="${escapeRegExp(CANONICAL_URL)}">`).test(indexSource), CANONICAL_URL);
     addCheck("OG core", /<meta property="og:title"/.test(indexSource) && /<meta property="og:description"/.test(indexSource) && /<meta property="og:image"/.test(indexSource), "og:title/description/image");
@@ -183,6 +197,7 @@ try {
     addCheck("llms contact URL", llmsSource.includes("https://forms.gle/7JeN5nX7z1ajVziV6"), "contact URL");
     addCheck("llms facts", llmsSource.includes("Facts:") && llmsSource.includes("Audience:") && llmsSource.includes("Address policy:"), "facts block");
     addCheck("llms related site", llmsSource.includes("https://kogumarr.netlify.app/"), "related site");
+    addCheck("llms broad-area phrase removed", !llmsSource.includes(BROAD_AREA_PHRASE), BROAD_AREA_PHRASE);
 
     addCheck("netlify headers", /\[\[headers\]\]/.test(netlifySource) && /for = "\/image\/\*"/.test(netlifySource), "header rules + image cache");
     addCheck("netlify llms header", /for = "\/llms\.txt"/.test(netlifySource) && /Content-Type = "text\/plain; charset=UTF-8"/.test(netlifySource), LLMS_URL);
@@ -191,20 +206,23 @@ try {
         label: "kyoto support page",
         filePath: path.join(ROOT, "kyoto-piano-school", "index.html"),
         canonicalUrl: KYOTO_SUPPORT_URL,
-        expectedPlacement: "kyoto_page"
+        expectedPlacement: "kyoto_page",
+        expectBroadAreaNosnippet: true
     });
     auditSupportPage({
         label: "adult support page",
         filePath: path.join(ROOT, "kyoto-adult-piano", "index.html"),
         canonicalUrl: ADULT_SUPPORT_URL,
-        expectedPlacement: "adult_kyoto_page"
+        expectedPlacement: "adult_kyoto_page",
+        expectBroadAreaNosnippet: true
     });
     auditSupportPage({
         label: "faq page",
         filePath: path.join(ROOT, "faq", "index.html"),
         canonicalUrl: FAQ_URL,
         expectedPlacement: "faq_page",
-        expectFaqLink: false
+        expectFaqLink: false,
+        expectBroadAreaNosnippet: true
     });
 } catch (error) {
     console.error(`FAIL: ${error.message}`);
