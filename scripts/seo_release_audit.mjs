@@ -19,6 +19,7 @@ const LLMS_URL = `${CANONICAL_URL}llms.txt`;
 const META_ROBOTS_CONTENT = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const BROAD_AREA_PHRASE = "京都市内の幅広いエリア";
 const BROAD_AREA_NOSNIPPET = '<span data-nosnippet>上賀茂・西賀茂・市原に加えて、京都市内の幅広いエリアから通っていただいています。</span>';
+const SEARCH_ALIAS_NAME = "安部ピアノルーム 上賀茂";
 const strictMode = process.argv.includes("--strict");
 
 const checks = [];
@@ -81,7 +82,7 @@ function auditSupportPage({ label, filePath, canonicalUrl, expectedPlacement, ex
     addCheck(`${label} canonical`, new RegExp(`<link rel="canonical" href="${escapeRegExp(canonicalUrl)}">`).test(source), canonicalUrl);
     addCheck(`${label} og core`, /<meta property="og:title"/.test(source) && /<meta property="og:description"/.test(source) && /<meta property="og:image"/.test(source), "og:title/description/image");
     addCheck(`${label} og:url`, new RegExp(`<meta property="og:url" content="${escapeRegExp(canonicalUrl)}">`).test(source), canonicalUrl);
-    addCheck(`${label} og:site_name`, /<meta property="og:site_name" content="安部ピアノルーム">/.test(source), "安部ピアノルーム");
+    addCheck(`${label} og:site_name`, new RegExp(`<meta property="og:site_name" content="${escapeRegExp(SEARCH_ALIAS_NAME)}">`).test(source), SEARCH_ALIAS_NAME);
     addCheck(`${label} og:locale`, /<meta property="og:locale" content="ja_JP">/.test(source), "ja_JP");
     addCheck(`${label} og:image dimensions`, /<meta property="og:image:width" content="1200">/.test(source) && /<meta property="og:image:height" content="630">/.test(source) && /<meta property="og:image:type" content="image\/jpeg">/.test(source), "1200x630 image/jpeg");
     addCheck(`${label} og:image:alt`, /<meta property="og:image:alt" content="[^"]+">/.test(source), "image alt");
