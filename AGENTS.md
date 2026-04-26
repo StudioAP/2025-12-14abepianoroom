@@ -6,7 +6,8 @@
 - 複雑な変更、複数ページ変更、仕様が曖昧な変更は必ず `/plan` から始める。
 - 依頼文や `GOALS.md` には `Goal / Context / Constraints / Done when` を必ず入れる。
 - 長時間タスクは `git worktree` を使って分離し、セッション名は `abepiano-<goal>` 形式で残す。
-- `content_master_v1.md` を仕様の正本とし、本文変更時は `index.html` と整合させる。
+- トップページ本文ブロックは `content/home-text.json` を講師編集用の正本とし、`node scripts/build_home_content.mjs --write` で `index.html` と `content_master_v1.md` に同期する。
+- `content_master_v1.md` は公開仕様スナップショットとして扱い、単独手編集で確定しない。
 - 編集後は必ず `make check`、完了前は必ず `make test` を通す。
 - 画面変更はコード読みだけで完了扱いにせず、desktop と mobile の実画面確認まで行う。
 - 未確認の hook や config key は足さない。post-tool 検証は workflow で担保する。

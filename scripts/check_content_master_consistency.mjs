@@ -204,10 +204,13 @@ function normalizeSection(section, nativeRatioSet) {
     blocks.forEach((block) => {
         if (!block || typeof block !== "object") return;
         if (block.type === "text") {
-            normalizedBlocks.push({
+            const textBlock = {
                 type: "text",
                 lines: normalizeTextBlockLines(block.lines || [])
-            });
+            };
+            const className = normalizeText(block.className || "").trim();
+            if (className) textBlock.className = className;
+            normalizedBlocks.push(textBlock);
             return;
         }
         if (block.type === "quote") {
@@ -270,10 +273,13 @@ function toComparableMasterData(masterData) {
     const sections = (safe.sections || []).map((section) => {
         const blocks = (section.blocks || []).map((block) => {
             if (block.type === "text") {
-                return {
+                const textBlock = {
                     type: "text",
                     lines: normalizeTextBlockLines(block.lines || [])
                 };
+                const className = normalizeText(block.className || "").trim();
+                if (className) textBlock.className = className;
+                return textBlock;
             }
             if (block.type === "gallery") {
                 return {
@@ -373,9 +379,8 @@ function renderMasterMarkdown(data) {
     lines.push("# content_master_v1");
     lines.push("");
     lines.push("## 役割");
-    lines.push("- 本文・写真仕様は本ファイルを正本とし、`index.html` 直編集のみで確定しない。");
-    lines.push("- 編集順序: `content_master_v1.md` 更新 → `index.html` 反映 → `node scripts/check_content_master_consistency.mjs` 合格。");
-    lines.push("- 差分チェックが `PASS` になるまで、公開反映しない。");
+    lines.push("- 本文・写真仕様の公開スナップショットです。トップページ本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。");
+    lines.push("- 手編集で確定しないでください。差分チェックが `PASS` になるまで、公開反映しません。");
     lines.push("");
     lines.push("## ヒーロー仕様");
     lines.push(`- title: ${data.hero.title}`);

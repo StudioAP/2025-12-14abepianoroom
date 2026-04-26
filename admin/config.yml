@@ -1,0 +1,85 @@
+backend:
+  name: git-gateway
+  branch: main
+  accept_roles:
+    - admin
+    - teacher
+
+local_backend: true
+publish_mode: simple
+locale: ja
+
+site_url: https://abepianoroom.netlify.app
+display_url: https://abepianoroom.netlify.app
+media_folder: image/uploads
+public_folder: /image/uploads
+
+collections:
+  - name: home_text
+    label: トップページ本文
+    editor:
+      preview: false
+    files:
+      - name: home_text
+        label: トップページ本文
+        file: content/home-text.json
+        format: json
+        fields:
+          - label: schemaVersion
+            name: schemaVersion
+            widget: hidden
+            default: 1
+          - label: ごあいさつ
+            name: greeting
+            widget: object
+            fields:
+              - label: 導入文
+                name: main
+                widget: text
+              - label: 募集状況
+                name: availability
+                widget: text
+          - label: 対象・場所
+            name: targetLocation
+            widget: object
+            fields:
+              - label: 対象・場所
+                name: main
+                widget: text
+              - label: 広告注記
+                name: adNote
+                widget: text
+          - label: 料金・曜日・時間
+            name: pricing
+            widget: object
+            fields:
+              - label: 改定注記
+                name: revisionNote
+                widget: text
+              - label: 募集状況
+                name: availability
+                widget: text
+              - label: 自宅練習サポート動画説明
+                name: supportVideo
+                widget: text
+          - label: 大人向けへの想い
+            name: adultMessage
+            widget: object
+            fields:
+              - label: 本文
+                name: main
+                widget: text
+          - label: 教室概要・講師略歴
+            name: profile
+            widget: object
+            fields:
+              - label: 本文
+                name: main
+                widget: text
+          - label: 小さいお子様向け
+            name: rhythmic
+            widget: object
+            fields:
+              - label: 本文
+                name: main
+                widget: text

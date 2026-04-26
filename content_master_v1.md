@@ -1,9 +1,8 @@
 # content_master_v1
 
 ## 役割
-- 本文・写真仕様は本ファイルを正本とし、`index.html` 直編集のみで確定しない。
-- 編集順序: `content_master_v1.md` 更新 → `index.html` 反映 → `node scripts/check_content_master_consistency.mjs` 合格。
-- 差分チェックが `PASS` になるまで、公開反映しない。
+- 本文・写真仕様の公開スナップショットです。トップページ本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。
+- 手編集で確定しないでください。差分チェックが `PASS` になるまで、公開反映しません。
 
 ## ヒーロー仕様
 - title: 安部ピアノルーム
@@ -55,24 +54,28 @@
 西賀茂・市原からも通いやすい立地です。
 
 ※自宅教室につき住所詳細は、お問合せくださった方にお伝えしております。駐車可。
+```
+
+#### Text 2
+```text
 （住所登録が必須となるGoogle広告は掲載しておりません）
 ```
 
 ### 3. 料金・曜日・時間
 - textFlow: structured
 
-#### Text 0（共通注記）
+#### Text 1
 ```text
 ※2026年3月、大人・子どもレッスンともに内容・料金一部改定
 ```
 
-#### Text 0-2（子どもレッスン募集状況）
+#### Text 2
 ```text
 子どもレッスンは火曜日17:30の募集を再開しました。
 ※他の曜日の募集は現在ありません
 ```
 
-#### Text 1
+#### Text 3
 ```text
 ※「自宅練習サポート動画」について
 
@@ -197,10 +200,10 @@ https://kogumarr.netlify.app/
         },
         {
           "type": "text",
-          "className": "stream-text--address-ad-note",
           "lines": [
             "（住所登録が必須となるGoogle広告は掲載しておりません）"
-          ]
+          ],
+          "className": "stream-text--address-ad-note"
         }
       ]
     },
@@ -211,10 +214,10 @@ https://kogumarr.netlify.app/
       "blocks": [
         {
           "type": "text",
-          "className": "stream-text--pricing-revision-note",
           "lines": [
             "※2026年3月、大人・子どもレッスンともに内容・料金一部改定"
-          ]
+          ],
+          "className": "stream-text--pricing-revision-note"
         },
         {
           "type": "text",

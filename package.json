@@ -2,6 +2,8 @@
   "name": "abepianoroom-codex-harness",
   "private": true,
   "scripts": {
+    "build": "node scripts/build_home_content.mjs --write && node scripts/check_content_master_consistency.mjs",
+    "check": "node scripts/build_home_content.mjs --check && node scripts/check_content_master_consistency.mjs",
     "e2e": "playwright test"
   },
   "devDependencies": {
