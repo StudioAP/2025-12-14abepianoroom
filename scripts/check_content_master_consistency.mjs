@@ -379,7 +379,7 @@ function renderMasterMarkdown(data) {
     lines.push("# content_master_v1");
     lines.push("");
     lines.push("## 役割");
-    lines.push("- 本文・写真仕様の公開スナップショットです。トップページ本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。");
+    lines.push("- 本文・写真仕様の公開スナップショットです。トップページの見出し・本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。");
     lines.push("- 手編集で確定しないでください。差分チェックが `PASS` になるまで、公開反映しません。");
     lines.push("");
     lines.push("## ヒーロー仕様");

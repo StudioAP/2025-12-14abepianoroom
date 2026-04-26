@@ -10,6 +10,18 @@ const MASTER_FILE = "content_master_v1.md";
 const HOME_TEXT_FILE = "content/home-text.json";
 const START_MARKER = "<!-- CONTENT_MASTER_DATA_START -->";
 const END_MARKER = "<!-- CONTENT_MASTER_DATA_END -->";
+const HOME_TEXT_SCHEMA_VERSION = 2;
+const MAX_SECTION_TITLE_LENGTH = 18;
+const MAX_BLOCK_LABEL_LENGTH = 28;
+
+const EDITABLE_SECTIONS = [
+  { sectionIndex: 0, sectionKey: "greeting" },
+  { sectionIndex: 1, sectionKey: "targetLocation" },
+  { sectionIndex: 2, sectionKey: "pricing" },
+  { sectionIndex: 3, sectionKey: "adultMessage" },
+  { sectionIndex: 4, sectionKey: "profile" },
+  { sectionIndex: 5, sectionKey: "rhythmic" }
+];
 
 const EDITABLE_TEXT_BLOCKS = [
   { sectionIndex: 0, blockIndex: 0, sectionKey: "greeting", fieldKey: "main", label: "導入文" },
@@ -200,16 +212,58 @@ function editableTextToLines(value) {
   return lines;
 }
 
+function textLength(value) {
+  return [...String(value || "")].length;
+}
+
+function normalizeEditableTitle(value, context) {
+  const title = normalizeText(value).trim();
+  if (!title) {
+    throw new Error(`${HOME_TEXT_FILE}: ${context} は空にできません`);
+  }
+  if (textLength(title) > MAX_SECTION_TITLE_LENGTH) {
+    throw new Error(`${HOME_TEXT_FILE}: ${context} は${MAX_SECTION_TITLE_LENGTH}文字以内にしてください`);
+  }
+  return title;
+}
+
+function normalizeEditableLabel(value, context) {
+  const label = normalizeText(value).trim();
+  if (!label) {
+    throw new Error(`${HOME_TEXT_FILE}: ${context} は空にできません`);
+  }
+  if (textLength(label) > MAX_BLOCK_LABEL_LENGTH) {
+    throw new Error(`${HOME_TEXT_FILE}: ${context} は${MAX_BLOCK_LABEL_LENGTH}文字以内にしてください`);
+  }
+  return label;
+}
+
 function deriveHomeTextFromConfig(config) {
-  const homeText = { schemaVersion: 1 };
+  const homeText = { schemaVersion: HOME_TEXT_SCHEMA_VERSION };
+  EDITABLE_SECTIONS.forEach((editableSection) => {
+    const section = (config.sections || [])[editableSection.sectionIndex];
+    if (!section) {
+      throw new Error(`編集対象セクションが見つかりません: section ${editableSection.sectionIndex}`);
+    }
+    homeText[editableSection.sectionKey] = {
+      title: normalizeEditableTitle(section.title || "", `${editableSection.sectionKey}.title`),
+      blocks: []
+    };
+  });
   EDITABLE_TEXT_BLOCKS.forEach((field) => {
     const section = (config.sections || [])[field.sectionIndex];
     const block = section && (section.blocks || [])[field.blockIndex];
     if (!section || !block || block.type !== "text") {
       throw new Error(`編集対象が見つかりません: section ${field.sectionIndex}, block ${field.blockIndex}`);
     }
-    if (!homeText[field.sectionKey]) homeText[field.sectionKey] = {};
-    homeText[field.sectionKey][field.fieldKey] = linesToEditableText(block.lines || []);
+    if (!homeText[field.sectionKey]) {
+      throw new Error(`編集対象セクションが見つかりません: ${field.sectionKey}`);
+    }
+    homeText[field.sectionKey].blocks.push({
+      id: field.fieldKey,
+      label: field.label,
+      text: linesToEditableText(block.lines || [])
+    });
   });
   return homeText;
 }
@@ -222,34 +276,95 @@ function loadHomeText(rootDir) {
   return JSON.parse(readUtf8(filePath));
 }
 
+function getHomeTextSchemaVersion(homeText) {
+  return Number(homeText && homeText.schemaVersion ? homeText.schemaVersion : 1);
+}
+
+function getEditableSectionData(homeText, field) {
+  const section = homeText[field.sectionKey];
+  if (!section || typeof section !== "object") {
+    throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey} がありません`);
+  }
+  return section;
+}
+
+function getEditableBlockEntry(section, field) {
+  if (Array.isArray(section.blocks)) {
+    const entry = section.blocks.find((block) => block && block.id === field.fieldKey);
+    if (!entry || typeof entry !== "object") {
+      throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey}.blocks に ${field.fieldKey} がありません`);
+    }
+    return entry;
+  }
+  return section[field.fieldKey];
+}
+
+function getEditableBlockText(section, field) {
+  const entry = getEditableBlockEntry(section, field);
+  if (typeof entry === "string") return entry;
+  if (entry && typeof entry === "object" && typeof entry.text === "string") return entry.text;
+  throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey}.${field.fieldKey} の本文は文字列である必要があります`);
+}
+
+function validateEditableBlockLabel(section, field) {
+  const entry = getEditableBlockEntry(section, field);
+  if (typeof entry === "string") return;
+  if (!entry || typeof entry !== "object") {
+    throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey}.${field.fieldKey} が不正です`);
+  }
+  if (entry.id !== field.fieldKey) {
+    throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey}.${field.fieldKey} の内部IDが不正です`);
+  }
+  const labelSource = Object.hasOwn(entry, "label") ? entry.label : field.label;
+  normalizeEditableLabel(labelSource, `${field.sectionKey}.${field.fieldKey}.label`);
+}
+
 function validateHomeText(homeText) {
   if (!homeText || typeof homeText !== "object") {
     throw new Error(`${HOME_TEXT_FILE} がオブジェクトではありません`);
   }
-  if (Number(homeText.schemaVersion || 1) !== 1) {
-    throw new Error(`${HOME_TEXT_FILE} の schemaVersion は 1 のみ対応です`);
+  const schemaVersion = getHomeTextSchemaVersion(homeText);
+  if (![1, HOME_TEXT_SCHEMA_VERSION].includes(schemaVersion)) {
+    throw new Error(`${HOME_TEXT_FILE} の schemaVersion は 1 または ${HOME_TEXT_SCHEMA_VERSION} のみ対応です`);
   }
-  EDITABLE_TEXT_BLOCKS.forEach((field) => {
-    const section = homeText[field.sectionKey];
+  EDITABLE_SECTIONS.forEach((editableSection) => {
+    const section = homeText[editableSection.sectionKey];
     if (!section || typeof section !== "object") {
-      throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey} がありません`);
+      throw new Error(`${HOME_TEXT_FILE}: ${editableSection.sectionKey} がありません`);
     }
-    if (typeof section[field.fieldKey] !== "string") {
-      throw new Error(`${HOME_TEXT_FILE}: ${field.sectionKey}.${field.fieldKey} は文字列である必要があります`);
+    if (schemaVersion >= HOME_TEXT_SCHEMA_VERSION) {
+      normalizeEditableTitle(section.title, `${editableSection.sectionKey}.title`);
     }
+  });
+  EDITABLE_TEXT_BLOCKS.forEach((field) => {
+    const section = getEditableSectionData(homeText, field);
+    getEditableBlockText(section, field);
+    validateEditableBlockLabel(section, field);
   });
 }
 
 function applyHomeTextToConfig(config, homeText) {
   validateHomeText(homeText);
   const nextConfig = structuredClone(config);
+  const schemaVersion = getHomeTextSchemaVersion(homeText);
+  EDITABLE_SECTIONS.forEach((editableSection) => {
+    const section = nextConfig.sections[editableSection.sectionIndex];
+    const sourceSection = homeText[editableSection.sectionKey];
+    if (!section) {
+      throw new Error(`編集対象セクションが見つかりません: section ${editableSection.sectionIndex}`);
+    }
+    if (schemaVersion >= HOME_TEXT_SCHEMA_VERSION) {
+      section.title = normalizeEditableTitle(sourceSection.title, `${editableSection.sectionKey}.title`);
+    }
+  });
   EDITABLE_TEXT_BLOCKS.forEach((field) => {
     const section = nextConfig.sections[field.sectionIndex];
     const block = section && section.blocks[field.blockIndex];
     if (!section || !block || block.type !== "text") {
       throw new Error(`編集対象が見つかりません: section ${field.sectionIndex}, block ${field.blockIndex}`);
     }
-    block.lines = editableTextToLines(homeText[field.sectionKey][field.fieldKey]);
+    const sourceSection = getEditableSectionData(homeText, field);
+    block.lines = editableTextToLines(getEditableBlockText(sourceSection, field));
   });
   return nextConfig;
 }
@@ -811,7 +926,7 @@ function renderMasterMarkdown(data) {
   lines.push("# content_master_v1");
   lines.push("");
   lines.push("## 役割");
-  lines.push("- 本文・写真仕様の公開スナップショットです。トップページ本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。");
+  lines.push("- 本文・写真仕様の公開スナップショットです。トップページの見出し・本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。");
   lines.push("- 手編集で確定しないでください。差分チェックが `PASS` になるまで、公開反映しません。");
   lines.push("");
   lines.push("## ヒーロー仕様");

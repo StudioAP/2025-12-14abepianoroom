@@ -11,6 +11,8 @@ test("homepage smoke", async ({ page }) => {
 test("homepage editable text blocks render with the existing pricing table", async ({ page }) => {
   await page.goto("/");
 
+  await expect(page.getByRole("heading", { level: 2, name: "ごあいさつ" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "小さいお子様向け（リトミック）" })).toBeVisible();
   await expect(page.getByText("初めてだけど弾いてみたい…")).toBeVisible();
   await expect(page.getByText("（住所登録が必須となるGoogle広告は掲載しておりません）")).toBeVisible();
   await expect(page.getByText("※「自宅練習サポート動画」について")).toBeVisible();

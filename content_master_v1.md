@@ -1,7 +1,7 @@
 # content_master_v1
 
 ## 役割
-- 本文・写真仕様の公開スナップショットです。トップページ本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。
+- 本文・写真仕様の公開スナップショットです。トップページの見出し・本文ブロックは `content/home-text.json` を編集し、`node scripts/build_home_content.mjs --write` で本ファイルと `index.html` に反映します。
 - 手編集で確定しないでください。差分チェックが `PASS` になるまで、公開反映しません。
 
 ## ヒーロー仕様

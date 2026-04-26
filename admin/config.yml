@@ -28,58 +28,190 @@ collections:
           - label: schemaVersion
             name: schemaVersion
             widget: hidden
-            default: 1
-          - label: ごあいさつ
+            default: 2
+          - label: セクション1
             name: greeting
             widget: object
             fields:
-              - label: 導入文
-                name: main
-                widget: text
-              - label: 募集状況
-                name: availability
-                widget: text
-          - label: 対象・場所
+              - label: ページに表示する見出し
+                name: title
+                widget: string
+                pattern:
+                  - "^.{1,18}$"
+                  - "18文字以内で入力してください"
+              - label: 本文ブロック
+                name: blocks
+                widget: list
+                summary: "{{fields.label}}"
+                collapsed: true
+                allow_add: false
+                min: 2
+                max: 2
+                fields:
+                  - label: 内部ID
+                    name: id
+                    widget: hidden
+                  - label: ブロック名
+                    name: label
+                    widget: string
+                    pattern:
+                      - "^.{1,28}$"
+                      - "28文字以内で入力してください"
+                  - label: 本文
+                    name: text
+                    widget: text
+          - label: セクション2
             name: targetLocation
             widget: object
             fields:
-              - label: 対象・場所
-                name: main
-                widget: text
-              - label: 広告注記
-                name: adNote
-                widget: text
-          - label: 料金・曜日・時間
+              - label: ページに表示する見出し
+                name: title
+                widget: string
+                pattern:
+                  - "^.{1,18}$"
+                  - "18文字以内で入力してください"
+              - label: 本文ブロック
+                name: blocks
+                widget: list
+                summary: "{{fields.label}}"
+                collapsed: true
+                allow_add: false
+                min: 2
+                max: 2
+                fields:
+                  - label: 内部ID
+                    name: id
+                    widget: hidden
+                  - label: ブロック名
+                    name: label
+                    widget: string
+                    pattern:
+                      - "^.{1,28}$"
+                      - "28文字以内で入力してください"
+                  - label: 本文
+                    name: text
+                    widget: text
+          - label: セクション3
             name: pricing
             widget: object
             fields:
-              - label: 改定注記
-                name: revisionNote
-                widget: text
-              - label: 募集状況
-                name: availability
-                widget: text
-              - label: 自宅練習サポート動画説明
-                name: supportVideo
-                widget: text
-          - label: 大人向けへの想い
+              - label: ページに表示する見出し
+                name: title
+                widget: string
+                pattern:
+                  - "^.{1,18}$"
+                  - "18文字以内で入力してください"
+              - label: 本文ブロック
+                name: blocks
+                widget: list
+                summary: "{{fields.label}}"
+                collapsed: true
+                allow_add: false
+                min: 3
+                max: 3
+                fields:
+                  - label: 内部ID
+                    name: id
+                    widget: hidden
+                  - label: ブロック名
+                    name: label
+                    widget: string
+                    pattern:
+                      - "^.{1,28}$"
+                      - "28文字以内で入力してください"
+                  - label: 本文
+                    name: text
+                    widget: text
+          - label: セクション4
             name: adultMessage
             widget: object
             fields:
-              - label: 本文
-                name: main
-                widget: text
-          - label: 教室概要・講師略歴
+              - label: ページに表示する見出し
+                name: title
+                widget: string
+                pattern:
+                  - "^.{1,18}$"
+                  - "18文字以内で入力してください"
+              - label: 本文ブロック
+                name: blocks
+                widget: list
+                summary: "{{fields.label}}"
+                collapsed: true
+                allow_add: false
+                min: 1
+                max: 1
+                fields:
+                  - label: 内部ID
+                    name: id
+                    widget: hidden
+                  - label: ブロック名
+                    name: label
+                    widget: string
+                    pattern:
+                      - "^.{1,28}$"
+                      - "28文字以内で入力してください"
+                  - label: 本文
+                    name: text
+                    widget: text
+          - label: セクション5
             name: profile
             widget: object
             fields:
-              - label: 本文
-                name: main
-                widget: text
-          - label: 小さいお子様向け
+              - label: ページに表示する見出し
+                name: title
+                widget: string
+                pattern:
+                  - "^.{1,18}$"
+                  - "18文字以内で入力してください"
+              - label: 本文ブロック
+                name: blocks
+                widget: list
+                summary: "{{fields.label}}"
+                collapsed: true
+                allow_add: false
+                min: 1
+                max: 1
+                fields:
+                  - label: 内部ID
+                    name: id
+                    widget: hidden
+                  - label: ブロック名
+                    name: label
+                    widget: string
+                    pattern:
+                      - "^.{1,28}$"
+                      - "28文字以内で入力してください"
+                  - label: 本文
+                    name: text
+                    widget: text
+          - label: セクション6
             name: rhythmic
             widget: object
             fields:
-              - label: 本文
-                name: main
-                widget: text
+              - label: ページに表示する見出し
+                name: title
+                widget: string
+                pattern:
+                  - "^.{1,18}$"
+                  - "18文字以内で入力してください"
+              - label: 本文ブロック
+                name: blocks
+                widget: list
+                summary: "{{fields.label}}"
+                collapsed: true
+                allow_add: false
+                min: 1
+                max: 1
+                fields:
+                  - label: 内部ID
+                    name: id
+                    widget: hidden
+                  - label: ブロック名
+                    name: label
+                    widget: string
+                    pattern:
+                      - "^.{1,28}$"
+                      - "28文字以内で入力してください"
+                  - label: 本文
+                    name: text
+                    widget: text
