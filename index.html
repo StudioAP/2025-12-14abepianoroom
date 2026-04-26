@@ -42,6 +42,25 @@
     <meta name="twitter:image" content="https://abepianoroom.netlify.app/image/ogp.jpg">
     <meta name="twitter:image:alt" content="安部ピアノルーム 上賀茂｜京都市北区のピアノ教室">
     <meta name="twitter:url" content="https://abepianoroom.netlify.app/">
+    <script>
+        (function redirectNetlifyIdentityTokens() {
+            const hash = window.location.hash || "";
+            if (!hash) return;
+
+            const tokenNames = [
+                "invite_token",
+                "confirmation_token",
+                "recovery_token",
+                "email_change_token"
+            ];
+            const params = new URLSearchParams(hash.slice(1));
+            if (!tokenNames.some((name) => params.has(name))) return;
+
+            const adminUrl = new URL("/admin/", window.location.origin);
+            adminUrl.hash = hash;
+            window.location.replace(adminUrl.toString());
+        }());
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVNNE0X4VW"></script>
     <script>
         (function initializeGa4Head() {

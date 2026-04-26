@@ -24,6 +24,15 @@ test("homepage editable text blocks render with the existing pricing table", asy
   await expect(pricingSection.getByText("5,000円")).toBeVisible();
 });
 
+test("Netlify Identity email links land on the admin screen", async ({ page }) => {
+  await page.route("https://identity.netlify.com/**", (route) => route.abort());
+  await page.route("https://unpkg.com/**", (route) => route.abort());
+
+  await page.goto("/#invite_token=test-token");
+
+  await expect(page).toHaveURL(/\/admin\/#invite_token=test-token$/);
+});
+
 test("faq smoke", async ({ page }) => {
   await page.goto("/faq/");
   await expect(page).toHaveTitle(/よくあるご質問/);
