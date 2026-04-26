@@ -5,9 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>安部ピアノルーム 本文編集</title>
+  <style>
+    #admin-session-banner {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 2147483647;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      max-width: min(420px, calc(100vw - 24px));
+      padding: 8px 10px;
+      border: 1px solid rgba(47, 37, 30, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 252, 249, 0.96);
+      box-shadow: 0 8px 28px rgba(47, 37, 30, 0.14);
+      color: #332b25;
+      font: 13px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    }
+
+    #admin-session-banner.is-visible {
+      display: flex;
+    }
+
+    #admin-session-banner button,
+    #admin-session-banner a {
+      border: 0;
+      border-radius: 6px;
+      background: #5c4a3f;
+      color: #fff;
+      padding: 7px 9px;
+      font: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    #admin-session-banner a {
+      background: #76685e;
+    }
+  </style>
+  <script>
+    (function routeSmallScreensToMobileEditor() {
+      const params = new URLSearchParams(window.location.search || "");
+      if (params.get("desktop") === "1") return;
+      const shouldUseMobileEditor = window.matchMedia("(max-width: 820px), (pointer: coarse)").matches;
+      if (!shouldUseMobileEditor) return;
+      const mobileUrl = new URL("mobile.html", window.location.href);
+      mobileUrl.hash = window.location.hash || "";
+      window.location.replace(mobileUrl.toString());
+    }());
+  </script>
 </head>
 <body>
+  <div id="admin-session-banner" aria-live="polite"></div>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
+  <script>
+    (function showCurrentIdentityUser() {
+      const banner = document.getElementById("admin-session-banner");
+      if (!banner) return;
+
+      function render(user) {
+        if (!user) {
+          banner.classList.remove("is-visible");
+          banner.textContent = "";
+          return;
+        }
+        const email = String(user.email || "メール不明");
+        banner.replaceChildren();
+        const text = document.createElement("span");
+        text.textContent = `ログイン中: ${email}`;
+        const mobileLink = document.createElement("a");
+        mobileLink.href = "mobile.html";
+        mobileLink.textContent = "スマホ用";
+        const logout = document.createElement("button");
+        logout.type = "button";
+        logout.textContent = "ログアウト";
+        logout.addEventListener("click", () => {
+          if (window.netlifyIdentity) window.netlifyIdentity.logout();
+        });
+        banner.append(text, mobileLink, logout);
+        banner.classList.add("is-visible");
+      }
+
+      window.addEventListener("load", () => {
+        if (!window.netlifyIdentity) return;
+        render(window.netlifyIdentity.currentUser());
+        window.netlifyIdentity.on("init", render);
+        window.netlifyIdentity.on("login", render);
+        window.netlifyIdentity.on("logout", () => render(null));
+      });
+    }());
+  </script>
 </body>
 </html>

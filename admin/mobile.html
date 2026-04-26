@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>安部ピアノルーム スマホ本文編集</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fbf7f3;
+      --panel: #fffdfb;
+      --text: #2f2925;
+      --muted: #776b62;
+      --line: #e5d9cf;
+      --accent: #6c5144;
+      --accent-strong: #4b382f;
+      --danger: #9f352f;
+      --ok: #2f6d4f;
+      --focus: #94745f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a.ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.62;
+      cursor: wait;
+    }
+
+    a {
+      color: var(--accent-strong);
+    }
+
+    .app {
+      min-height: 100svh;
+      padding: max(16px, env(safe-area-inset-top)) 14px max(24px, env(safe-area-inset-bottom));
+    }
+
+    .shell {
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: 0 -14px 16px;
+      padding: 10px 14px;
+      background: rgba(251, 247, 243, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(229, 217, 207, 0.7);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .user-email {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .top-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 8px;
+    }
+
+    .ghost-button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--accent-strong);
+    }
+
+    .status {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status[data-kind="error"] {
+      border-color: rgba(159, 53, 47, 0.3);
+      color: var(--danger);
+    }
+
+    .status[data-kind="success"] {
+      border-color: rgba(47, 109, 79, 0.3);
+      color: var(--ok);
+    }
+
+    .login-card,
+    .section-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 8px 28px rgba(47, 37, 30, 0.08);
+    }
+
+    .login-card {
+      padding: 18px;
+    }
+
+    .login-card h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .login-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .section-card {
+      margin: 0 0 14px;
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: grid;
+      gap: 7px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fff8f3;
+    }
+
+    .section-kicker {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .fields {
+      display: grid;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .block-fields {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffaf6;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      padding: 10px 11px;
+      font-weight: 400;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(148, 116, 95, 0.18);
+    }
+
+    textarea {
+      min-height: 170px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .counter {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 400;
+      text-align: right;
+    }
+
+    .savebar {
+      position: sticky;
+      bottom: 0;
+      z-index: 9;
+      margin: 18px -14px 0;
+      padding: 12px 14px max(12px, env(safe-area-inset-bottom));
+      background: rgba(251, 247, 243, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(229, 217, 207, 0.8);
+    }
+
+    .savebar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .dirty-mark {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (min-width: 720px) {
+      .app {
+        padding-inline: 24px;
+      }
+
+      .topbar,
+      .savebar {
+        margin-inline: -24px;
+        padding-inline: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <h1 class="brand-title">本文編集</h1>
+          <p id="user-email" class="user-email">未ログイン</p>
+        </div>
+        <div class="top-actions">
+          <a class="ghost-button" href="./?desktop=1">通常画面</a>
+          <button id="logout-button" class="ghost-button hidden" type="button">ログアウト</button>
+        </div>
+      </div>
+    </div>
+
+    <main class="shell">
+      <p id="status" class="status">ログイン状態を確認しています。</p>
+
+      <section id="login-card" class="login-card hidden">
+        <h1>安部ピアノルーム</h1>
+        <p>本文編集には、招待済みのメールアドレスとパスワードが必要です。</p>
+        <button id="login-button" type="button">ログインする</button>
+      </section>
+
+      <form id="editor-form" class="hidden" novalidate></form>
+
+      <div id="savebar" class="savebar hidden">
+        <div class="savebar-inner">
+          <div id="dirty-mark" class="dirty-mark">変更はありません</div>
+          <button id="save-button" type="button">保存</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    (function initializeMobileEditor() {
+      const BRANCH = "main";
+      const CONTENT_PATH = "content/home-text.json";
+      const CONTENT_ENDPOINT = `/.netlify/git/github/contents/${CONTENT_PATH}`;
+      const MAX_TITLE_LENGTH = 18;
+      const MAX_LABEL_LENGTH = 28;
+      const SECTION_ORDER = [
+        { key: "greeting", fallbackTitle: "ごあいさつ" },
+        { key: "targetLocation", fallbackTitle: "対象・場所" },
+        { key: "pricing", fallbackTitle: "料金・曜日・時間" },
+        { key: "adultMessage", fallbackTitle: "大人向けへの想い" },
+        { key: "profile", fallbackTitle: "教室概要・講師略歴" },
+        { key: "rhythmic", fallbackTitle: "小さいお子様向け（リトミック）" }
+      ];
+      const LEGACY_BLOCKS = {
+        greeting: [
+          { id: "main", label: "導入文" },
+          { id: "availability", label: "募集状況" }
+        ],
+        targetLocation: [
+          { id: "main", label: "対象・場所" },
+          { id: "adNote", label: "広告注記" }
+        ],
+        pricing: [
+          { id: "revisionNote", label: "改定注記" },
+          { id: "availability", label: "募集状況" },
+          { id: "supportVideo", label: "自宅練習サポート動画説明" }
+        ],
+        adultMessage: [{ id: "main", label: "大人向けへの想い" }],
+        profile: [{ id: "main", label: "教室概要・講師略歴" }],
+        rhythmic: [{ id: "main", label: "小さいお子様向け" }]
+      };
+
+      const els = {
+        status: document.getElementById("status"),
+        loginCard: document.getElementById("login-card"),
+        loginButton: document.getElementById("login-button"),
+        logoutButton: document.getElementById("logout-button"),
+        userEmail: document.getElementById("user-email"),
+        form: document.getElementById("editor-form"),
+        savebar: document.getElementById("savebar"),
+        saveButton: document.getElementById("save-button"),
+        dirtyMark: document.getElementById("dirty-mark")
+      };
+
+      let currentContent = null;
+      let currentSha = "";
+      let isDirty = false;
+      let isSaving = false;
+
+      function setStatus(message, kind = "") {
+        els.status.textContent = message;
+        if (kind) {
+          els.status.dataset.kind = kind;
+        } else {
+          delete els.status.dataset.kind;
+        }
+      }
+
+      function setDirty(nextDirty) {
+        isDirty = Boolean(nextDirty);
+        els.dirtyMark.textContent = isDirty ? "未保存の変更があります" : "変更はありません";
+      }
+
+      function showLogin() {
+        els.loginCard.classList.remove("hidden");
+        els.form.classList.add("hidden");
+        els.savebar.classList.add("hidden");
+        els.logoutButton.classList.add("hidden");
+        els.userEmail.textContent = "未ログイン";
+      }
+
+      function showEditor(user) {
+        els.loginCard.classList.add("hidden");
+        els.form.classList.remove("hidden");
+        els.savebar.classList.remove("hidden");
+        els.logoutButton.classList.remove("hidden");
+        els.userEmail.textContent = `ログイン中: ${user.email || "メール不明"}`;
+      }
+
+      function utf8ToBase64(value) {
+        const bytes = new TextEncoder().encode(value);
+        let binary = "";
+        bytes.forEach((byte) => {
+          binary += String.fromCharCode(byte);
+        });
+        return btoa(binary);
+      }
+
+      function base64ToUtf8(value) {
+        const binary = atob(String(value || "").replace(/\s/g, ""));
+        const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+        return new TextDecoder().decode(bytes);
+      }
+
+      function textLength(value) {
+        return [...String(value || "")].length;
+      }
+
+      async function getJwt() {
+        const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+        if (!user) throw new Error("ログインが必要です。");
+        return user.jwt();
+      }
+
+      async function gitGatewayFetch(url, options = {}) {
+        const token = await getJwt();
+        const headers = new Headers(options.headers || {});
+        headers.set("Authorization", `Bearer ${token}`);
+        if (options.body) headers.set("Content-Type", "application/json");
+        const response = await fetch(url, { ...options, headers });
+        if (response.status === 401 || response.status === 403) {
+          throw new Error("このアカウントには保存権限がありません。ログアウトして、招待済みのメールアドレスで入り直してください。");
+        }
+        if (response.status === 409) {
+          throw new Error("先に別の保存が反映されています。画面を開き直してから、もう一度編集してください。");
+        }
+        if (!response.ok) {
+          const body = await response.text().catch(() => "");
+          throw new Error(`通信に失敗しました。${response.status} ${body.slice(0, 120)}`);
+        }
+        return response;
+      }
+
+      function normalizeContent(raw) {
+        if (!raw || typeof raw !== "object") throw new Error("本文データの形式が不正です。");
+        if (Number(raw.schemaVersion || 1) === 2) return raw;
+        const next = { schemaVersion: 2 };
+        SECTION_ORDER.forEach((sectionInfo) => {
+          const source = raw[sectionInfo.key] || {};
+          next[sectionInfo.key] = {
+            title: sectionInfo.fallbackTitle,
+            blocks: (LEGACY_BLOCKS[sectionInfo.key] || []).map((block) => ({
+              id: block.id,
+              label: block.label,
+              text: String(source[block.id] || "")
+            }))
+          };
+        });
+        return next;
+      }
+
+      async function loadContent() {
+        setStatus("本文データを読み込んでいます。");
+        const response = await gitGatewayFetch(`${CONTENT_ENDPOINT}?ref=${encodeURIComponent(BRANCH)}&t=${Date.now()}`);
+        const file = await response.json();
+        currentSha = file.sha || "";
+        currentContent = normalizeContent(JSON.parse(base64ToUtf8(file.content || "")));
+        renderForm();
+        setDirty(false);
+        setStatus("編集できます。保存後、公開ページへの反映には数分かかります。");
+      }
+
+      function appendCounter(input, maxLength) {
+        const counter = document.createElement("div");
+        counter.className = "counter";
+        const update = () => {
+          counter.textContent = `${textLength(input.value)} / ${maxLength}`;
+        };
+        input.addEventListener("input", update);
+        update();
+        return counter;
+      }
+
+      function buildTextField(labelText, value, maxLength, dataset) {
+        const label = document.createElement("label");
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = labelText;
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = value || "";
+        input.maxLength = maxLength;
+        Object.assign(input.dataset, dataset);
+        input.addEventListener("input", () => setDirty(true));
+        label.append(labelSpan, input, appendCounter(input, maxLength));
+        return label;
+      }
+
+      function buildTextarea(labelText, value, dataset) {
+        const label = document.createElement("label");
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = labelText;
+        const textarea = document.createElement("textarea");
+        textarea.value = value || "";
+        Object.assign(textarea.dataset, dataset);
+        textarea.addEventListener("input", () => setDirty(true));
+        label.append(labelSpan, textarea);
+        return label;
+      }
+
+      function renderForm() {
+        els.form.replaceChildren();
+        SECTION_ORDER.forEach((sectionInfo, index) => {
+          const section = currentContent[sectionInfo.key] || { title: sectionInfo.fallbackTitle, blocks: [] };
+          const card = document.createElement("section");
+          card.className = "section-card";
+
+          const head = document.createElement("div");
+          head.className = "section-head";
+          const kicker = document.createElement("div");
+          kicker.className = "section-kicker";
+          kicker.textContent = `セクション${index + 1}`;
+          head.append(
+            kicker,
+            buildTextField("ページに表示する見出し", section.title || "", MAX_TITLE_LENGTH, {
+              sectionKey: sectionInfo.key,
+              field: "title"
+            })
+          );
+
+          const fields = document.createElement("div");
+          fields.className = "fields";
+          (section.blocks || []).forEach((block) => {
+            const blockWrap = document.createElement("div");
+            blockWrap.className = "block-fields";
+            blockWrap.dataset.sectionKey = sectionInfo.key;
+            blockWrap.dataset.blockId = block.id || "";
+            blockWrap.append(
+              buildTextField("ブロック名", block.label || "", MAX_LABEL_LENGTH, {
+                sectionKey: sectionInfo.key,
+                blockId: block.id || "",
+                field: "label"
+              }),
+              buildTextarea("本文", block.text || "", {
+                sectionKey: sectionInfo.key,
+                blockId: block.id || "",
+                field: "text"
+              })
+            );
+            fields.append(blockWrap);
+          });
+
+          card.append(head, fields);
+          els.form.append(card);
+        });
+      }
+
+      function requireLength(value, maxLength, fieldName) {
+        const text = String(value || "").trim();
+        if (!text) throw new Error(`${fieldName} は空にできません。`);
+        if (textLength(text) > maxLength) throw new Error(`${fieldName} は${maxLength}文字以内にしてください。`);
+        return text;
+      }
+
+      function collectForm() {
+        const next = { schemaVersion: 2 };
+        SECTION_ORDER.forEach((sectionInfo) => {
+          const source = currentContent[sectionInfo.key];
+          const titleInput = els.form.querySelector(`input[data-section-key="${sectionInfo.key}"][data-field="title"]`);
+          next[sectionInfo.key] = {
+            title: requireLength(titleInput && titleInput.value, MAX_TITLE_LENGTH, "ページに表示する見出し"),
+            blocks: (source.blocks || []).map((block) => {
+              const safeId = String(block.id || "");
+              const labelInput = els.form.querySelector(`input[data-section-key="${sectionInfo.key}"][data-block-id="${CSS.escape(safeId)}"][data-field="label"]`);
+              const textInput = els.form.querySelector(`textarea[data-section-key="${sectionInfo.key}"][data-block-id="${CSS.escape(safeId)}"][data-field="text"]`);
+              return {
+                id: safeId,
+                label: requireLength(labelInput && labelInput.value, MAX_LABEL_LENGTH, "ブロック名"),
+                text: String((textInput && textInput.value) || "").normalize("NFC")
+              };
+            })
+          };
+        });
+        return next;
+      }
+
+      async function saveContent() {
+        if (isSaving) return;
+        try {
+          isSaving = true;
+          els.saveButton.disabled = true;
+          setStatus("保存しています。");
+          const next = collectForm();
+          const body = {
+            message: "Update home text from mobile editor",
+            content: utf8ToBase64(`${JSON.stringify(next, null, 2)}\n`),
+            sha: currentSha,
+            branch: BRANCH
+          };
+          const response = await gitGatewayFetch(CONTENT_ENDPOINT, {
+            method: "PUT",
+            body: JSON.stringify(body)
+          });
+          const result = await response.json();
+          currentContent = next;
+          currentSha = result.content && result.content.sha ? result.content.sha : currentSha;
+          setDirty(false);
+          setStatus("保存しました。公開ページへの反映には数分かかります。", "success");
+        } catch (error) {
+          setStatus(error.message || "保存に失敗しました。", "error");
+        } finally {
+          isSaving = false;
+          els.saveButton.disabled = false;
+        }
+      }
+
+      function bindIdentity() {
+        if (!window.netlifyIdentity) {
+          setStatus("ログイン機能を読み込めませんでした。通信状態を確認して開き直してください。", "error");
+          showLogin();
+          return;
+        }
+        let didReceiveIdentityInit = false;
+        window.netlifyIdentity.on("init", (user) => {
+          didReceiveIdentityInit = true;
+          if (!user) {
+            setStatus("ログインしてください。");
+            showLogin();
+            return;
+          }
+          showEditor(user);
+          loadContent().catch((error) => setStatus(error.message, "error"));
+        });
+        window.netlifyIdentity.on("login", (user) => {
+          window.netlifyIdentity.close();
+          showEditor(user);
+          loadContent().catch((error) => setStatus(error.message, "error"));
+        });
+        window.netlifyIdentity.on("logout", () => {
+          currentContent = null;
+          currentSha = "";
+          els.form.replaceChildren();
+          setDirty(false);
+          setStatus("ログアウトしました。");
+          showLogin();
+        });
+        window.netlifyIdentity.init();
+        setTimeout(() => {
+          if (didReceiveIdentityInit) return;
+          const user = window.netlifyIdentity.currentUser();
+          if (!user) {
+            setStatus("ログインしてください。");
+            showLogin();
+            return;
+          }
+          showEditor(user);
+          loadContent().catch((error) => setStatus(error.message, "error"));
+        }, 1600);
+      }
+
+      els.loginButton.addEventListener("click", () => {
+        if (window.netlifyIdentity) window.netlifyIdentity.open("login");
+      });
+      els.logoutButton.addEventListener("click", () => {
+        if (window.netlifyIdentity) window.netlifyIdentity.logout();
+      });
+      els.saveButton.addEventListener("click", saveContent);
+      window.addEventListener("beforeunload", (event) => {
+        if (!isDirty) return;
+        event.preventDefault();
+        event.returnValue = "";
+      });
+
+      bindIdentity();
+    }());
+  </script>
+</body>
+</html>
