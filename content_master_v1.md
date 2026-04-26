@@ -61,12 +61,12 @@
 （住所登録が必須となるGoogle広告は掲載しておりません）
 ```
 
-### 3. 料金・曜日・時間
+### 3. 料金・曜日・時間など
 - textFlow: structured
 
 #### Text 1
 ```text
-※2026年3月、大人・子どもレッスンともに内容・料金一部改定
+※2026年3月、大人・子どもレッスンともに内容・料金一部改定しました
 ```
 
 #### Text 2
@@ -208,14 +208,14 @@ https://kogumarr.netlify.app/
       ]
     },
     {
-      "title": "料金・曜日・時間",
+      "title": "料金・曜日・時間など",
       "subtitle": "",
       "textFlow": "structured",
       "blocks": [
         {
           "type": "text",
           "lines": [
-            "※2026年3月、大人・子どもレッスンともに内容・料金一部改定"
+            "※2026年3月、大人・子どもレッスンともに内容・料金一部改定しました"
           ],
           "className": "stream-text--pricing-revision-note"
         },
